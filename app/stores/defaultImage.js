@@ -39,7 +39,7 @@
 //         img: '/images/defualtProfile.png',
 //         user: '/img/default-user.png',
 //         avatar: '/img/default-avatar.png',
-//         banner: '/img/default-banner.png',
+//         banner: '/img/default-no-img.png',
 //         product: '/img/default-product.png',
 //       }
 
@@ -67,15 +67,14 @@ export const UseDefaultImageStore = defineStore('defaultImageStore', {
       const fallbackMap = {
         //  user: new URL('../assets/imgs/default-user.png', import.meta.url).href,
         // avatar: new URL('../assets/imgs/default-avatar.png', import.meta.url).href,
-        img: new URL('../assets/imgs/placeholder.png', import.meta.url).href,
-        user: new URL('../assets/imgs/profile_female.png', import.meta.url).href,
-        avatar: new URL('../assets/imgs/profile_female.png', import.meta.url).href,
-        female: new URL('../assets/imgs/profile_female.png', import.meta.url).href,
-        f: new URL('../assets/imgs/profile_female.png', import.meta.url).href,
-        male: new URL('../assets/imgs/profile_male.png', import.meta.url).href,
-        m: new URL('../assets/imgs/profile_male.png', import.meta.url).href,
-        banner: new URL('../assets/imgs/default-banner.png', import.meta.url).href,
-        product: new URL('../assets/imgs/default-product.png', import.meta.url).href,
+        img: new URL('~/assets/imgs/placeholder.png', import.meta.url).href,
+        user: new URL('~/assets/imgs/profile_female.png', import.meta.url).href,
+        avatar: new URL('~/assets/imgs/profile_female.png', import.meta.url).href,
+        female: new URL('~/assets/imgs/profile_female.png', import.meta.url).href,
+        f: new URL('~/assets/imgs/profile_female.png', import.meta.url).href,
+        male: new URL('~/assets/imgs/profile_male.png', import.meta.url).href,
+        m: new URL('~/assets/imgs/profile_male.png', import.meta.url).href,
+        banner: new URL('~/assets/imgs/default-no-img.png', import.meta.url).href,
       }
 
       // fallbackMap1  
@@ -83,7 +82,7 @@ export const UseDefaultImageStore = defineStore('defaultImageStore', {
       //   img: '/imgs/defaultProfile.png',
       //   user: '/imgs/default-user.png',
       //   avatar: '/imgs/default-avatar.png',
-      //   banner: '/imgs/default-banner.png',
+      //   banner: '/imgs/default-no-img.png',
       //   product: '/imgs/default-product.png',
       // }
 

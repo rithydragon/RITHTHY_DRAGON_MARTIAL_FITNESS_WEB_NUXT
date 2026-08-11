@@ -1,0 +1,599 @@
+{
+  "pages": [
+    {
+      "id": "home",
+      "path": "/",
+      "title": {
+        "en": "Rithy Martial & Fitness — Premier Martial Arts & Combat Training in Cambodia",
+        "km": "រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស — មជ្ឈមណ្ឌលហ្វឹកហាត់ក្បាច់គុន និងកាយសម្បទាឈានមុខគេនៅកម្ពុជា",
+        "zh": "Rithy 武术与健身 — 柬埔寨顶级武术与格斗训练中心"
+      },
+      "description": {
+        "en": "Train with Master Ny Rithy in ancient Cambodian Bokator, Kun Khmer (Pradal Serey), Yuthakram Khom, BJJ, and high-performance strength & conditioning in Phnom Penh.",
+        "km": "ហ្វឹកហាត់ជាមួយគ្រូនី រិទ្ធី លើក្បាច់គុនបុរាណខ្មែរបុកាទ័រ គុនខ្មែរ (ប្រាដាល់សេរី) យុទ្ធក្រមខ្មែរ BJJ និងការហ្វឹកហាត់កម្លាំងកាយសម្បទានៅភ្នំពេញ។",
+        "zh": "在金边与 Ny Rithy 大师一起训练古老的高棉斗狮拳、高棉拳、高棉武技、巴西柔术以及高性能力量与体能训练。"
+      },
+      "seo": {
+        "ogTitle": {
+          "en": "Rithy Martial & Fitness — Master Bokator & Kun Khmer Training",
+          "km": "រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស — ការហ្វឹកហាត់បុកាទ័រ និងគុនខ្មែរកម្រិតខ្ពស់",
+          "zh": "Rithy 武术与健身 — 掌握斗狮拳与高棉拳训练"
+        },
+        "ogDescription": {
+          "en": "Join Cambodia's premier combat arts center. Elite coaching in Bokator, Kun Khmer, BJJ, MMA, and functional strength.",
+          "km": "ចូលរួមជាមួយមជ្ឈមណ្ឌលក្បាច់គុនឈានមុខគេនៅកម្ពុជា។ ការបង្វឹកកម្រិតពិភពលោកលើបុកាទ័រ គុនខ្មែរ BJJ និងកម្លាំងកាយសម្បទា។",
+          "zh": "加入柬埔寨顶尖格斗艺术中心。斗狮拳、高棉拳、柔术、综合格斗与功能性力量精英辅导。"
+        },
+        "ogImage": "https://images.pexels.com/photos/7045699/pexels-photo-7045699.jpeg",
+        "ogImageWidth": 1200,
+        "ogImageHeight": 630,
+        "twitterCard": "summary_large_image",
+        "twitterTitle": {
+          "en": "Rithy Martial & Fitness — Premier Combat Training",
+          "km": "រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស — ការហ្វឹកហាត់ក្បាច់គុនឈានមុខ",
+          "zh": "Rithy 武术与健身 — 顶级格斗训练"
+        },
+        "twitterDescription": {
+          "en": "Traditional Cambodian martial arts and modern fitness training in Phnom Penh.",
+          "km": "ក្បាច់គុនបុរាណខ្មែរ និងការហ្វឹកហាត់កាយសម្បទាសម័យទំនើបនៅភ្នំពេញ។",
+          "zh": "金边传统柬埔寨武术与现代健身训练。"
+        },
+        "keywords": {
+          "en": "Rithy Martial Arts, Bokator Cambodia, Kun Khmer gym, Pradal Serey, BJJ Phnom Penh, Fitness gym Cambodia",
+          "km": "រិទ្ធីក្បាច់គុន, បុកាទ័រកម្ពុជា, ក្លឹបហាត់គុនខ្មែរ, ប្រាដាល់សេរី, BJJ ភ្នំពេញ, ក្លឹបហាត់ប្រាណកម្ពុជា",
+          "zh": "Rithy武术, 柬埔寨斗狮拳, 高棉拳馆, 巴西柔术金边, 柬埔寨健身房"
+        },
+        "canonical": "/",
+        "robots": "index, follow"
+      },
+      "layout": "default",
+      "requiresAuth": false
+    },
+    {
+      "id": "about",
+      "path": "/about",
+      "title": {
+        "en": "About Us — Rithy Martial & Fitness",
+        "km": "អំពីយើង — រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស",
+        "zh": "关于我们 — Rithy 武术与健身"
+      },
+      "description": {
+        "en": "Learn about Master Ny Rithy's vision to preserve Cambodian martial heritage while empowering athletes through modern athletic performance.",
+        "km": "ស្វែងយល់អំពីចក្ខុវិស័យរបស់គ្រូនី រិទ្ធី ក្នុងការអភិរក្សបេតិកភណ្ឌក្បាច់គុនខ្មែរ និងពង្រឹងសមត្ថភាពអត្តពលិកតាមរយៈកាយសម្បទាទំនើប។",
+        "zh": "了解 Ny Rithy 大师在通过现代运动表现赋予运动员力量的同时保护柬埔寨武术遗产的愿景。"
+      },
+      "seo": {
+        "ogTitle": {
+          "en": "About Master Ny Rithy & Rithy Martial & Fitness",
+          "km": "អំពីគ្រូនី រិទ្ធី និង រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស",
+          "zh": "关于 Ny Rithy 大师与 Rithy 武术健身"
+        },
+        "ogDescription": {
+          "en": "Discover the story, philosophy, and world-class training standards at Rithy Martial & Fitness in Phnom Penh.",
+          "km": "ស្វែងយល់ពីប្រវត្តិ ទស្សនវិជ្ជា និងស្តង់ដារហ្វឹកហាត់កម្រិតពិភពលោកនៅ រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស ក្នុងរាជធានីភ្នំពេញ។",
+          "zh": "探索金边 Rithy 武术与健身的故事、哲学和世界级训练标准。"
+        },
+        "ogImage": "https://images.pexels.com/photos/56866/martial-arts-combative-arts-fight-kickboxing-56866.jpeg",
+        "ogImageWidth": 1200,
+        "ogImageHeight": 630,
+        "twitterCard": "summary_large_image",
+        "keywords": {
+          "en": "Ny Rithy, Bokator Master, Khmer Martial Arts history, Martial arts academy Cambodia",
+          "km": "នី រិទ្ធី, គ្រូម៉ាសលបុកាទ័រ, ប្រវត្តិក្បាច់គុនខ្មែរ, សាលាក្បាច់គុនកម្ពុជា",
+          "zh": "Ny Rithy, 斗狮拳大师, 高棉武术历史, 柬埔寨武术学院"
+        },
+        "canonical": "/about",
+        "robots": "index, follow"
+      },
+      "layout": "default",
+      "requiresAuth": false
+    },
+    {
+      "id": "services",
+      "path": "/services",
+      "title": {
+        "en": "Services & Training Programs — Rithy Martial & Fitness",
+        "km": "សេវាកម្ម និងកម្មវិធីហ្វឹកហាត់ — រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស",
+        "zh": "服务与训练项目 — Rithy 武术与健身"
+      },
+      "description": {
+        "en": "Explore our comprehensive martial arts and fitness services: Bokator, Kun Khmer, BJJ, MMA Cage Prep, and Strength & Conditioning.",
+        "km": "ស្វែងរកសេវាកម្មហ្វឹកហាត់ក្បាច់គុន និងកាយសម្បទាពេញលេញ៖ បុកាទ័រ គុនខ្មែរ BJJ ការរៀបចំប្រកួត MMA និងការហ្វឹកហាត់កម្លាំង។",
+        "zh": "探索我们全面的武术与健身服务：斗狮拳、高棉拳、巴西柔术、MMA 备战以及力量与体能训练。"
+      },
+      "seo": {
+        "ogTitle": {
+          "en": "Martial Arts & Fitness Services in Phnom Penh",
+          "km": "សេវាកម្មក្បាច់គុន និងហ្វ៊ីតនេសនៅភ្នំពេញ",
+          "zh": "金边的武术与健身服务"
+        },
+        "ogDescription": {
+          "en": "Classes for all skill levels from beginner to professional fighter. Private training & group sessions available.",
+          "km": "ថ្នាក់រៀនសម្រាប់គ្រប់កម្រិតចាប់ពីអ្នកចាប់ផ្តើមដំបូងរហូតដល់កីឡាករអាជីព។ មានការបង្វឹកផ្ទាល់ខ្លួន និងជាក្រុម។",
+          "zh": "适合从初学者到专业格斗家各个水平的课程。提供私教与团体课程。"
+        },
+        "ogImage": "https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=1200&auto=format&fit=crop",
+        "ogImageWidth": 1200,
+        "ogImageHeight": 630,
+        "twitterCard": "summary_large_image",
+        "keywords": {
+          "en": "Martial arts services, Bokator classes, Kun Khmer training, BJJ Phnom Penh, Private fitness trainer",
+          "km": "សេវាកម្មក្បាច់គុន, ថ្នាក់រៀនបុកាទ័រ, ការហ្វឹកហាត់គុនខ្មែរ, BJJ ភ្នំពេញ, គ្រូបង្វឹកផ្ទាល់ខ្លួន",
+          "zh": "武术服务, 斗狮拳课程, 高棉拳训练, 巴西柔术金边, 私人健身教练"
+        },
+        "canonical": "/services",
+        "robots": "index, follow"
+      },
+      "layout": "default",
+      "requiresAuth": false
+    },
+    {
+      "id": "programs",
+      "path": "/programs",
+      "title": {
+        "en": "Combat & Performance Programs — Rithy Martial & Fitness",
+        "km": "កម្មវិធីប្រយុទ្ធ និងកាយសម្បទា — រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស",
+        "zh": "格斗与表现训练计划 — Rithy 武术与健身"
+      },
+      "description": {
+        "en": "Specialized combat curriculums: Traditional Khmer Weapons, Fighter Conditioning, Self-Defense, and Youth Martial Arts.",
+        "km": "កម្មវិធីសិក្សាក្បាច់គុនប្រយុទ្ធពិសេស៖ អាវុធបុរាណខ្មែរ កាយសម្បទាអ្នកច្បាំង ការការពារខ្លួន និងក្បាច់គុនកុមារ។",
+        "zh": "专业格斗课程：传统高棉武器、战士体能、自卫术及青少年武术。"
+      },
+      "seo": {
+        "ogTitle": {
+          "en": "Specialized Combat Curriculums & Athletic Programs",
+          "km": "កម្មវិធីសិក្សាក្បាច់គុនប្រយុទ្ធ និងកាយសម្បទាពិសេស",
+          "zh": "专业格斗课程与运动训练项目"
+        },
+        "ogDescription": {
+          "en": "Transform your body and mind through disciplined martial arts programs designed by Kru Ny Rithy.",
+          "km": "ផ្លាស់ប្តូរកាយសម្បទា និងស្មារតីរបស់អ្នកតាមរយៈកម្មវិធីក្បាច់គុនដែលមានវិន័យ ឌីសាញដោយគ្រូនី រិទ្ធី។",
+          "zh": "通过 Kru Ny Rithy 设计的纪律严明的武术计划改变您的身心。"
+        },
+        "ogImage": "https://images.pexels.com/photos/4753986/pexels-photo-4753986.jpeg",
+        "ogImageWidth": 1200,
+        "ogImageHeight": 630,
+        "twitterCard": "summary_large_image",
+        "keywords": {
+          "en": "Combat programs, Self defense classes Phnom Penh, Khmer weapon training, Youth martial arts",
+          "km": "កម្មវិធីប្រយុទ្ធ, ថ្នាក់ការពារខ្លួនភ្នំពេញ, ការហ្វឹកហាត់អាវុធខ្មែរ, ក្បាច់គុនកុមារ",
+          "zh": "格斗项目, 自卫课程金边, 高棉武器训练, 青少年武术"
+        },
+        "canonical": "/programs",
+        "robots": "index, follow"
+      },
+      "layout": "default",
+      "requiresAuth": false
+    },
+    {
+      "id": "program-detail",
+      "path": "/programs/:slug",
+      "title": {
+        "en": "{programTitle} — Rithy Martial & Fitness",
+        "km": "{programTitle} — រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស",
+        "zh": "{programTitle} — Rithy 武术与健身"
+      },
+      "description": {
+        "en": "Detailed information about {programTitle} program at Rithy Martial & Fitness.",
+        "km": "ព័ត៌មានលម្អិតអំពីកម្មវិធី {programTitle} នៅ រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស។",
+        "zh": "关于 Rithy 武术与健身 {programTitle} 项目的详细信息。"
+      },
+      "seo": {
+        "ogTitle": {
+          "en": "{programTitle} Program Details",
+          "km": "ព័ត៌មានលម្អិតកម្មវិធី {programTitle}",
+          "zh": "{programTitle} 项目详情"
+        },
+        "ogDescription": {
+          "en": "Master techniques and build strength with {programTitle} at Rithy Martial & Fitness.",
+          "km": "ស្ទាត់ជំនាញបច្ចេកទេស និងសាងសង់កម្លាំងជាមួយ {programTitle} នៅ រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស។",
+          "zh": "在 Rithy 武术与健身通过 {programTitle} 掌握技巧并建立力量。"
+        },
+        "ogImage": "https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg",
+        "ogImageWidth": 1200,
+        "ogImageHeight": 630,
+        "twitterCard": "summary_large_image",
+        "keywords": {
+          "en": "{programTitle}, combat training, martial arts program",
+          "km": "{programTitle}, ការហ្វឹកហាត់ប្រយុទ្ធ, កម្មវិធីក្បាច់គុន",
+          "zh": "{programTitle}, 格斗训练, 武术项目"
+        },
+        "canonical": "/programs/:slug",
+        "robots": "index, follow"
+      },
+      "layout": "default",
+      "requiresAuth": false
+    },
+    {
+      "id": "trainers",
+      "path": "/trainers",
+      "title": {
+        "en": "Master Trainers & Coaches — Rithy Martial & Fitness",
+        "km": "គ្រូបង្វឹកជើងឯក — រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស",
+        "zh": "大师级教练团队 — Rithy 武术与健身"
+      },
+      "description": {
+        "en": "Meet Kru Ny Rithy, Coach Marcus Chen, Coach Sara Sovann, and our team of champion martial arts instructors.",
+        "km": "ស្គាល់គ្រូនី រិទ្ធី, គ្រូ Marcus Chen, គ្រូ Sara Sovann និងក្រុមគ្រូបង្វឹកជើងឯករបស់យើង។",
+        "zh": "认识 Kru Ny Rithy, Marcus Chen 教练, Sara Sovann 教练以及我们的冠军武术教练团队。"
+      },
+      "seo": {
+        "ogTitle": {
+          "en": "World-Class Martial Arts Instructors & Coaches",
+          "km": "គ្រូបង្វឹកក្បាច់គុនកម្រិតពិភពលោក",
+          "zh": "世界级武术教练与导师"
+        },
+        "ogDescription": {
+          "en": "Train with seasoned combat champions, BJJ black belts, and strength specialists in Phnom Penh.",
+          "km": "ហ្វឹកហាត់ជាមួយជើងឯកប្រយុទ្ធដែលមានបទពិសោធន៍ ខ្សែក្រវាត់ខ្មៅ BJJ និងអ្នកជំនាញកម្លាំងនៅភ្នំពេញ។",
+          "zh": "在金边与经验丰富的格斗冠军、柔术黑带和力量专家一起训练。"
+        },
+        "ogImage": "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=1200&auto=format&fit=crop",
+        "ogImageWidth": 1200,
+        "ogImageHeight": 630,
+        "twitterCard": "summary_large_image",
+        "keywords": {
+          "en": "Kru Riththy, BJJ coach Phnom Penh, Martial arts trainers Cambodia, Strength coach",
+          "km": "គ្រូរិទ្ធី, គ្រូ BJJ ភ្នំពេញ, គ្រូបង្វឹកក្បាច់គុនកម្ពុជា, គ្រូកាយសម្បទា",
+          "zh": "Riththy教练, 柔术教练金边, 柬埔寨武术教练, 力量教练"
+        },
+        "canonical": "/trainers",
+        "robots": "index, follow"
+      },
+      "layout": "default",
+      "requiresAuth": false
+    },
+    {
+      "id": "portfolio",
+      "path": "/portfolio",
+      "title": {
+        "en": "Photo & Video Gallery — Rithy Martial & Fitness",
+        "km": "អាល់ប៊ុមរូបថត និងវីដេអូ — រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស",
+        "zh": "图库与视频集锦 — Rithy 武术与健身"
+      },
+      "description": {
+        "en": "View high-energy training photos, fight highlights, seminar moments, and facility highlights.",
+        "km": "មើលរូបថតហ្វឹកហាត់ពោរពេញដោយថាមពល ការប្រកួតដ៏រំភើប សិក្ខាសាលា និងទីតាំងក្លឹបហាត់ប្រាណ។",
+        "zh": "查看高能量训练照片、格斗精彩集锦、研讨会瞬间和场馆亮点。"
+      },
+      "seo": {
+        "ogTitle": {
+          "en": "Martial Arts Action & Training Highlights",
+          "km": "សកម្មភាពក្បាច់គុន និងរូបភាពហ្វឹកហាត់",
+          "zh": "武术动作与训练集锦"
+        },
+        "ogDescription": {
+          "en": "Get an inside look at daily training sessions at Rithy Martial & Fitness.",
+          "km": "មើលសកម្មភាពហ្វឹកហាត់ប្រចាំថ្ងៃនៅ រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស។",
+          "zh": "深入了解 Rithy 武术与健身的日常训练过程。"
+        },
+        "ogImage": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=1200&auto=format&fit=crop",
+        "ogImageWidth": 1200,
+        "ogImageHeight": 630,
+        "twitterCard": "summary_large_image",
+        "keywords": {
+          "en": "Martial arts photos, Bokator pictures, Kun Khmer fights, Gym gallery Phnom Penh",
+          "km": "រូបថតក្បាច់គុន, រូបភាពបុកាទ័រ, ការប្រកួតគុនខ្មែរ, អាល់ប៊ុមរូបថតក្លឹប",
+          "zh": "武术照片, 斗狮拳图库, 高棉拳比赛, 金边健身房图库"
+        },
+        "canonical": "/portfolio",
+        "robots": "index, follow"
+      },
+      "layout": "default",
+      "requiresAuth": false
+    },
+    {
+      "id": "schedule",
+      "path": "/schedule",
+      "title": {
+        "en": "Class Schedule & Timetable — Rithy Martial & Fitness",
+        "km": "កាលវិភាគថ្នាក់រៀន — រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស",
+        "zh": "课程表与时间安排 — Rithy 武术与健身"
+      },
+      "description": {
+        "en": "Check our weekly class timetable for Bokator, Kun Khmer, BJJ, Strength & Conditioning, and Private Sessions.",
+        "km": "ពិនិត្យកាលវិភាគថ្នាក់រៀនប្រចាំសប្តាហ៍សម្រាប់បុកាទ័រ គុនខ្មែរ BJJ ការហ្វឹកហាត់កម្លាំង និងការបង្វឹកផ្ទាល់ខ្លួន។",
+        "zh": "查看我们关于斗狮拳、高棉拳、巴西柔术、力量与体能训练及私教课程的每周课程表。"
+      },
+      "seo": {
+        "ogTitle": {
+          "en": "Weekly Martial Arts & Fitness Class Timetable",
+          "km": "កាលវិភាគថ្នាក់រៀនក្បាច់គុន និងហ្វ៊ីតនេសប្រចាំសប្តាហ៍",
+          "zh": "每周武术与健身课程表"
+        },
+        "ogDescription": {
+          "en": "Morning and evening classes available 6 days a week. Book your preferred time slot today.",
+          "km": "ថ្នាក់រៀនពេលព្រឹក និងពេលល្ងាចមាន ៦ ថ្ងៃក្នុងមួយសប្តាហ៍។ កក់ម៉ោងសិក្សារបស់អ្នកថ្ងៃនេះ។",
+          "zh": "每周6天提供早班和晚班课程。立即预订您首选的时间段。"
+        },
+        "ogImage": "https://images.unsplash.com/photo-1517438984742-1262db08379e?q=80&w=1200&auto=format&fit=crop",
+        "ogImageWidth": 1200,
+        "ogImageHeight": 630,
+        "twitterCard": "summary_large_image",
+        "keywords": {
+          "en": "Gym schedule Phnom Penh, Bokator hours, Kun Khmer class times, BJJ timetable",
+          "km": "កាលវិភាគក្លឹបភ្នំពេញ, ម៉ោងសិក្សាបុកាទ័រ, ម៉ោងហាត់គុនខ្មែរ, កាលវិភាគ BJJ",
+          "zh": "金边健身房时间表, 斗狮拳上课时间, 高棉拳课程时间, 柔术时间表"
+        },
+        "canonical": "/schedule",
+        "robots": "index, follow"
+      },
+      "layout": "default",
+      "requiresAuth": false
+    },
+    {
+      "id": "testimonials",
+      "path": "/testimonials",
+      "title": {
+        "en": "Member Reviews & Success Stories — Rithy Martial & Fitness",
+        "km": "ការវាយតម្លៃ និងរឿងរ៉ាវជោគជ័យ — រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស",
+        "zh": "学员评价与成功故事 — Rithy 武术与健身"
+      },
+      "description": {
+        "en": "Read real testimonials and transformation reviews from our members, amateur fighters, and martial arts students.",
+        "km": "អានការវាយតម្លៃពិតប្រាកដ និងរឿងរ៉ាវផ្លាស់ប្តូរកាយសម្បទារបស់សមាជិក និងសិស្សក្បាច់គុនរបស់យើង។",
+        "zh": "阅读来自我们学员、业余格斗家和武术学生的真实评价与转变过程。"
+      },
+      "seo": {
+        "ogTitle": {
+          "en": "What Our Members Say About Training With Kru Riththy",
+          "km": "អ្វីដែលសមាជិករបស់យើងនិយាយអំពីការហ្វឹកហាត់ជាមួយគ្រូរិទ្ធី",
+          "zh": "学员对与 Riththy 教练一起训练的评价"
+        },
+        "ogDescription": {
+          "en": "Authentic stories of athletic growth, weight loss, self-defense mastery, and mental toughness.",
+          "km": "រឿងរ៉ាវពិតនៃការលូតលាស់កាយសម្បទា ការសម្រកទម្ងន់ ការស្ទាត់ជំនាញការពារខ្លួន និងភាពរឹងមាំស្មារតី។",
+          "zh": "关于运动成长、减肥、自卫技巧掌握和坚韧意志的真实故事。"
+        },
+        "ogImage": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200&auto=format&fit=crop",
+        "ogImageWidth": 1200,
+        "ogImageHeight": 630,
+        "twitterCard": "summary_large_image",
+        "keywords": {
+          "en": "Gym reviews Phnom Penh, Rithy gym feedback, Bokator student reviews, Fighter transformations",
+          "km": "ការវាយតម្លៃក្លឹបភ្នំពេញ, ការផ្តល់មតិរិទ្ធីក្លឹប, ការវាយតម្លៃសិស្សបុកាទ័រ",
+          "zh": "金边健身房评价, Rithy 健身房反馈, 斗狮拳学员评价"
+        },
+        "canonical": "/testimonials",
+        "robots": "index, follow"
+      },
+      "layout": "default",
+      "requiresAuth": false
+    },
+    {
+      "id": "blog",
+      "path": "/blog",
+      "title": {
+        "en": "Blog & Knowledge — Martial Arts, Heritage & Conditioning",
+        "km": "ប្លុក និងចំណេះដឹង — ក្បាច់គុន បេតិកភណ្ឌ និងកាយសម្បទា",
+        "zh": "博客与知识库 — 武术、文化遗产与体能调节"
+      },
+      "description": {
+        "en": "Articles by Kru Ny Rithy on Bokator history, Kun Khmer techniques, fight nutrition, injury prevention, and athletic recovery.",
+        "km": "អត្ថបទដោយគ្រូនី រិទ្ធី អំពីប្រវត្តិក្បាច់គុនបុកាទ័រ បច្ចេកទេសគុនខ្មែរ អាហារូបត្ថម្ភប្រយុទ្ធ ការពាររបួស និងការស្តារកម្លាំង។",
+        "zh": "Kru Ny Rithy 撰写的关于斗狮拳历史、高棉拳技术、格斗营养、伤病预防和运动恢复的文章。"
+      },
+      "seo": {
+        "ogTitle": {
+          "en": "Martial Arts Insights & Athletic Training Articles",
+          "km": "ការយល់ដឹងអំពីក្បាច់គុន និងអត្ថបទហ្វឹកហាត់កាយសម្បទា",
+          "zh": "武术见解与运动训练文章"
+        },
+        "ogDescription": {
+          "en": "Deepen your knowledge of Cambodian fight culture, biomechanics, and nutrition.",
+          "km": "ពង្រីកចំណេះដឹងរបស់អ្នកអំពីវប្បធម៌ប្រយុទ្ធខ្មែរ និងអាហារូបត្ថម្ភ។",
+          "zh": "加深您对柬埔寨格斗文化、人体生物力学和营养学的了解。"
+        },
+        "ogImage": "https://images.pexels.com/photos/7045699/pexels-photo-7045699.jpeg",
+        "ogImageWidth": 1200,
+        "ogImageHeight": 630,
+        "twitterCard": "summary_large_image",
+        "keywords": {
+          "en": "Martial arts blog, Bokator history article, Kun Khmer vs Muay Thai, Fighter nutrition guide",
+          "km": "ប្លុកក្បាច់គុន, អត្ថបទប្រវត្តិក្បាច់គុន, គុនខ្មែរនិងមួយថៃ, មគ្គុទ្ទេសក៍អាហារូបត្ថម្ភ",
+          "zh": "武术博客, 斗狮拳历史文章, 高棉拳与泰拳对比, 格斗指南"
+        },
+        "canonical": "/blog",
+        "robots": "index, follow"
+      },
+      "layout": "default",
+      "requiresAuth": false
+    },
+    {
+      "id": "blog-detail",
+      "path": "/blog/:slug",
+      "title": {
+        "en": "{articleTitle} — Rithy Martial & Fitness Blog",
+        "km": "{articleTitle} — ប្លុក រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស",
+        "zh": "{articleTitle} — Rithy 武术与健身博客"
+      },
+      "description": {
+        "en": "{articleExcerpt}",
+        "km": "{articleExcerpt}",
+        "zh": "{articleExcerpt}"
+      },
+      "seo": {
+        "ogTitle": {
+          "en": "{articleTitle}",
+          "km": "{articleTitle}",
+          "zh": "{articleTitle}"
+        },
+        "ogDescription": {
+          "en": "{articleExcerpt}",
+          "km": "{articleExcerpt}",
+          "zh": "{articleExcerpt}"
+        },
+        "ogImage": "https://images.pexels.com/photos/7045699/pexels-photo-7045699.jpeg",
+        "ogImageWidth": 1200,
+        "ogImageHeight": 630,
+        "twitterCard": "summary_large_image",
+        "keywords": {
+          "en": "Cambodian martial arts, fight training, {articleTitle}",
+          "km": "ក្បាច់គុនខ្មែរ, ការហ្វឹកហាត់ប្រយុទ្ធ, {articleTitle}",
+          "zh": "柬埔寨武术, 格斗训练, {articleTitle}"
+        },
+        "canonical": "/blog/:slug",
+        "robots": "index, follow"
+      },
+      "layout": "default",
+      "requiresAuth": false
+    },
+    {
+      "id": "detail",
+      "path": "/detail/:slug",
+      "title": {
+        "en": "{title} — Rithy Martial & Fitness Detail",
+        "km": "{title} — ព័ត៌មានលម្អិត រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស",
+        "zh": "{title} — Rithy 武术与健身"
+      },
+      "description": {
+        "en": "{description}",
+        "km": "{description}",
+        "zh": "{description}"
+      },
+      "seo": {
+        "ogTitle": {
+          "en": "{title}",
+          "km": "{title}",
+          "zh": "{title}"
+        },
+        "ogDescription": {
+          "en": "{description}",
+          "km": "{description}",
+          "zh": "{description}"
+        },
+        "ogImage": "https://images.pexels.com/photos/7045699/pexels-photo-7045699.jpeg",
+        "ogImageWidth": 1200,
+        "ogImageHeight": 630,
+        "twitterCard": "summary_large_image",
+        "keywords": {
+          "en": "Rithy Martial Arts detail, {title}",
+          "km": "ព័ត៌មានលម្អិតក្បាច់គុនរិទ្ធី, {title}",
+          "zh": "Rithy武术详情, {title}"
+        },
+        "canonical": "/detail/:slug",
+        "robots": "index, follow"
+      },
+      "layout": "default",
+      "requiresAuth": false
+    },
+    {
+      "id": "contact",
+      "path": "/contact",
+      "title": {
+        "en": "Contact Us & Location — Rithy Martial & Fitness",
+        "km": "ទំនាក់ទំនង និងទីតាំង — រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស",
+        "zh": "联系我们与地址 — Rithy 武术与健身"
+      },
+      "description": {
+        "en": "Get in touch with Master Ny Rithy and our team. Visit our Phnom Penh training facility, call us, or send an inquiry for a free trial class.",
+        "km": "ទំនាក់ទំនងជាមួយគ្រូនី រិទ្ធី និងក្រុមការងាររបស់យើង។ មកកាន់ទីតាំងហ្វឹកហាត់នៅភ្នំពេញ ទូរស័ព្ទមកយើង ឬផ្ញើសំណួរសម្រាប់ការសាកល្បងដោយឥតគិតថ្លៃ។",
+        "zh": "与 Ny Rithy 大师及团队取得联系。访问我们的金边训练场馆，致电或发送咨询以获取免费试听课。"
+      },
+      "seo": {
+        "ogTitle": {
+          "en": "Contact Rithy Martial & Fitness Phnom Penh",
+          "km": "ទំនាក់ទំនង រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស ភ្នំពេញ",
+          "zh": "联系金边 Rithy 武术与健身"
+        },
+        "ogDescription": {
+          "en": "Book your free trial class or ask about private training programs today.",
+          "km": "កក់ថ្នាក់រៀនសាកល្បងដោយឥតគិតថ្លៃ ឬសួរអំពីកម្មវិធីបង្វឹកផ្ទាល់ខ្លួនថ្ងៃនេះ។",
+          "zh": "立即预订免费试听课或咨询私教课程。"
+        },
+        "ogImage": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1200&auto=format&fit=crop",
+        "ogImageWidth": 1200,
+        "ogImageHeight": 630,
+        "twitterCard": "summary_large_image",
+        "keywords": {
+          "en": "Contact Rithy gym, Gym location Phnom Penh, Free martial arts trial, Master Rithy phone",
+          "km": "ទំនាក់ទំនងរិទ្ធីក្លឹប, ទីតាំងក្លឹបភ្នំពេញ, ថ្នាក់សាកល្បងឥតគិតថ្លៃ, លេខទូរស័ព្ទគ្រូរិទ្ធី",
+          "zh": "联系 Rithy 健身房, 金边健身房地址, 免费武术体验, Rithy 大师电话"
+        },
+        "canonical": "/contact",
+        "robots": "index, follow"
+      },
+      "layout": "default",
+      "requiresAuth": false
+    },
+    {
+      "id": "pricing",
+      "path": "/pricing",
+      "title": {
+        "en": "Membership Plans & Drop-in Rates — Rithy Martial & Fitness",
+        "km": "កញ្ចប់សមាជិកភាព និងតម្លៃចូលហាត់ — រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស",
+        "zh": "会员套餐与单次卡价格 — Rithy 武术与健身"
+      },
+      "description": {
+        "en": "Flexible membership packages, daily drop-in passes, unlimited martial arts bundles, and private coaching rates.",
+        "km": "កញ្ចប់សមាជិកភាពបត់បែន សំបុត្រចូលហាត់ប្រចាំថ្ងៃ កញ្ចប់ក្បាច់គុនមិនកំណត់ និងតម្លៃបង្វឹកផ្ទាល់ខ្លួន។",
+        "zh": "灵活的会员套餐、单次体验卡、无限次武术组合及私教价格。"
+      },
+      "seo": {
+        "ogTitle": {
+          "en": "Affordable Martial Arts Membership & Training Rates",
+          "km": "តម្លៃសមាជិកភាព និងការហ្វឹកហាត់ក្បាច់គុនសមរម្យ",
+          "zh": "实惠的武术会员资格与训练价格"
+        },
+        "ogDescription": {
+          "en": "Transparent pricing for daily, monthly, and annual martial arts training in Phnom Penh.",
+          "km": "តម្លៃច្បាស់លាស់សម្រាប់ការហ្វឹកហាត់ប្រចាំថ្ងៃ ប្រចាំខែ និងប្រចាំឆ្នាំនៅភ្នំពេញ។",
+          "zh": "金边每日、每月和每年武术训练的透明定价。"
+        },
+        "ogImage": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=1200&auto=format&fit=crop",
+        "ogImageWidth": 1200,
+        "ogImageHeight": 630,
+        "twitterCard": "summary_large_image",
+        "keywords": {
+          "en": "Gym price Phnom Penh, Bokator fee, Kun Khmer class cost, BJJ membership price",
+          "km": "តម្លៃក្លឹបភ្នំពេញ, តម្លៃហាត់បុកាទ័រ, តម្លៃថ្នាក់គុនខ្មែរ, តម្លៃសមាជិក BJJ",
+          "zh": "金边健身房价格, 斗狮拳学费, 高棉拳课程费用, 柔术会员价格"
+        },
+        "canonical": "/pricing",
+        "robots": "index, follow"
+      },
+      "layout": "default",
+      "requiresAuth": false
+    },
+    {
+      "id": "faq",
+      "path": "/faq",
+      "title": {
+        "en": "Frequently Asked Questions — Rithy Martial & Fitness",
+        "km": "សំណួរដែលគេសួរញឹកញាប់ — រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស",
+        "zh": "常见问题解答 — Rithy 武术与健身"
+      },
+      "description": {
+        "en": "Find answers regarding gear requirements, beginner suitability, class etiquette, and trial passes.",
+        "km": "ស្វែងរកចម្លើយអំពីតម្រូវការបរិក្ខារ ភាពសមស្របសម្រាប់អ្នកចាប់ផ្តើម សីលធម៌ក្នុងថ្នាក់ និងសំបុត្រសាកល្បង។",
+        "zh": "查找有关装备要求、初学者适合度、课堂礼仪和试用卡解答。"
+      },
+      "seo": {
+        "ogTitle": {
+          "en": "Martial Arts Training FAQ & Answers",
+          "km": "សំណួរ និងចម្លើយញឹកញាប់នៃការហ្វឹកហាត់ក្បាច់គុន",
+          "zh": "武术训练常见问题与解答"
+        },
+        "ogDescription": {
+          "en": "Everything you need to know before stepping onto the mat for the first time.",
+          "km": "អ្វីគ្រប់យ៉ាងដែលអ្នកត្រូវដឹងមុនពេលឈានជើងចូលហាត់លើកដំបូង។",
+          "zh": "在第一次踏上训练垫之前需要了解的一切。"
+        },
+        "ogImage": "https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&w=1200&auto=format&fit=crop",
+        "ogImageWidth": 1200,
+        "ogImageHeight": 630,
+        "twitterCard": "summary_large_image",
+        "keywords": {
+          "en": "Bokator FAQ, What to wear Kun Khmer, Gym beginner tips Phnom Penh",
+          "km": "សំណួរញឹកញាប់បុកាទ័រ, អ្វីដែលត្រូវពាក់ហាត់គុនខ្មែរ, គន្លឹះអ្នកចាប់ផ្តើម",
+          "zh": "斗狮拳常见问题, 高棉拳穿着要求, 金边初学者指南"
+        },
+        "canonical": "/faq",
+        "robots": "index, follow"
+      },
+      "layout": "default",
+      "requiresAuth": false
+    }
+  ]
+}

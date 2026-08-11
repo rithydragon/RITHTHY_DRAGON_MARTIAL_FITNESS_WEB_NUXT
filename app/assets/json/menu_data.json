@@ -1,0 +1,224 @@
+[
+  {
+    "section": "navbar",
+    "title": "navbar",
+    "navbar_menu": [
+      {
+        "id": "home",
+        "label": "nav.home",
+        "path": "/",
+        "icon": "home"
+      },
+      {
+        "id": "services",
+        "label": "nav.services",
+        "path": "/services",
+        "icon": "dumbbell",
+        "children": [
+          {
+            "id": "martial_arts",
+            "label": "martial_arts",
+            "path": "/services",
+            "children": [
+              { "id": "bokator", "label": "bokator", "path": "/detail/bokator" },
+              { "id": "kun_khmer", "label": "kun_khmer", "path": "/detail/kun-khmer" }
+            ]
+          },
+          {
+            "id": "fitness_conditioning",
+            "label": "fitness_conditioning",
+            "path": "/services",
+            "children": [
+              { "id": "strength_conditioning", "label": "strength_conditioning", "path": "/detail/strength" },
+              { "id": "bjj_grappling", "label": "bjj_grappling", "path": "/detail/bjj" }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "programs",
+        "label": "programs",
+        "path": "/programs",
+        "icon": "layers",
+        "children": [
+          {
+            "id": "all_programs",
+            "label": "all_programs",
+            "path": "/programs"
+          },
+          {
+            "id": "fighter_prep",
+            "label": "fighter_prep",
+            "path": "/programs",
+            "children": [
+              { "id": "private_coaching", "label": "private_coaching", "path": "/contact" },
+              { "id": "group_classes", "label": "group_classes", "path": "/schedule" }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "schedule_pricing",
+        "label": "schedule_pricing",
+        "path": "/schedule",
+        "icon": "calendar",
+        "children": [
+          { "id": "timetable", "label": "timetable", "path": "/schedule" },
+          { "id": "pricing-passes", "label": "pricing_passes", "path": "/pricing" },
+          { "id": "faqs", "label": "faqs", "path": "/faq" }
+        ]
+      },
+      {
+        "id": "about",
+        "label": "about",
+        "path": "/about",
+        "icon": "user",
+        "children": [
+          { "id": "about_us", "label": "about_us", "path": "/about" },
+          { "id": "master_trainers", "label": "master_trainers", "path": "/trainers" },
+          { "id": "member_reviews", "label": "member_reviews", "path": "/testimonials" }
+        ]
+      },
+      {
+        "id": "portfolio",
+        "label": "nav.portfolio",
+        "path": "/portfolio",
+        "icon": "image"
+      },
+      {
+        "id": "blog",
+        "label": "nav.blog",
+        "path": "/blog",
+        "icon": "book-open"
+      },
+      {
+        "id": "contact",
+        "label": "nav.contact",
+        "path": "/contact",
+        "icon": "mail"
+      }
+    ]
+  },
+  {
+    "section": "contact",
+    "title": "contact",
+    "contact": [
+      {
+        "name": "telegram",
+        "id": "telegram",
+        "icon": "ri-telegram-line",
+        "href": "https://t.me/NY_RITHY",
+        "color": "#38A7D2",
+        "roles": [
+          "user",
+          "admin"
+        ],
+        "blank": true,
+        "permission": "DASHBOARD"
+      },
+      {
+        "name": "facebook",
+        "id": "facebook",
+        "icon": "ri-facebook-circle-line",
+        "href": "https://facebook.com/riththydragon",
+        "color": "#1877F3",
+        "roles": [
+          "user",
+          "admin"
+        ],
+        "blank": true,
+        "permission": "DASHBOARD"
+      },
+      {
+        "name": "instagram",
+        "id": "instagram",
+        "icon": "ri-instagram-line",
+        "href": "https://instagram.com/riththydragon",
+        "color": "#E4405F",
+        "roles": [
+          "user",
+          "admin"
+        ],
+        "blank": true,
+        "permission": "DASHBOARD"
+      },
+      {
+        "name": "email",
+        "id": "email",
+        "icon": "ri-mail-line",
+        "href": "mailto:riththydragon@email.com",
+        "color": "#EA4335",
+        "roles": [
+          "user",
+          "admin"
+        ],
+        "blank": false,
+        "permission": "DASHBOARD"
+      },
+      {
+        "title": "phone",
+        "id": "phone",
+        "icon": "ri-phone-line",
+        "href": "tel:+855979053790",
+        "color": "#34B7F1",
+        "roles": [
+          "user",
+          "admin"
+        ],
+        "blank": true,
+        "permission": "DASHBOARD"
+      }
+    ]
+  },
+  {
+    "section": "footer",
+    "footer": [
+      {
+        "id": "about",
+        "label": "about",
+        "href": "/about"
+      },
+      {
+        "id": "contact",
+        "label": "contact",
+        "href": "/contact"
+      }
+    ]
+  },
+  {
+    "section": "service",
+    "title": "service",
+    "service": [
+      {
+        "id": "bokator",
+        "label": "services.bokator.title",
+        "path": "/services",
+        "icon": "dumbbell"
+      },
+      {
+        "id": "pradal",
+        "label": "services.pradal.title",
+        "path": "/services",
+        "icon": "dumbbell"
+      },
+      {
+        "id": "yuthakram",
+        "label": "services.yuthakram.title",
+        "path": "/services",
+        "icon": "dumbbell"
+      },
+      {
+        "id": "private",
+        "label": "services.private.title",
+        "path": "/services",
+        "icon": "dumbbell"
+      },
+      {
+        "id": "conditioning",
+        "label": "services.conditioning.title",
+        "path": "/services",
+        "icon": "dumbbell"
+      }
+    ]
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "title": "Bokator Training Session",
+    "category": "training",
+    "image": "https://images.pexels.com/photos/7045699/pexels-photo-7045699.jpeg",
+    "alt": "Bokator martial arts training session"
+  },
+  {
+    "id": 2,
+    "title": "Kun Khmer Championship",
+    "category": "competition",
+    "image": "https://images.pexels.com/photos/4753986/pexels-photo-4753986.jpeg",
+    "alt": "Kun Khmer boxing championship match"
+  },
+  {
+    "id": 3,
+    "title": "Strength Conditioning",
+    "category": "training",
+    "image": "https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg",
+    "alt": "Strength and conditioning training"
+  },
+  {
+    "id": 4,
+    "title": "Student Transformation",
+    "category": "transformation",
+    "image": "https://images.pexels.com/photos/3768916/pexels-photo-3768916.jpeg",
+    "alt": "Student fitness transformation journey"
+  },
+  {
+    "id": 5,
+    "title": "Annual Martial Arts Expo",
+    "category": "events",
+    "image": "https://images.pexels.com/photos/3757954/pexels-photo-3757954.jpeg",
+    "alt": "Annual Cambodian martial arts exhibition"
+  },
+  {
+    "id": 6,
+    "title": "Private Coaching Session",
+    "category": "training",
+    "image": "https://images.pexels.com/photos/4753986/pexels-photo-4753986.jpeg",
+    "alt": "One-on-one private martial arts coaching"
+  },
+  {
+    "id": 7,
+    "title": "Fight Night Phnom Penh",
+    "category": "competition",
+    "image": "https://images.pexels.com/photos/7045699/pexels-photo-7045699.jpeg",
+    "alt": "Kun Khmer fight night in Phnom Penh"
+  },
+  {
+    "id": 8,
+    "title": "Weight Loss Journey",
+    "category": "transformation",
+    "image": "https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg",
+    "alt": "Weight loss transformation through martial arts"
+  },
+  {
+    "id": 9,
+    "title": "Cultural Heritage Workshop",
+    "category": "events",
+    "image": "https://images.pexels.com/photos/3757954/pexels-photo-3757954.jpeg",
+    "alt": "Cambodian martial arts cultural workshop"
+  },
+  {
+    "id": 10,
+    "title": "Yuthakram Khom Practice",
+    "category": "training",
+    "image": "https://images.pexels.com/photos/4753986/pexels-photo-4753986.jpeg",
+    "alt": "Yuthakram Khom traditional combat training"
+  }
+]

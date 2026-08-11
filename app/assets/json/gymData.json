@@ -1,0 +1,216 @@
+{
+  "services": [
+    {
+      "id": "muay-thai",
+      "icon": "ri-boxing-line",
+      "title": {
+        "en": "Muay Thai (Kickboxing)",
+        "km": "គុនខ្មែរ / ម៉ូតៃ",
+        "zh": "泰拳搏击"
+      },
+      "desc": {
+        "en": "Master the art of eight limbs. Learn striking techniques, elbows, knees, and kicks from champion trainers.",
+        "km": "ស្ទាត់ជំនាញសិល្បៈប្រយុទ្ធអវយវៈទាំងប្រាំបី។ រៀនបច្ចេកទេសវាយ កែង ជង្គង់ និងទាត់ពីគ្រូបង្វឹកជើងឯក។",
+        "zh": "掌握八肢艺术。向冠军教练学习打击技巧、肘击、膝击和踢腿技术。"
+      },
+      "image": "https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      "id": "bjj",
+      "icon": "ri-hand-coin-line",
+      "title": {
+        "en": "Brazilian Jiu-Jitsu (BJJ)",
+        "km": "យូយីតស៊ូប្រេស៊ីល (BJJ)",
+        "zh": "巴西柔术"
+      },
+      "desc": {
+        "en": "Focus on ground fighting, submission holds, and grappling. Build core strength, flexibility, and tactical self-defense.",
+        "km": "ផ្តោតលើការប្រយុទ្ធនៅលើដី ការចងកៀប និងការចំបាប់។ បង្កើតកម្លាំងស្នូល ភាពបត់បែន និងការការពារខ្លួន។",
+        "zh": "专注于地面格斗、降服与缠斗。建立核心力量、灵活性和战术防卫技巧。"
+      },
+      "image": "https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      "id": "strength",
+      "icon": "ri-shake-hands-line",
+      "title": {
+        "en": "Strength & Conditioning",
+        "km": "ការហ្វឹកហាត់កម្លាំង និងកាយសម្បទា",
+        "zh": "力量与体能训练"
+      },
+      "desc": {
+        "en": "Tailored training programs to increase functional power, speed, core endurance, and lean athletic muscle.",
+        "km": "កម្មវិធីហ្វឹកហាត់ដែលរៀបចំជាពិសេសដើម្បីបង្កើនថាមពល ល្បឿន ភាពធន់ និងសាច់ដុំអត្តពលកម្ម។",
+        "zh": "量身定制的训练计划，旨在增加功能性力量、速度、核心耐力和精实运动肌肉。"
+      },
+      "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      "id": "mma",
+      "icon": "ri-sword-line",
+      "title": {
+        "en": "MMA Cage Preparation",
+        "km": "ការរៀបចំប្រកួត MMA",
+        "zh": "综合格斗备战"
+      },
+      "desc": {
+        "en": "Blend striking and grappling inside our custom cage. Learn transitions, cage control, and high-intensity conditioning.",
+        "km": "បញ្ចូលគ្នារវាងការវាយ និងការចំបាប់នៅក្នុងទ្រុង។ រៀនបច្ចេកទេសផ្លាស់ប្តូរ និងការគ្រប់គ្រងក្នុងទ្រុង។",
+        "zh": "在我们的定制笼中融合打击与缠斗。学习转换技术、笼边控制和高强度体能调节。"
+      },
+      "image": "https://images.unsplash.com/photo-1517438984742-1262db08379e?q=80&w=600&auto=format&fit=crop"
+    }
+  ],
+  "trainers": [
+    {
+      "name": "Kru Riththy",
+      "role": {
+        "en": "Head Muay Thai Coach",
+        "km": "ប្រធានគ្រូបង្វឹកគុនខ្មែរ / ម៉ូតៃ",
+        "zh": "泰拳主教练"
+      },
+      "bio": {
+        "en": "Former regional champion with 150+ professional fights. Passionate about martial arts form and mental discipline.",
+        "km": "អតីតជើងឯកតំបន់ដែលមានប្រវត្តិតស៊ូជាង ១៥០ លើក។ ស្រឡាញ់ទម្រង់ក្បាច់គុន និងវិន័យផ្លូវចិត្ត។",
+        "zh": "前区域冠军，参加过150多场职业比赛。热爱武术技巧和心理意志纪律。"
+      },
+      "image": "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=400&auto=format&fit=crop"
+    },
+    {
+      "name": "Coach Marcus Chen",
+      "role": {
+        "en": "BJJ Black Belt & Grappling lead",
+        "km": "ខ្សែក្រវាត់ខ្មៅ BJJ & គ្រូចំបាប់",
+        "zh": "巴西柔术黑带与缠斗主教练"
+      },
+      "bio": {
+        "en": "10+ years of grappling experience. Specialize in submission flows, sweeps, and leglocks.",
+        "km": "បទពិសោធន៍ចំបាប់ជាង ១០ ឆ្នាំ។ ឯកទេសខាងក្បាច់កៀប Sweeps និងចាក់ជើង។",
+        "zh": "拥有10年以上的缠斗经验。专长于降服流畅衔接、扫翻与腿锁技术。"
+      },
+      "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop"
+    },
+    {
+      "name": "Coach Sara Sovann",
+      "role": {
+        "en": "Strength & Conditioning Specialist",
+        "km": "គ្រូជំនាញផ្នែកកាយសម្បទា និងកម្លាំង",
+        "zh": "力量与体能专业教练"
+      },
+      "bio": {
+        "en": "Certified sports nutritionist and fitness expert focusing on metabolic conditioning and mobility.",
+        "km": "អ្នកជំនាញអាហារូបត្ថម្ភកីឡា និងកាយសម្បទា ដែលផ្តោតលើភាពបត់បែន និងការដុតរំលាយអាហារ។",
+        "zh": "认证运动营养师和健身专家，专注于代谢调节和关节活动度训练。"
+      },
+      "image": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop"
+    }
+  ],
+  "testimonials": [
+    {
+      "name": "Sokha Mean",
+      "role": {
+        "en": "Member for 1 Year",
+        "km": "សមាជិករយៈពេល ១ ឆ្នាំ",
+        "zh": "健身房会员1年"
+      },
+      "quote": {
+        "en": "Training with Kru Riththy completely transformed my physical fitness and mental sharpness. The atmosphere is intense but welcoming!",
+        "km": "ការហ្វឹកហាត់ជាមួយគ្រូរិទ្ធីបានផ្លាស់ប្តូរកាយសម្បទា និងស្មារតីរបស់ខ្ញុំទាំងស្រុង។ បរិយាកាសពោរពេញដោយថាមពល និងភាពរាក់ទាក់!",
+        "zh": "与 Riththy 教练一起训练完全改变了我的体能和精神面貌。这里的氛围既紧张又充满人情味！"
+      },
+      "rating": 5,
+      "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop"
+    },
+    {
+      "name": "David Miller",
+      "role": {
+        "en": "BJJ Purple Belt",
+        "km": "ខ្សែក្រវាត់ស្វាយ BJJ",
+        "zh": "巴西柔术紫带"
+      },
+      "quote": {
+        "en": "Coach Chen has an incredibly detailed way of teaching. Every session is a puzzle. Highly recommend this gym for martial arts enthusiasts.",
+        "km": "គ្រូ Chen មានវិធីសាស្ត្របង្រៀនលម្អិតដ៏អស្ចារ្យ។ រាល់វគ្គសិក្សាទាំងអស់ប្រៀបដូចជាការដោះស្រាយល្បែងផ្គុំរូប។ សូមណែនាំខ្លាំងណាស់!",
+        "zh": "陈教练的教学方法极其细致。每一堂课都像在解谜。强烈推荐给所有的武术爱好者。"
+      },
+      "rating": 5,
+      "image": "https://images.unsplash.com/photo-1628157582853-a796fa650a6a?q=80&w=200&auto=format&fit=crop"
+    }
+  ],
+  "blogs": [
+    {
+      "id": 1,
+      "author": "Kru Riththy",
+      "date": "2026-06-25",
+      "title": {
+        "en": "5 Core Muay Thai Stretches for Hip Mobility",
+        "km": "លំហាត់ប្រាណពង្រីកសាច់ដុំ ៥ យ៉ាងសម្រាប់គុនខ្មែរ",
+        "zh": "提升髋部活动度的5个泰拳核心拉伸动作"
+      },
+      "excerpt": {
+        "en": "High kicks start with flexible hips. Discover the exact stretching routine used by champion fighters.",
+        "km": "ការទាត់ខ្ពស់ចាប់ផ្តើមពីត្រគាកដែលមានភាពបត់បែន។ ស្វែងយល់ពីលំហាត់ពង្រីកសាច់ដុំដែលប្រើដោយកីឡាករល្បីៗ។",
+        "zh": "高踢腿始于灵活的髋部。探索冠军选手所使用的拉伸程序。"
+      },
+      "content": {
+        "en": "Hip mobility is critical in Muay Thai. Without it, you cannot execute high kicks or defend efficiently. In this article, we outline five essential stretching techniques to open your hips: 1. The butterfly stretch, 2. The dynamic lunges, 3. The pigeon pose, 4. The frog stretch, and 5. Half-kneeling hip flexor stretches. Perform these daily after your workout to see rapid improvement in your kick height.",
+        "km": "ភាពបត់បែននៃត្រគាកគឺពិតជាសំខាន់ណាស់នៅក្នុងការប្រកួតក្បាច់គុន។ បើគ្មានវាទេ អ្នកមិនអាចទាត់ខ្ពស់ ឬការពារខ្លួនបានលឿនឡើយ។ នៅក្នុងអត្ថបទនេះ យើងបង្ហាញពីវិធីពង្រីកសាច់ដុំគន្លឹះចំនួន៥៖ ១. វិធីមេអំបៅ ២. លំហាត់ប្រាណបោះជំហាន ៣. វិធីព្រាប ៤. វិធីកង្កែប ៥. វិធីពង្រីកត្រគាកបែបលុតជង្គង់។ ធ្វើលំហាត់ទាំងនេះជារៀងរាល់ថ្ងៃក្រោយពេលហាត់រួច។",
+        "zh": "髋关节活动度在泰拳中至关重要。没有它，你将无法进行高踢腿或有效防守。在这篇文章中，我们列出了五种基本拉伸技巧：1. 蝴蝶式拉伸，2. 动态弓步拉伸，3. 鸽子式，4. 青蛙式拉伸，5. 半跪姿髋屈肌拉伸。每天训练后进行这些动作，你将在踢腿高度上看到飞跃的进步。"
+      },
+      "image": "https://images.unsplash.com/photo-1544033527-b192daee1f5b?q=80&w=800&auto=format&fit=crop"
+    },
+    {
+      "id": 2,
+      "author": "Coach Chen",
+      "date": "2026-07-02",
+      "title": {
+        "en": "The Importance of Grappling Drill Consistency",
+        "km": "សារៈសំខាន់នៃការហាត់សមចំបាប់ជាប្រចាំ",
+        "zh": "缠斗练习一致性的重要性"
+      },
+      "excerpt": {
+        "en": "Muscle memory is everything in Jiu-Jitsu. Here is why repetitive drilling yields faster progress than live sparring alone.",
+        "km": "ការចងចាំសាច់ដុំគឺជាអ្វីគ្រប់យ៉ាងនៅក្នុងយូយីតស៊ូ។ ហេតុអ្វីបានជាការហាត់ដដែលៗទទួលបានផលលឿនជាងការប្រយុទ្ធសាកល្បង។",
+        "zh": "肌肉记忆是柔术的一切。这就是为什么重复的动作练习比单纯的实战对抗见效更快的原因。"
+      },
+      "content": {
+        "en": "Many beginners focus solely on sparring, but drilling is the true path to black belt mastery. When you drill a technique 50 times in a row, your nervous system encodes it as second nature. During live sparring, you cannot think about mechanics; your body must react instantly. We recommend dedicating at least 30 minutes of every training block to repetitive technique drills.",
+        "km": "អ្នកចាប់ផ្តើមដំបូងភាគច្រើនផ្តោតតែលើការប្រយុទ្ធផ្ទាល់ ប៉ុន្តែការហាត់សមបច្ចេកទេសដដែលៗគឺជាផ្លូវពិតទៅកាន់ខ្សែក្រវាត់ខ្មៅ។ នៅពេលអ្នកធ្វើបច្ចេកទេសដដែលៗចំនួន៥០ដង វានឹងក្លាយជាប្រតិកម្មស្វ័យប្រវត្តិនៃរាងកាយរបស់អ្នក។ យើងណែនាំឱ្យចំណាយពេលយ៉ាងតិច ៣០នាទីរាល់វគ្គហ្វឹកហាត់នីមួយៗ។",
+        "zh": "许多初学者只专注于实战对抗，但反复练习才是走向黑带大师的真正道路。当你连续练习一个技术50次时，你的神经系统会将它编码为第二本能。在实战中，你无法去思考技术动作的机械结构，身体必须立即做出反应。我们建议将每个训练阶段的至少30分钟专门用于重复性技术练习。"
+      },
+      "image": "https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&w=800&auto=format&fit=crop"
+    }
+  ],
+  "galleries": [
+    {
+      "title": "Muay Thai Pad Work",
+      "category": "Muay Thai",
+      "image": "https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      "title": "BJJ Sparring Session",
+      "category": "Jiu-Jitsu",
+      "image": "https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      "title": "Heavy Kettlebell Swings",
+      "category": "Strength",
+      "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      "title": "Focus Mitt Drills",
+      "category": "Muay Thai",
+      "image": "https://images.unsplash.com/photo-1517438984742-1262db08379e?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      "title": "BJJ Guard Pass",
+      "category": "Jiu-Jitsu",
+      "image": "https://images.unsplash.com/photo-1544033527-b192daee1f5b?q=80&w=600&auto=format&fit=crop"
+    },
+    {
+      "title": "Athlete Sprints",
+      "category": "Conditioning",
+      "image": "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=600&auto=format&fit=crop"
+    }
+  ]
+}

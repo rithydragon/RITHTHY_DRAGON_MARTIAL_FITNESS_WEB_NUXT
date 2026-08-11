@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "day": "monday",
+    "time": "06:00-07:30",
+    "period": "morning",
+    "class": "Bokator Fundamentals",
+    "classKey": "services.bokator.title",
+    "instructor": "Mr. Ny Rithy",
+    "level": "All Levels"
+  },
+  {
+    "id": 2,
+    "day": "monday",
+    "time": "17:00-18:30",
+    "period": "evening",
+    "class": "Pradal Serey (Kun Khmer)",
+    "classKey": "services.pradal.title",
+    "instructor": "Mr. Ny Rithy",
+    "level": "Intermediate"
+  },
+  {
+    "id": 3,
+    "day": "tuesday",
+    "time": "06:00-07:30",
+    "period": "morning",
+    "class": "Strength & Conditioning",
+    "classKey": "services.conditioning.title",
+    "instructor": "Coach Dara",
+    "level": "All Levels"
+  },
+  {
+    "id": 4,
+    "day": "tuesday",
+    "time": "17:00-18:30",
+    "period": "evening",
+    "class": "Yuthakram Khom",
+    "classKey": "services.yuthakram.title",
+    "instructor": "Mr. Ny Rithy",
+    "level": "Advanced"
+  },
+  {
+    "id": 5,
+    "day": "wednesday",
+    "time": "06:00-07:30",
+    "period": "morning",
+    "class": "Bokator Fundamentals",
+    "classKey": "services.bokator.title",
+    "instructor": "Coach Sok",
+    "level": "Beginner"
+  },
+  {
+    "id": 6,
+    "day": "wednesday",
+    "time": "15:00-16:30",
+    "period": "afternoon",
+    "class": "Private Training",
+    "classKey": "services.private.title",
+    "instructor": "Mr. Ny Rithy",
+    "level": "All Levels"
+  },
+  {
+    "id": 7,
+    "day": "wednesday",
+    "time": "17:00-18:30",
+    "period": "evening",
+    "class": "Pradal Serey Sparring",
+    "classKey": "services.pradal.title",
+    "instructor": "Mr. Ny Rithy",
+    "level": "Advanced"
+  },
+  {
+    "id": 8,
+    "day": "thursday",
+    "time": "06:00-07:30",
+    "period": "morning",
+    "class": "Strength & Conditioning",
+    "classKey": "services.conditioning.title",
+    "instructor": "Coach Dara",
+    "level": "All Levels"
+  },
+  {
+    "id": 9,
+    "day": "thursday",
+    "time": "17:00-18:30",
+    "period": "evening",
+    "class": "Group Fitness",
+    "classKey": "services.group.title",
+    "instructor": "Coach Sok",
+    "level": "All Levels"
+  },
+  {
+    "id": 10,
+    "day": "friday",
+    "time": "06:00-07:30",
+    "period": "morning",
+    "class": "Bokator Advanced Forms",
+    "classKey": "services.bokator.title",
+    "instructor": "Mr. Ny Rithy",
+    "level": "Advanced"
+  },
+  {
+    "id": 11,
+    "day": "friday",
+    "time": "17:00-18:30",
+    "period": "evening",
+    "class": "Kun Khmer Clinch Work",
+    "classKey": "services.pradal.title",
+    "instructor": "Mr. Ny Rithy",
+    "level": "Intermediate"
+  },
+  {
+    "id": 12,
+    "day": "saturday",
+    "time": "08:00-10:00",
+    "period": "morning",
+    "class": "Open Mat & Sparring",
+    "classKey": "services.group.title",
+    "instructor": "All Coaches",
+    "level": "All Levels"
+  },
+  {
+    "id": 13,
+    "day": "saturday",
+    "time": "15:00-16:30",
+    "period": "afternoon",
+    "class": "Yuthakram Khom Weapons",
+    "classKey": "services.yuthakram.title",
+    "instructor": "Mr. Ny Rithy",
+    "level": "Advanced"
+  },
+  {
+    "id": 14,
+    "day": "sunday",
+    "time": "08:00-09:30",
+    "period": "morning",
+    "class": "Recovery & Mobility",
+    "classKey": "services.conditioning.title",
+    "instructor": "Coach Dara",
+    "level": "All Levels"
+  },
+  {
+    "id": 15,
+    "day": "sunday",
+    "time": "17:00-18:30",
+    "period": "evening",
+    "class": "Private Training",
+    "classKey": "services.private.title",
+    "instructor": "Mr. Ny Rithy",
+    "level": "All Levels"
+  }
+]

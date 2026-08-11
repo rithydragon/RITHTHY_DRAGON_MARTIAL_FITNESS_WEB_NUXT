@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "slug": "history-of-bokator",
+    "title": "The Ancient History of Bokator: Khmer Warrior Combat Art",
+    "titleBy": {
+      "en": "The Ancient History of Bokator: Khmer Warrior Combat Art",
+      "km": "ប្រវត្តិបុកាទ័របុរាណ៖ សិល្បៈចំបុយប្រយុទ្ធរបស់អ្នកច្បាំងខ្មែរ",
+      "zh": "斗狮拳的古老历史：高棉战士的战斗艺术"
+    },
+    "excerpt": "Discover the 1,000-year legacy of Bokator, the ancient martial art of the Angkor Empire, and its role in Cambodian culture today.",
+    "excerptBy": {
+      "en": "Discover the 1,000-year legacy of Bokator, the ancient martial art of the Angkor Empire, and its role in Cambodian culture today.",
+      "km": "ស្វែងយល់បេតិកាបុកាទ័រអាយុ ១.០០០ ឆ្នាំ និងតួនាទីរបស់វាក្នុងវប្បធម៌កម្ពុជាសម័យទំនើប។",
+      "zh": "探索斗狮拳一千年传承，吴哥帝国的古老武术及其在今日柬埔寨文化中的角色。"
+    },
+    "cover": "https://images.pexels.com/photos/7045699/pexels-photo-7045699.jpeg",
+    "author": "Mr. Ny Rithy",
+    "date": "2025-01-15",
+    "readTime": 8,
+    "category": "history",
+    "content": "<h2>The Origins of Bokator</h2><p>Bokator is one of the oldest fighting systems in Southeast Asia, with roots tracing back over 1,000 years to the Angkor Empire. The name itself translates to 'lion pounding' — a reference to the legendary warrior who defeated a lion with bare hands.</p><h3>Animal Forms</h3><p>Bokator features 341 distinct techniques modeled after animal movements: the elephant, lion, crab, horse, bird, and many more. Each form carries deep philosophical meaning tied to Khmer cosmology.</p><h3>Survival and Revival</h3><p>Nearly lost during the Khmer Rouge era, Bokator has been painstakingly revived by dedicated masters. Today it is recognized as intangible cultural heritage by UNESCO.</p>"
+  },
+  {
+    "id": 2,
+    "slug": "kun-khmer-vs-muay-thai",
+    "title": "Kun Khmer vs Muay Thai: Understanding the Differences",
+    "titleBy": {
+      "en": "Kun Khmer vs Muay Thai: Understanding the Differences",
+      "km": "គុនខ្មែរនិងមួយថៃ៖ ការយល់ដឹងពីភាពខុសគ្នា",
+      "zh": "高棉拳与泰拳：理解差异"
+    },
+    "excerpt": "A detailed comparison between Cambodia's Pradal Serey and Thailand's Muay Thai — techniques, history, and cultural significance.",
+    "excerptBy": {
+      "en": "A detailed comparison between Cambodia's Pradal Serey and Thailand's Muay Thai — techniques, history, and cultural significance.",
+      "km": "ការប្រៀបធៀបលម្អិតរវាងប្រាដាល់សេរីកម្ពុជានិងមួយថៃ។",
+      "zh": "柬埔寨高棉拳与泰拳的详细比较——技术、历史和文化意义。"
+    },
+    "cover": "https://images.pexels.com/photos/4753986/pexels-photo-4753986.jpeg",
+    "author": "Mr. Ny Rithy",
+    "date": "2025-02-10",
+    "readTime": 6,
+    "category": "martial-arts",
+    "content": "<h2>Shared Roots</h2><p>Both Kun Khmer and Muay Thai share ancient roots in Southeast Asian martial traditions. However, each developed distinct characteristics influenced by their respective cultures.</p><h3>Technique Differences</h3><p>Kun Khmer emphasizes elbow strikes and clinch work, while Muay Thai is known for its roundhouse kicks. The stance and rhythm also differ significantly.</p>"
+  },
+  {
+    "id": 3,
+    "slug": "strength-training-for-martial-artists",
+    "title": "Strength Training for Martial Artists: A Complete Guide",
+    "titleBy": {
+      "en": "Strength Training for Martial Artists: A Complete Guide",
+      "km": "ការបង្វឹកកម្លាំងសម្រាប់អ្នកកីឡាចំបុយប្រយុទ្ធ៖ មគ្គុទ្ទេសក៍ពេញលេញ",
+      "zh": "武术运动员力量训练：完整指南"
+    },
+    "excerpt": "How to build fighter-level strength without sacrificing speed or flexibility. Periodization, exercises, and recovery strategies.",
+    "excerptBy": {
+      "en": "How to build fighter-level strength without sacrificing speed or flexibility. Periodization, exercises, and recovery strategies.",
+      "km": "របៀបសាងសង់កម្លាំងកម្រិតអ្នកច្បាំងដោយមិនបាត់បង់ល្បឿនឬភាពបត់បែន។",
+      "zh": "如何在不牺牲速度或柔韧性的情况下打造战士级力量。周期化、训练动作和恢复策略。"
+    },
+    "cover": "https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg",
+    "author": "Mr. Ny Rithy",
+    "date": "2025-03-05",
+    "readTime": 10,
+    "category": "fitness",
+    "content": "<h2>Why Strength Matters</h2><p>Strength is the foundation of all athletic performance. For martial artists, it means harder strikes, better grappling, and injury prevention.</p><h3>Periodization</h3><p>Divide your training into cycles: hypertrophy, strength, power, and peaking. This prevents overtraining and optimizes fight-night performance.</p>"
+  },
+  {
+    "id": 4,
+    "slug": "yuthakram-khom-complete-system",
+    "title": "Yuthakram Khom: The Complete Khmer Combat System",
+    "titleBy": {
+      "en": "Yuthakram Khom: The Complete Khmer Combat System",
+      "km": "យុទ្ធក្រមខ្មែរ៖ ប្រព័ន្ធចំបុយប្រយុទ្ធខ្មែរពេញលេញ",
+      "zh": "高棉武技：完整的高棉战斗体系"
+    },
+    "excerpt": "An in-depth look at Yuthakram Khom — the comprehensive Khmer martial system covering striking, grappling, and weapons.",
+    "excerptBy": {
+      "en": "An in-depth look at Yuthakram Khom — the comprehensive Khmer martial system covering striking, grappling, and weapons.",
+      "km": "ការមើលជ្រាលជ្រាលទៅលើយុទ្ធក្រមខ្មែរ — ប្រព័ន្�ាចំបុយប្រយុទ្ធខ្មែរពេញលេញ។",
+      "zh": "深入了解高棉武技——涵盖打击、缠斗和武器的全面高棉武术体系。"
+    },
+    "cover": "https://images.pexels.com/photos/3757954/pexels-photo-3757954.jpeg",
+    "author": "Mr. Ny Rithy",
+    "date": "2025-04-20",
+    "readTime": 12,
+    "category": "martial-arts",
+    "content": "<h2>What is Yuthakram Khom?</h2><p>Yuthakram Khom is the comprehensive Khmer combat science that encompasses all aspects of traditional warfare — unarmed combat, weapon systems, and battlefield strategy.</p>"
+  },
+  {
+    "id": 5,
+    "slug": "nutrition-for-fighters",
+    "title": "Nutrition for Fighters: Fueling Martial Arts Performance",
+    "titleBy": {
+      "en": "Nutrition for Fighters: Fueling Martial Arts Performance",
+      "km": "អាហារូបត្បម្ពសម្រាប់អ្នកច្បាំង៖ បំពេញសមត្ថភាពកីឡាចំបុយប្រយុទ្ធ",
+      "zh": "战士营养：为武术表现提供能量"
+    },
+    "excerpt": "Macronutrients, timing, supplements, and weight cutting strategies for martial artists and fighters.",
+    "excerptBy": {
+      "en": "Macronutrients, timing, supplements, and weight cutting strategies for martial artists and fighters.",
+      "km": "ម៉ាក្រូនុត្រិយ៉ង ពេលវេលា អាហារបំប៉ន និងការកាត់ទម្ងន់សម្រាប់អ្នកកីឡាចំបុយប្រយុទ្ធ។",
+      "zh": "武术运动员的宏量营养素、时间安排、补充剂和减重策略。"
+    },
+    "cover": "https://images.pexels.com/photos/3768916/pexels-photo-3768916.jpeg",
+    "author": "Mr. Ny Rithy",
+    "date": "2025-05-12",
+    "readTime": 7,
+    "category": "fitness",
+    "content": "<h2>Fueling the Warrior Body</h2><p>Proper nutrition is the difference between good and great. Fighters need precise macronutrient ratios, strategic meal timing, and evidence-based supplementation.</p>"
+  }
+]

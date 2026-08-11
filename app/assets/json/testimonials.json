@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "name": "Sok Pisey",
+    "role": "Professional Fighter",
+    "text": "Training under Mr. Ny Rithy transformed my career. I went from a beginner to competing in Kun Khmer within 18 months. His deep knowledge of Bokator and modern conditioning is unmatched in Cambodia.",
+    "textBy": {
+      "en": "Training under Mr. Ny Rithy transformed my career. I went from a beginner to competing in Kun Khmer within 18 months. His deep knowledge of Bokator and modern conditioning is unmatched in Cambodia.",
+      "km": "ការបង្វឹកក្រោមលោក ញ៉ី រិទ្ធី បានផ្លាស់ប្តូរអាជីពរបស់ខ្ញុំ។ ខ្ញុំពីអ្នកចាប់ផ្តើមក្លាយជាអ្នកប្រកួតគុនខ្មែរក្នុងរយៈពេល ១៨ ខែ។",
+      "zh": "在 Ny Rithy 先生指导下训练改变了我的职业生涯。我在18个月内从初学者成长为参加高棉拳比赛的选手。"
+    },
+    "image": "https://images.pexels.com/photos/4753986/pexels-photo-4753986.jpeg",
+    "rating": 5,
+    "achievement": "Kun Khmer Champion 2024"
+  },
+  {
+    "id": 2,
+    "name": "Chen Dara",
+    "role": "Fitness Enthusiast",
+    "text": "I lost 25kg and gained real strength. The martial arts conditioning program is intense but perfectly structured. Mr. Rithy pushes you beyond your limits while keeping you safe.",
+    "textBy": {
+      "en": "I lost 25kg and gained real strength. The martial arts conditioning program is intense but perfectly structured. Mr. Rithy pushes you beyond your limits while keeping you safe.",
+      "km": "ខ្ញុំបានធ្លាក់ទម្ងន់ ២៥ គីឡូក្រាម និងទទួលបានកម្លាំងពិតប្រាកដ។ កម្មវិធីការពង្រឹងកីឡាចំបុយប្រយុទ្ធាមានភាពតានតឹងប៉ុន្តែត្រូវបានរចនាឡើងយ៉ាងល្អ។",
+      "zh": "我减重25公斤并获得了真正的力量。武术体能训练强度大但结构完美。"
+    },
+    "image": "https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg",
+    "rating": 5,
+    "achievement": "Lost 25kg in 6 months"
+  },
+  {
+    "id": 3,
+    "name": "Kim Sophea",
+    "role": "Business Executive",
+    "text": "As a busy executive, I needed efficient training. The private sessions with Mr. Rithy fit my schedule and delivered results fast. My energy levels and mental clarity have never been better.",
+    "textBy": {
+      "en": "As a busy executive, I needed efficient training. The private sessions with Mr. Rithy fit my schedule and delivered results fast. My energy levels and mental clarity have never been better.",
+      "km": "ក្នុងនាមជានាយកប្រតិបត្តិដែលមានភាពរវល់រវល់ ខ្ញុំត្រូវការការបង្វឹកដែលមានប្រសិទ្ធភាព។ ពេលវេលាបង្វឹកផ្ទាល់ខ្លួនជាមួយលោក រិទ្ធី សមនឹងកាលកំណត់របស់ខ្ញុំ។",
+      "zh": "作为忙碌的高管，我需要高效训练。私人课程完美契合我的时间表并快速见效。"
+    },
+    "image": "https://images.pexels.com/photos/3768916/pexels-photo-3768916.jpeg",
+    "rating": 5,
+    "achievement": "Improved energy & focus"
+  },
+  {
+    "id": 4,
+    "name": "Vath Navy",
+    "role": "University Student",
+    "text": "I joined to learn self-defense and discovered a whole culture. Learning Bokator connected me to my Khmer heritage in a way I never expected. Mr. Rithy is not just a coach, he's a cultural guardian.",
+    "textBy": {
+      "en": "I joined to learn self-defense and discovered a whole culture. Learning Bokator connected me to my Khmer heritage in a way I never expected. Mr. Rithy is not just a coach, he's a cultural guardian.",
+      "km": "ខ្ញុំបានចូលរួមដើម្បីរៀនការការពារខ្លួនឯង ហើយបានរកឃើញវប្បធម៌ទាំងមូល។ ការរៀនបុកាទ័របានភ្ជាប់ខ្ញុំទៅនឹងបេតិកាខ្មែរ។",
+      "zh": "我加入是为了学习自卫，却发现了整个文化。学习斗狮拳让我与高棉传承产生了意想不到的联系。"
+    },
+    "image": "https://images.pexels.com/photos/3757954/pexels-photo-3757954.jpeg",
+    "rating": 5,
+    "achievement": "Cultural connection & self-defense"
+  },
+  {
+    "id": 5,
+    "name": "Tan Rasmey",
+    "role": "Amateur Boxer",
+    "text": "The Yuthakram Khom training opened my eyes to the depth of Cambodian martial arts. The weapon forms, the grappling, the philosophy — it's a complete system. Best training experience of my life.",
+    "textBy": {
+      "en": "The Yuthakram Khom training opened my eyes to the depth of Cambodian martial arts. The weapon forms, the grappling, the philosophy — it's a complete system. Best training experience of my life.",
+      "km": "ការបង្វឹកយុទ្ធក្រមខ្មែរបានបើកភ្នែកខ្ញុំទៅនឹងជម្រៅនៃសិល្បៈកីឡាចំបុយប្រយុទ្ធខ្មែរ។ វាគឺជាប្រព័ន្ធពេញលេញ។",
+      "zh": "高棉武技训练让我看到了柬埔寨武术的深度。武器形态、缠斗、哲学——这是一个完整的体系。"
+    },
+    "image": "https://images.pexels.com/photos/7045699/pexels-photo-7045699.jpeg",
+    "rating": 5,
+    "achievement": "Regional Boxing Medal 2024"
+  }
+]

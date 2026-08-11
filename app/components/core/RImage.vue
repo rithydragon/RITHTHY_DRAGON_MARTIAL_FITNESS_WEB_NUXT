@@ -41,18 +41,16 @@ const imageSrc = computed(() => {
   if (!props.src) {
     const fallbackMap = {
       img: new URL('~/assets/imgs/placeholder.png', import.meta.url).href,
-      user: new URL('~/assets/imgs/default-user.png', import.meta.url).href,
-      avatar: new URL('~/assets/imgs/default-avatar.png', import.meta.url).href,
-      banner: new URL('~/assets/imgs/default-banner.png', import.meta.url).href,
-      product: new URL('~/assets/imgs/default-product.png', import.meta.url).href,
+      user: new URL('~/assets/imgs/defaultProfile.png', import.meta.url).href,
+      avatar: new URL('~/assets/imgs/default-user.png', import.meta.url).href,
+      banner: new URL('~/assets/imgs/default-no-img.png', import.meta.url).href,
     }
 
     const fallbackMap1 = {
       img: '/imgs/defaultProfile.png',
-      user: '/imgs/default-user.png',
-      avatar: '/imgs/default-avatar.png',
-      banner: '/imgs/default-banner.png',
-      product: '/imgs/default-product.png',
+      user: '/imgs/defaultProfile.png',
+      avatar: '/imgs/default-user.png',
+      banner: '/imgs/default-no-img.png',
     };
     return fallbackMap[props.errorType] || fallbackMap.img;
   }

@@ -5,35 +5,61 @@
 // ============================================================
 
 :root {
+    --c-bg: #faf9f6;
+  --c-surface: #ffffff;
+  --c-primary: #b8941f;
+  --c-secondary: #a02828;
+  --c-text: #1a1a1a;
+  --c-text-muted: #666666;
+  --c-muted: #666666;
+  --c-border: #e0ddd6;
+  --c-success: #2e7d32;
+  --c-warning: #f57c00;
+  --c-error: #d32f2f;
+
+  --c-primary-soft: rgba(184, 148, 31, 0.10);
+  --c-secondary-soft: rgba(160, 40, 40, 0.08);
+  --c-overlay: rgba(255, 255, 255, 0.7);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+  --shadow-gold: 0 0 24px rgba(184, 148, 31, 0.15);
+
+  --scrollbar-bg: #faf9f6;
+  --scrollbar-thumb-bg: #e0ddd6;
+  --scrollbar-thumb-hover-bg: #b8941f;
+  --scrollbar-thumb-border: #faf9f6;
+
   // ---- Color Palette (default: Dark) ----
-  --c-bg: #0a0a0a;            // 1. Base background (dark charcoal)
-  --c-surface: #161616;        // 2. Elevated surface / cards
-  --c-primary: #c9a227;        // 3. Gold — brand accent (Cambodian gold)
-  --c-secondary: #8b1e1e;      // 4. Deep red — Cambodian martial heritage
-  --c-text: #f5f5f5;           // 5. Primary text (near-white)
-  --c-text-muted: #9a9a9a;     // 6a. Muted text alias
-  --c-muted: #9a9a9a;          // 6. Secondary / muted text
-  --c-border: #2a2a2a;         // 7. Borders / dividers
-  --c-success: #2e7d32;        // 8. Success state
-  --c-warning: #f57c00;        // 9. Warning state
-  --c-error: #d32f2f;          // 10. Error state
+  // --c-bg: #0a0a0a;            // 1. Base background (dark charcoal)
+  // --c-surface: #161616;        // 2. Elevated surface / cards
+  // --c-primary: #c9a227;        // 3. Gold — brand accent (Cambodian gold)
+  // --c-secondary: #8b1e1e;      // 4. Deep red — Cambodian martial heritage
+  // --c-text: #f5f5f5;           // 5. Primary text (near-white)
+  // --c-text-muted: #9a9a9a;     // 6a. Muted text alias
+  // --c-muted: #9a9a9a;          // 6. Secondary / muted text
+  // --c-border: #2a2a2a;         // 7. Borders / dividers
+  // --c-success: #2e7d32;        // 8. Success state
+  // --c-warning: #f57c00;        // 9. Warning state
+  // --c-error: #d32f2f;          // 10. Error state
 
-  // ---- Derived alpha tokens (same palette, not new colors) ----
-  --c-primary-soft: rgba(201, 162, 39, 0.12);
-  --c-secondary-soft: rgba(139, 30, 30, 0.12);
-  --c-overlay: rgba(0, 0, 0, 0.65);
+  // // ---- Derived alpha tokens (same palette, not new colors) ----
+  // --c-primary-soft: rgba(201, 162, 39, 0.12);
+  // --c-secondary-soft: rgba(139, 30, 30, 0.12);
+  // --c-overlay: rgba(0, 0, 0, 0.65);
 
-  // ---- Shadows (dark theme) ----
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.6);
-  --shadow-gold: 0 0 24px rgba(201, 162, 39, 0.25);
+  // // ---- Shadows (dark theme) ----
+  // --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  // --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  // --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.6);
+  // --shadow-gold: 0 0 24px rgba(201, 162, 39, 0.25);
 
-  // ---- Scrollbar (dark theme) ----
-  --scrollbar-bg: #0a0a0a;
-  --scrollbar-thumb-bg: #2a2a2a;
-  --scrollbar-thumb-hover-bg: #c9a227;
-  --scrollbar-thumb-border: #0a0a0a;
+  // // ---- Scrollbar (dark theme) ----
+  // --scrollbar-bg: #0a0a0a;
+  // --scrollbar-thumb-bg: #2a2a2a;
+  // --scrollbar-thumb-hover-bg: #c9a227;
+  // --scrollbar-thumb-border: #0a0a0a;
 }
 
 // ---- Dark theme (explicit, mirrors :root default) ----
@@ -66,32 +92,32 @@
   --scrollbar-thumb-border: #0a0a0a;
 }
 
-// ---- Light theme overrides ----
-.light,
-:root[data-theme="light"] {
-  --c-bg: #faf9f6;
-  --c-surface: #ffffff;
-  --c-primary: #b8941f;
-  --c-secondary: #a02828;
-  --c-text: #1a1a1a;
-  --c-text-muted: #666666;
-  --c-muted: #666666;
-  --c-border: #e0ddd6;
-  --c-success: #2e7d32;
-  --c-warning: #f57c00;
-  --c-error: #d32f2f;
+// // ---- Light theme overrides ----
+// .light,
+// :root[data-theme="light"] {
+//   --c-bg: #faf9f6;
+//   --c-surface: #ffffff;
+//   --c-primary: #b8941f;
+//   --c-secondary: #a02828;
+//   --c-text: #1a1a1a;
+//   --c-text-muted: #666666;
+//   --c-muted: #666666;
+//   --c-border: #e0ddd6;
+//   --c-success: #2e7d32;
+//   --c-warning: #f57c00;
+//   --c-error: #d32f2f;
 
-  --c-primary-soft: rgba(184, 148, 31, 0.10);
-  --c-secondary-soft: rgba(160, 40, 40, 0.08);
-  --c-overlay: rgba(255, 255, 255, 0.7);
+//   --c-primary-soft: rgba(184, 148, 31, 0.10);
+//   --c-secondary-soft: rgba(160, 40, 40, 0.08);
+//   --c-overlay: rgba(255, 255, 255, 0.7);
 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10);
-  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
-  --shadow-gold: 0 0 24px rgba(184, 148, 31, 0.15);
+//   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+//   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10);
+//   --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+//   --shadow-gold: 0 0 24px rgba(184, 148, 31, 0.15);
 
-  --scrollbar-bg: #faf9f6;
-  --scrollbar-thumb-bg: #e0ddd6;
-  --scrollbar-thumb-hover-bg: #b8941f;
-  --scrollbar-thumb-border: #faf9f6;
-}
+//   --scrollbar-bg: #faf9f6;
+//   --scrollbar-thumb-bg: #e0ddd6;
+//   --scrollbar-thumb-hover-bg: #b8941f;
+//   --scrollbar-thumb-border: #faf9f6;
+// }

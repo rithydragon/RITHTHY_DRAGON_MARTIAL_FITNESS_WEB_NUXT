@@ -59,6 +59,7 @@ export default defineNuxtConfig({
     buildAssetsDir: '_riththy_dragon',
     pageTransition: { name: 'page', mode: 'out-in' },
     layoutTransition: { name: 'layout', mode: 'out-in' },
+    dark: true,
 
     head: {
       htmlAttrs: { lang: 'en', dir: 'ltr' },

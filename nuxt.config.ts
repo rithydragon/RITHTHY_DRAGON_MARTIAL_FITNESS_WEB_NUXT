@@ -145,6 +145,18 @@ export default defineNuxtConfig({
     },
   },
 
+  nitro: {
+    hooks: {
+      compiled() {
+        // Force clean exit after Nitro finishes (needed on Vercel)
+        setTimeout(() => process.exit(0), 0)
+      }
+    },
+    routeRules: {
+      '/**': { headers: {} }  // empty object is bad on Vercel
+    }
+  },
+
   robots: {
     rules: [
       {

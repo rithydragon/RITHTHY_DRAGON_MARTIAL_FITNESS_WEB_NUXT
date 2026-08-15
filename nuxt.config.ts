@@ -152,9 +152,6 @@ export default defineNuxtConfig({
         setTimeout(() => process.exit(0), 0)
       }
     },
-    routeRules: {
-      '/**': { headers: {} }  // empty object is bad on Vercel
-    }
   },
 
   robots: {

@@ -21,7 +21,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   future: { compatibilityVersion: 4 },
   devtools: { enabled: false },
-  ssr: false,
+  // ssr: false,
 
   site: {
     url: 'https://rithymartialfitness.com',
@@ -145,14 +145,14 @@ export default defineNuxtConfig({
     },
   },
 
-  nitro: {
-    hooks: {
-      compiled() {
-        // Force clean exit after Nitro finishes (needed on Vercel)
-        setTimeout(() => process.exit(0), 0)
-      }
-    },
-  },
+  // nitro: {
+  //   hooks: {
+  //     compiled() {
+  //       // Force clean exit after Nitro finishes (needed on Vercel)
+  //       setTimeout(() => process.exit(0), 0)
+  //     }
+  //   },
+  // },
 
   robots: {
     rules: [

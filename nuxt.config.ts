@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 import getComponentPaths from './app/utils/getComponentPaths'
+import articles from './app/assets/json/articles.json'
 import os from 'os';
 
 function getLocalIp() {
@@ -17,11 +18,16 @@ function getLocalIp() {
   return 'localhost';
 }
 
+const blogRoutes = Array.isArray(articles)
+  ? articles
+      .filter(article => article?.slug)
+      .map(article => `/blog/${article.slug}`)
+  : []
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   future: { compatibilityVersion: 4 },
   devtools: { enabled: false },
-  // ssr: false,
+  ssr: false,
 
   site: {
     url: 'https://rithymartialfitness.com',
@@ -146,14 +152,28 @@ export default defineNuxtConfig({
     },
   },
 
-  // nitro: {
-  //   hooks: {
-  //     compiled() {
-  //       // Force clean exit after Nitro finishes (needed on Vercel)
-  //       setTimeout(() => process.exit(0), 0)
-  //     }
-  //   },
-  // },
+  nitro: {
+     prerender: {
+      crawlLinks: true,
+      failOnError: true,
+      routes: [
+        '/',
+        '/about',
+        '/contact',
+        '/blog',
+        '/schedule',
+        '/services',
+
+        ...blogRoutes
+      ]
+    }
+    // hooks: {
+    //   compiled() {
+    //     // Force clean exit after Nitro finishes (needed on Vercel)
+    //     setTimeout(() => process.exit(0), 0)
+    //   }
+    // },
+  },
 
   robots: {
     rules: [
@@ -178,11 +198,11 @@ export default defineNuxtConfig({
       '/schedule',
       '/testimonials',
       '/blog',
-      '/blog/history-of-bokator',
-      '/blog/kun-khmer-vs-muay-thai',
-      '/blog/strength-training-for-martial-artists',
-      '/blog/yuthakram-khom-complete-system',
-      '/blog/nutrition-for-fighters',
+      // '/blog/history-of-bokator',
+      // '/blog/kun-khmer-vs-muay-thai',
+      // '/blog/strength-training-for-martial-artists',
+      // '/blog/yuthakram-khom-complete-system',
+      // '/blog/nutrition-for-fighters',
       '/pricing',
       '/faq',
       '/contact'

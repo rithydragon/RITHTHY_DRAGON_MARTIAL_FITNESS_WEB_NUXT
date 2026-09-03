@@ -49,52 +49,109 @@
 </template>
 
 <script setup>
-import { computed, watchEffect, onMounted } from 'vue'
+import { computed, watch } from 'vue'
 import articlesData from '~/assets/json/articles.json'
 
+const route = useRoute()
 const { t } = useI18n()
 const { tBy } = useTBy()
-const route = useRoute()
 const animate = useAnimate()
 
+const articles = Array.isArray(articlesData)
+  ? articlesData
+  : []
+
+/**
+ * Route slug
+ */
+const slug = computed(() => {
+  const value = route.params.slug
+
+  return Array.isArray(value)
+    ? value[0]
+    : value
+})
+
+/**
+ * Current article
+ */
+const article = computed(() => {
+  if (!slug.value) {
+    return null
+  }
+
+  return articles.find(
+    item => item?.slug === slug.value
+  ) || null
+})
+
+/**
+ * Related articles
+ */
+const relatedArticles = computed(() =>
+  articles
+    .filter(item => item?.slug !== slug.value)
+    .slice(0, 3)
+)
+
+/**
+ * Animation
+ */
 onMounted(() => {
   animate.init()
 })
 
-const articles = Array.isArray(articlesData) ? articlesData : []
+/**
+ * SEO
+ */
+watch(
+  article,
+  (value) => {
+    if (!value) {
+      useSeo('blog')
+      return
+    }
 
-const article = computed(() =>
-  articles.find((a) => a.slug === route.params.slug)
-)
+    const titleText = tBy({
+      en: value.title,
+      km: value.titleBy?.km,
+      zh: value.titleBy?.zh
+    })
 
-const relatedArticles = computed(() =>
-  articles.filter((a) => a.slug !== route.params.slug).slice(0, 3)
-)
+    const excerptText = tBy({
+      en: value.excerpt,
+      km: value.excerptBy?.km,
+      zh: value.excerptBy?.zh
+    })
 
-// Dynamic SEO binding
-watchEffect(() => {
-  if (article.value) {
-    const titleText = tBy({ en: article.value.title, km: article.value.titleBy?.km, zh: article.value.titleBy?.zh })
-    const excerptText = tBy({ en: article.value.excerpt, km: article.value.excerptBy?.km, zh: article.value.excerptBy?.zh })
-    
     useSeo('blog-detail', {
       articleTitle: titleText,
       articleExcerpt: excerptText,
-      image: article.value.cover,
-      author: article.value.author,
-      publishedAt: article.value.date
+      image: value.cover,
+      author: value.author,
+      publishedAt: value.date
     })
-  } else {
-    useSeo('blog')
+  },
+  {
+    immediate: true
   }
-})
+)
 
 function formatDate(dateStr) {
-  if (!dateStr) return ''
-  return new Date(dateStr).toLocaleDateString('en-US', {
+  if (!dateStr) {
+    return ''
+  }
+
+  const date = new Date(dateStr)
+
+  if (Number.isNaN(date.getTime())) {
+    return ''
+  }
+
+  return date.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
-    day: 'numeric',
+    day: 'numeric'
   })
 }
 </script>

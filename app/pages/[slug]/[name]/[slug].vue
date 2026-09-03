@@ -1,9 +1,9 @@
 <template>
   <div class="detail-page section">
     <div class="container">
-      <RLink to="/" class="detail-page__back btn btn--outline btn--sm">
+      <NuxtLink :to="localePath('/')" class="detail-page__back btn btn--outline btn--sm">
         ← {{ t('common.close') || 'Back' }}
-      </RLink>
+      </NuxtLink>
 
       <div v-if="item" class="detail-page__card" data-animate="fade">
         <div class="detail-page__hero">
@@ -19,8 +19,8 @@
           <div v-if="item.content" class="detail-page__body" v-html="item.content"></div>
           
           <div class="detail-page__cta">
-            <RLink to="/contact" class="btn btn--primary">Book a Free Trial</RLink>
-            <RLink to="/schedule" class="btn btn--outline">View Timetable</RLink>
+            <NuxtLink :to="localePath('/contact')" class="btn btn--primary">Book a Free Trial</NuxtLink>
+            <NuxtLink :to="localePath('/schedule')" class="btn btn--outline">View Timetable</NuxtLink>
           </div>
         </div>
       </div>
@@ -28,7 +28,7 @@
       <div v-else class="detail-page__empty">
         <h2>Item Not Found</h2>
         <p>The requested training program or detail could not be found.</p>
-        <RLink to="/services" class="btn btn--primary">View All Services</RLink>
+        <NuxtLink :to="localePath('/services')" class="btn btn--primary">View All Services</NuxtLink>
       </div>
     </div>
   </div>

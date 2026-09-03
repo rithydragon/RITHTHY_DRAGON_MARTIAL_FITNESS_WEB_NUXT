@@ -5,7 +5,7 @@
     </button>
     <Transition name="fade">
       <ul v-if="isOpen" class="lang-switcher__menu">
-        <li v-for="l in locales" :key="l.code">
+        <li v-for="l in localesLangs" :key="l.code">
           <button
             class="lang-switcher__option"
             :class="{ 'is-active': locale === l.code }"
@@ -20,26 +20,44 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
-import type { Locale } from '~/app/composables/useI18n'
 
-const { locale, setLocale, t } = useI18n()
+const { locale, locales,setLocale, t } = useI18n()
+console.log(" Locales ======================> ", locales.value)
 const isOpen = ref(false)
-const targetRef = ref<HTMLElement | null>(null)
+const targetRef = ref(null)
 onClickOutside(targetRef, () => {
   isOpen.value = false
 })
 
-const locales = [
-  { code: 'en' as Locale, name: 'English' ,img:''},
-  { code: 'km' as Locale, name: 'ខ្មែរ' ,img:''},
-  { code: 'zh' as Locale, name: '中文' ,img:''},
-]
+const i18n_redirected = useCookie('i18n_redirected')
+console.log(" i18n_redirected ======================> ", i18n_redirected.value)
 
-function select(l: Locale) {
+const locales1 = [
+  { code: 'en' , name: 'English' ,img:''},
+  { code: 'km' , name: 'ខ្មែរ' ,img:''},
+  { code: 'zh' , name: '中文' ,img:''},
+]
+const localesLangs = computed(() => {
+  return locales.value.map(lang => ({
+    code: lang.code,
+    name: lang.name,
+    flag: `/flags/${lang.code === 'en'
+      ? 'gb'
+      : lang.code === 'km'
+        ? 'kh'
+        : 'zh'
+    }.svg`
+  }))
+})
+
+console.log(" localesLangs ======================> ", localesLangs.value)
+
+function select(l) {
   setLocale(l)
+  i18n_redirected.value = l
   isOpen.value = false
 }
 </script>

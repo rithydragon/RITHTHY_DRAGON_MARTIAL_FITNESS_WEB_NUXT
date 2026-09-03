@@ -1,6 +1,6 @@
 <template>
   <article class="article-card card" data-animate="slide-up">
-    <RLink :to="`/blog/${article.slug}`" class="article-card__link">
+    <NuxtLink :to="localePath(`/blog/${article.slug}`)" class="article-card__link">
       <div class="article-card__image">
         <img :src="article.cover" :alt="article.title" loading="lazy" />
         <span class="article-card__category">{{ article.category }}</span>
@@ -14,7 +14,7 @@
           <span class="article-card__read">{{ article.readTime }} {{ t('blog.minRead') }}</span>
         </footer>
       </div>
-    </RLink>
+    </NuxtLink>
   </article>
 </template>
 

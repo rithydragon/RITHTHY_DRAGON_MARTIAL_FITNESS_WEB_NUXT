@@ -113,11 +113,12 @@ export default defineNuxtConfig({
     lazy: true,
     langDir: 'locales/',
     defaultLocale: 'en',
+    fallbackLocale: 'en',
     strategy: 'prefix_except_default',
     locales: [
-      { code: 'en', iso: 'en-US', name: 'English', file: 'en.json' },
-      { code: 'km', iso: 'km-KH', name: 'ខ្មែរ', file: 'km.json' },
-      { code: 'zh', iso: 'zh-CN', name: '中文', file: 'zh.json' }
+      { code: 'en', iso: 'en-US', name: 'English',language:'English', file: 'en.json',isotime:'En', flag:'/flags/gb.svg' },
+      { code: 'km', iso: 'km-KH', name: 'ខ្មែរ',language:'Khmer', file: 'km.json',isotime:'Kh', flag:'/flags/kh.svg' },
+      { code: 'zh', iso: 'zh-CN', name: '中文',language:'Chinese', file: 'zh.json',isotime:'Ch', flag:'/flags/zh.svg' }
     ],
     detectBrowserLanguage: {
       useCookie: true,

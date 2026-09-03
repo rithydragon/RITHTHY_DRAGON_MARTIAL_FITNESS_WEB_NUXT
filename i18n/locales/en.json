@@ -7,7 +7,13 @@
     "portfolio": "Gallery",
     "blog": "Blog",
     "testimonials": "Testimonials",
-    "contact": "Contact"
+    "contact": "Contact",
+    "programs":"Programs",
+    "schedule_pricing":"Schedule Pricing",
+    "pricing_plans":"Pricing Plans",
+    "contact_us":"Contact Us",
+    "about_page":"About Page",
+    "our_programs":"Our Programs"
   },
   "common": {
     "joinNow": "Join Now",

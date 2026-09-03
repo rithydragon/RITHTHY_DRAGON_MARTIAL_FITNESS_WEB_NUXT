@@ -1,4 +1,5 @@
 import pageSeoData from '~/assets/json/page_seo.json'
+import { useI18n } from '#imports'
 
 function getLocaleText(textObj, locale, fallbackStr = '') {
   if (!textObj) return fallbackStr

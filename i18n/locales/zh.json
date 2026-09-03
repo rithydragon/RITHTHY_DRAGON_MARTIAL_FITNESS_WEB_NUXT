@@ -7,7 +7,13 @@
     "portfolio": "画廊",
     "blog": "博客",
     "testimonials": "学员评价",
-    "contact": "联系"
+    "contact": "联系",
+    "programs":"课程",
+    "schedule_pricing":"课程表与价格",
+    "pricing_plans":"价格计划",
+    "contact_us":"联系我们",
+    "about_page":"关于我们",
+    "our_programs":"我们的课程"
   },
   "common": {
     "joinNow": "立即加入",

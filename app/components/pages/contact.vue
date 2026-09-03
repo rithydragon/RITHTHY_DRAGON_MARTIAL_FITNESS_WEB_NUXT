@@ -74,13 +74,13 @@
 import { ref, reactive, onMounted } from 'vue'
 
 const { t } = useI18n()
-const animate = useAnimate()
+// const animate = useAnimate()
 
 useSeo('contact')
 
-onMounted(() => {
-  animate.init()
-})
+// onMounted(() => {
+//   animate.init()
+// })
 
 const form = reactive({
   name: '',

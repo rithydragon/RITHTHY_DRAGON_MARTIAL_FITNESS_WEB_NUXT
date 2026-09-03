@@ -145,7 +145,7 @@ const isMenuOpen = ref(false)
 const expandedMobileSubs = ref([])
 
 onMounted(() => {
-  menuList.value = menu.navbar || []
+  menuList.value = Array.isArray(menu.navbar) ? menu.navbar : []
 })
 
 function getLabel(lblKey) {
@@ -154,7 +154,7 @@ function getLabel(lblKey) {
     const translated = t(lblKey)
     return translated !== lblKey ? translated : lblKey.replace('nav.', '')
   }
-  return lblKey
+  return t(`nav.${lblKey}`)
 }
 
 function isRouteActive(targetPath) {

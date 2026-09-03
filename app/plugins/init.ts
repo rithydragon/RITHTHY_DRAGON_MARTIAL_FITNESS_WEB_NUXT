@@ -6,7 +6,7 @@ import { useScreenStore } from '../stores/screen'
 import { useAuthStore } from '../stores/auth'
 import { useNotificationStore } from '../stores/notifications'
 import { useHttp } from '../composables/useHttp'
-import { useI18n } from '../composables/useI18n'
+import { useI18n } from '#imports'
 import { useSession } from '../composables/useSession'
 import { useAnimate } from '../composables/useAnimate'
 
@@ -15,12 +15,12 @@ export default defineNuxtPlugin((nuxtApp) => {
   const screen = useScreenStore()
   const auth = useAuthStore()
   const notifications = useNotificationStore()
-  const { initLocale } = useI18n()
+  // const { initLocale } = useI18n()
   const session = useSession()
   const animate = useAnimate()
 
   // Init locale
-  initLocale()
+  // initLocale()
 
   // Init theme
   theme.init()

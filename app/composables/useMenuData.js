@@ -27,6 +27,9 @@ export default async () => {
       if (item.section === 'service') {
         result.service = item.service ?? []
       }
+      if (item.section === 'about') {
+        result.about = item.about ?? []
+      }
     }
 
     return result

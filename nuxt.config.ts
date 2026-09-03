@@ -190,6 +190,11 @@ export default defineNuxtConfig({
   },
 
   vite: {
+    esbuild: {
+      drop: process.env.NODE_ENV === 'production'
+        ? ['console', 'debugger']
+        : [],
+    },
     css: {
       preprocessorOptions: {
         scss: {

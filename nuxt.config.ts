@@ -27,7 +27,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   future: { compatibilityVersion: 4 },
   devtools: { enabled: false },
-  ssr: false,
+  ssr: true,
 
   site: {
     url: 'https://rithymartialfitness.com',
@@ -153,9 +153,10 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-     prerender: {
+    prerender: {
       crawlLinks: true,
       failOnError: true,
+
       routes: [
         '/',
         '/about',
@@ -167,14 +168,7 @@ export default defineNuxtConfig({
         ...blogRoutes
       ]
     }
-    // hooks: {
-    //   compiled() {
-    //     // Force clean exit after Nitro finishes (needed on Vercel)
-    //     setTimeout(() => process.exit(0), 0)
-    //   }
-    // },
   },
-
   robots: {
     rules: [
       {
@@ -188,6 +182,7 @@ export default defineNuxtConfig({
   sitemap: {
     gzip: true,
     autoLastmod: true,
+
     urls: [
       '/',
       '/about',
@@ -198,14 +193,11 @@ export default defineNuxtConfig({
       '/schedule',
       '/testimonials',
       '/blog',
-      // '/blog/history-of-bokator',
-      // '/blog/kun-khmer-vs-muay-thai',
-      // '/blog/strength-training-for-martial-artists',
-      // '/blog/yuthakram-khom-complete-system',
-      // '/blog/nutrition-for-fighters',
       '/pricing',
       '/faq',
-      '/contact'
+      '/contact',
+
+      ...blogRoutes
     ]
   },
 

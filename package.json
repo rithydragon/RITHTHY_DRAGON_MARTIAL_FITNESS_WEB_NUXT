@@ -2,6 +2,9 @@
   "name": "rithy-martial-fitness",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -27,8 +30,5 @@
     "vue": "^3.5.14",
     "vue-i18n": "^11.1.7",
     "vue-router": "^4.5.1"
-  },
-  "engines": {
-    "node": "24.x"
   }
 }

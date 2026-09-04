@@ -65,63 +65,63 @@ html[lang='zh'] {
 
 @font-face {
     font-family: 'km-100';
-    src: url('~/assets/fonts/KhmerOS_muollight.ttf') format('truetype');
+    src: url('~/assets/fonts/KhmerOS_muollight.woff2') format('woff2');
     font-weight: 100;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'km-200'; // Kantumruy font
-    src: url('~/assets/fonts/Kantumruy/KantumruyPro-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/Kantumruy/KantumruyPro-Regular.woff2') format('woff2');
     font-weight: 200;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'km-300';
-    src: url('~/assets/fonts/KhmerOS_muollight.ttf') format('truetype');
+    src: url('~/assets/fonts/KhmerOS_muollight.woff2') format('woff2');
     font-weight: 300;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'km-400';
-    src: url('~/assets/fonts/Kantumruy/KantumruyPro-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/Kantumruy/KantumruyPro-Regular.woff2') format('woff2');
     font-weight: 400;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'km-500';
-    src: local('~/assets/fonts/KhmerOS_muolpali.ttf'), url('~/assets/fonts/KhmerOS_muolpali.ttf') format('truetype');
+    src: local('~/assets/fonts/KhmerOS_muolpali.woff2'), url('~/assets/fonts/KhmerOS_muolpali.woff2') format('woff2');
     font-weight: 500;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'km-600';
-    src: url('~/assets/fonts/Siemreap-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/Siemreap-Regular.woff2') format('woff2');
     font-weight: 600;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'km-700';
-    src: url('~/assets/fonts/Siemreap-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/Siemreap-Regular.woff2') format('woff2');
     font-weight: 700;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'km-800';
-    src: url('~/assets/fonts/Siemreap-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/Siemreap-Regular.woff2') format('woff2');
     font-weight: 800;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'km-900';
-    src: local('~/assets/fonts/KhmerOS_muolpali.ttf'), url('/assets/fonts/KhmerOS_muolpali.ttf') format('truetype');
+    src: local('~/assets/fonts/KhmerOS_muolpali.woff2'), url('/assets/fonts/KhmerOS_muolpali.woff2') format('woff2');
     font-weight: 900;
     font-display: swap;
 }
@@ -132,63 +132,63 @@ html[lang='zh'] {
 ========================= */
 @font-face {
     font-family: 'en-100'; //  english font
-    src: url('~/assets/fonts/En/SupermercadoOne-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/En/SupermercadoOne-Regular.woff2') format('woff2');
     font-weight: 100;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'en-200';
-    src: url('~/assets/fonts/En/SupermercadoOne-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/En/SupermercadoOne-Regular.woff2') format('woff2');
     font-weight: 200;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'en-300';
-    src: url('~/assets/fonts/En/SupermercadoOne-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/En/SupermercadoOne-Regular.woff2') format('woff2');
     font-weight: 300;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'en-400';
-    src: url('~/assets/fonts/noto-sans/NotoSans-Regular.woff.ttf') format('truetype');
+    src: url('~/assets/fonts/noto-sans/NotoSans-Regular.woff.woff2') format('woff2');
     font-weight: 400;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'en-500';
-    src: url('~/assets/fonts/En/SupermercadoOne-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/En/SupermercadoOne-Regular.woff2') format('woff2');
     font-weight: 500;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'en-600';
-    src: url('~/assets/fonts/En/SupermercadoOne-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/En/SupermercadoOne-Regular.woff2') format('woff2');
     font-weight: 600;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'en-700';
-    src: url('~/assets/fonts/En/SupermercadoOne-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/En/SupermercadoOne-Regular.woff2') format('woff2');
     font-weight: 700;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'en-800';
-    src: url('~/assets/fonts/En/SupermercadoOne-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/En/SupermercadoOne-Regular.woff2') format('woff2');
     font-weight: 800;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'en-900';
-    src: url('~/assets/fonts/En/SupermercadoOne-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/En/SupermercadoOne-Regular.woff2') format('woff2');
     font-weight: 900;
     font-display: swap;
 }
@@ -199,57 +199,57 @@ html[lang='zh'] {
 ========================= */
 @font-face {
     font-family: 'zh-100'; //  Chinese font
-    src: url('~/assets/fonts/Zh/NotoSansSC-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/Zh/NotoSansSC-Regular.woff2') format('woff2');
     font-weight: 100;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'zh-200'; //  Chinese font
-    src: url('~/assets/fonts/Zh/NotoSansSC-Bold.ttf') format('truetype');
+    src: url('~/assets/fonts/Zh/NotoSansSC-Bold.woff2') format('woff2');
     font-weight: 200;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'zh-300'; //  Chinese font
-    src: url('~/assets/fonts/Zh/NotoSansSC-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/Zh/NotoSansSC-Regular.woff2') format('woff2');
     font-weight: 300;
     font-display: swap;
 }
 @font-face {
     font-family: 'zh-400'; //  Chinese font
-    src: url('~/assets/fonts/Zh/NotoSansSC-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/Zh/NotoSansSC-Regular.woff2') format('woff2');
     font-weight: 400;
     font-display: swap;
 }
 @font-face {
     font-family: 'zh-500'; //  Chinese font
-    src: url('~/assets/fonts/Zh/NotoSansSC-Bold.ttf') format('truetype');
+    src: url('~/assets/fonts/Zh/NotoSansSC-Bold.woff2') format('woff2');
     font-weight: 500;
     font-display: swap;
 }
 @font-face {
     font-family: 'zh-600'; //  Chinese font
-    src: url('~/assets/fonts/Zh/NotoSansSC-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/Zh/NotoSansSC-Regular.woff2') format('woff2');
     font-weight: 600;
     font-display: swap;
 }
 @font-face {
     font-family: 'zh-700'; //  Chinese font
-    src: url('~/assets/fonts/Zh/NotoSansSC-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/Zh/NotoSansSC-Regular.woff2') format('woff2');
     font-weight: 700;
     font-display: swap;
 }
 @font-face {
     font-family: 'zh-800'; //  Chinese font
-    src: url('~/assets/fonts/Zh/NotoSansSC-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/Zh/NotoSansSC-Regular.woff2') format('woff2');
     font-weight: 800;
     font-display: swap;
 }
 @font-face {
     font-family: 'zh-900'; //  Chinese font
-    src: url('~/assets/fonts/Zh/NotoSansSC-Regular.ttf') format('truetype');
+    src: url('~/assets/fonts/Zh/NotoSansSC-Regular.woff2') format('woff2');
     font-weight: 900;
     font-display: swap;
 }

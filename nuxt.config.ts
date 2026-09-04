@@ -153,21 +153,21 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    prerender: {
-      crawlLinks: true,
-      failOnError: true,
+    // prerender: {
+    //   crawlLinks: true,
+    //   failOnError: true,
 
-      routes: [
-        '/',
-        '/about',
-        '/contact',
-        '/blog',
-        '/schedule',
-        '/services',
+    //   routes: [
+    //     '/',
+    //     '/about',
+    //     '/contact',
+    //     '/blog',
+    //     '/schedule',
+    //     '/services',
 
-        ...blogRoutes
-      ]
-    }
+    //     ...blogRoutes
+    //   ]
+    // }
   },
   robots: {
     rules: [
@@ -176,30 +176,30 @@ export default defineNuxtConfig({
         allow: '/'
       }
     ],
-    sitemap: 'https://rithymartialfitness.com/sitemap.xml'
+    // sitemap: 'https://rithymartialfitness.com/sitemap.xml'
   },
 
-  sitemap: {
-    gzip: true,
-    autoLastmod: true,
+  // sitemap: {
+  //   gzip: true,
+  //   autoLastmod: true,
 
-    urls: [
-      '/',
-      '/about',
-      '/services',
-      '/programs',
-      '/trainers',
-      '/portfolio',
-      '/schedule',
-      '/testimonials',
-      '/blog',
-      '/pricing',
-      '/faq',
-      '/contact',
+  //   urls: [
+  //     '/',
+  //     '/about',
+  //     '/services',
+  //     '/programs',
+  //     '/trainers',
+  //     '/portfolio',
+  //     '/schedule',
+  //     '/testimonials',
+  //     '/blog',
+  //     '/pricing',
+  //     '/faq',
+  //     '/contact',
 
-      ...blogRoutes
-    ]
-  },
+  //     ...blogRoutes
+  //   ]
+  // },
 
   vite: {
     esbuild: {

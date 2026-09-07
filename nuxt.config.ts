@@ -46,7 +46,7 @@ export default defineNuxtConfig({
     // host: getLocalIp(),
     host:'0.0.0.0',
     port: 3001,
-    url: `http://${getLocalIp()}:3000`,
+    // url: `http://${getLocalIp()}:3000`,
   },
 
   css: ['./app/assets/styles/main.scss'],
@@ -141,7 +141,8 @@ export default defineNuxtConfig({
     supabaseAnonKey: process.env.VITE_SUPABASE_ANON_KEY || '',
     apiInternalBase: process.env.API_INTERNAL_BASE || 'http://127.0.0.1:8000',
     apiInternalSecret: process.env.API_INTERNAL_SECRET || '',
-    apiBase: `http://${getLocalIp()}:58721`,
+    // apiBase: `http://${getLocalIp()}:58721`,
+    apiBase: process.env.NUXT_PUBLIC_API_BASE || 'https://api.rithymartialfitness.com',
     wsBase: process.env.NUXT_PUBLIC_WS_BASE || 'wss://api.rithymartialfitness.com/ws',
     siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://rithymartialfitness.com',
     oauth: {

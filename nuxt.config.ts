@@ -27,7 +27,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   future: { compatibilityVersion: 4 },
   devtools: { enabled: false },
-  ssr: true,
+  ssr: false,
 
   site: {
     url: 'https://rithymartialfitness.com',
@@ -154,6 +154,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    preset: 'vercel'
     // prerender: {
     //   crawlLinks: true,
     //   failOnError: true,

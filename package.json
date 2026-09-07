@@ -10,6 +10,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "vercel-deploy": "nuxt generate && vercel --prod",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {

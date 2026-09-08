@@ -6,7 +6,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   // ssr: false, //Hydration completed but contains mismatches
 
-  modules: ['@pinia/nuxt','@nuxtjs/tailwindcss', '@nuxtjs/i18n',],
+  modules: ['@pinia/nuxt',
+    // '@nuxtjs/tailwindcss', 
+    '@nuxtjs/i18n',],
   imports: {
     dirs: ['stores', 'utils', 'app', 'plugins', 'composables'],
   },

@@ -1,0 +1,44 @@
+# ==========================================
+# Stage 1: Dependencies
+# ==========================================
+FROM node:22-alpine AS deps
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+
+RUN npm ci
+
+
+# ==========================================
+# Stage 2: Build
+# ==========================================
+FROM node:22-alpine AS builder
+
+WORKDIR /app
+
+COPY --from=deps /app/node_modules ./node_modules
+
+COPY . .
+
+ENV NODE_ENV=production
+
+RUN npm run build
+
+
+# ==========================================
+# Stage 3: Production
+# ==========================================
+FROM node:22-alpine AS runner
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+# Nitro production output
+COPY --from=builder /app/.output ./.output
+
+# Vercel containers must listen on $PORT
+ENV HOST=0.0.0.0
+
+CMD ["node", ".output/server/index.mjs"]

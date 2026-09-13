@@ -113,8 +113,8 @@ export function useSeo(input = {}, dynamicData = null) {
   }
   // Case B: input is Object
   else if (typeof input === 'object' && input !== null) {
-    title = input.title || 'Rithy Martial & Fitness — Premium Cambodian Martial Arts & Fitness Training'
-    description = input.description || 'Premium martial arts and fitness training in Cambodia led by Mr. Ny Rithy. Bokator, Yuthakram Khom, Pradal Serey, BJJ, and strength & conditioning.'
+    title = input.title || 'RITHTHY Fitness — Premium Fitness Training'
+    description = input.description || 'Premium fitness training in Cambodia led by Mr. Ny Rithy. Strength & Conditioning.'
     image = input.image || '/og-image.jpg'
     url = input.url ? (input.url.startsWith('http') ? input.url : `${siteUrl}${input.url}`) : siteUrl
     type = input.type || 'website'
@@ -122,7 +122,7 @@ export function useSeo(input = {}, dynamicData = null) {
     modifiedAt = input.modifiedAt || ''
     author = input.author || 'Mr. Ny Rithy'
     noindex = !!input.noindex
-    keywords = input.keywords || 'Cambodian Martial Arts, Bokator, Kun Khmer, Pradal Serey, BJJ, Strength and Conditioning, Phnom Penh Gym'
+    keywords = input.keywords || 'Fitness, Strength & Conditioning, Phnom Penh Gym'
     twitterCard = input.twitterCard || 'summary_large_image'
     robots = noindex ? 'noindex, nofollow' : (input.robots || 'index, follow')
   }

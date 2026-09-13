@@ -31,7 +31,7 @@ export default defineNuxtConfig({
 
   site: {
     url: 'https://rithymartialfitness.com',
-    name: 'Rithy Martial & Fitness'
+    name: 'RITHTHY Fitness'
   },
 
   modules: [
@@ -58,7 +58,7 @@ export default defineNuxtConfig({
   components: getComponentPaths(),
 
   app: {
-    // titleTemplate: '%s | Rithy Martial & Fitness',
+    // titleTemplate: '%s | RITHTHY Fitness',
     rootId: 'riththy',
     rootTag: 'riththy-main',
     baseUrl: '/',
@@ -69,7 +69,7 @@ export default defineNuxtConfig({
 
     head: {
       htmlAttrs: { lang: 'en', dir: 'ltr' },
-      title: 'Rithy Martial & Fitness — Premier Cambodian Martial Arts & Fitness Training',
+      title: 'RITHTHY Fitness — Premier Cambodian Martial Arts & Fitness Training',
       bodyAttrs: {
         class: 'riththy-dragon-fitness',
       },
@@ -82,7 +82,7 @@ export default defineNuxtConfig({
         
         // Open Graph
         { property: 'og:type', content: 'website' },
-        { property: 'og:title', content: 'Rithy Martial & Fitness — Premier Combat Training' },
+        { property: 'og:title', content: 'RITHTHY Fitness — Premier Combat Training' },
         { property: 'og:description', content: 'Train in traditional Bokator, Kun Khmer kickboxing, BJJ, and high-performance athletic conditioning with Master Ny Rithy.' },
         { property: 'og:locale', content: 'en_US' },
         { property: 'og:image', content: '/og-image.jpg' },
@@ -90,7 +90,7 @@ export default defineNuxtConfig({
         
         // Twitter Card
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: 'Rithy Martial & Fitness' },
+        { name: 'twitter:title', content: 'RITHTHY Fitness' },
         { name: 'twitter:description', content: 'Cambodian Martial Arts, Bokator, Kun Khmer, BJJ & Strength Conditioning in Phnom Penh.' },
         { name: 'twitter:image', content: '/og-image.jpg' },
       ],

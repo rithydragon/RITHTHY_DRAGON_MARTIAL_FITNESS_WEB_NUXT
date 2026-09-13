@@ -23,8 +23,8 @@ useHead(() => ({
   },
   titleTemplate: (titleChunk) =>
     titleChunk
-      ? `${titleChunk} | Rithy Martial & Fitness`
-      : 'Rithy Martial & Fitness — Premier Cambodian Martial Arts & Fitness Training'
+      ? `${titleChunk} | RITHTHY Fitness`
+      : 'RITHTHY Fitness — Premier Fitness Training'
 }))
 
 

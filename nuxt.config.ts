@@ -69,7 +69,7 @@ export default defineNuxtConfig({
 
     head: {
       htmlAttrs: { lang: 'en', dir: 'ltr' },
-      title: 'RITHTHY Fitness — Premier Cambodian Martial Arts & Fitness Training',
+      title: 'RITHTHY Fitness — Premier Fitness Training',
       bodyAttrs: {
         class: 'riththy-dragon-fitness',
       },
@@ -77,13 +77,13 @@ export default defineNuxtConfig({
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'theme-color', content: '#0a0a0a' },
-        { name: 'description', content: 'Premium martial arts and fitness training in Cambodia led by Mr. Ny Rithy. Bokator, Yuthakram Khom, Pradal Serey (Kun Khmer), BJJ, strength & conditioning, private and group classes.' },
-        { name: 'keywords', content: 'Cambodian martial arts, Bokator, Yuthakram Khom, Pradal Serey, Kun Khmer, BJJ Phnom Penh, fitness training Cambodia, Ny Rithy, Rithy Martial Fitness' },
+        { name: 'description', content: 'Premium fitness training in Cambodia led by Mr. Ny Rithy. Strength & conditioning, private and group classes.' },
+        { name: 'keywords', content: 'Fitness training Cambodia, Ny Rithy,RITHTHY Fitness' },
         
         // Open Graph
         { property: 'og:type', content: 'website' },
-        { property: 'og:title', content: 'RITHTHY Fitness — Premier Combat Training' },
-        { property: 'og:description', content: 'Train in traditional Bokator, Kun Khmer kickboxing, BJJ, and high-performance athletic conditioning with Master Ny Rithy.' },
+        { property: 'og:title', content: 'RITHTHY Fitness — Premier Fitness Training' },
+        { property: 'og:description', content: 'Train with high-performance athletic conditioning with Master Ny Rithy.' },
         { property: 'og:locale', content: 'en_US' },
         { property: 'og:image', content: '/og-image.jpg' },
         { property: 'og:url', content: 'https://rithymartialfitness.com' },
@@ -91,7 +91,7 @@ export default defineNuxtConfig({
         // Twitter Card
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: 'RITHTHY Fitness' },
-        { name: 'twitter:description', content: 'Cambodian Martial Arts, Bokator, Kun Khmer, BJJ & Strength Conditioning in Phnom Penh.' },
+        { name: 'twitter:description', content: 'Strength Conditioning in Phnom Penh.' },
         { name: 'twitter:image', content: '/og-image.jpg' },
       ],
 

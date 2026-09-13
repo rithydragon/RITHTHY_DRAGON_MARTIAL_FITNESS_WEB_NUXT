@@ -121,8 +121,8 @@ import articlesData from '../assets/json/articles.json'
 const { t } = useI18n()
 
 useSeo({
-  title: 'Rithy Martial & Fitness — Premier Cambodian Martial Arts & Fitness Training',
-  description: 'Professional martial arts and fitness training in Cambodia led by Mr. Ny Rithy. Bokator, Yuthakram Khom, Pradal Serey, strength & conditioning.',
+  title: 'RITHTHY Fitness Training',
+  description: 'Professional  fitness training in Cambodia led by Mr. Ny Rithy. Strength & conditioning.',
   url: '/',
 })
 

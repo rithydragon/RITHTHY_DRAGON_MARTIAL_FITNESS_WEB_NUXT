@@ -158,7 +158,6 @@ const subscribed = ref(false)
 const categories = [
   { id: 'all', label: 'All Articles' },
   { id: 'history', label: 'Bokator History' },
-  { id: 'martial-arts', label: 'Kun Khmer & BJJ' },
   { id: 'fitness', label: 'Strength & Fitness' }
 ]
 

@@ -152,7 +152,7 @@
           "user",
           "admin"
         ],
-        "blank": false,
+        "blank": true,
         "permission": "DASHBOARD"
       },
       {

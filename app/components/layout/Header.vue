@@ -1,23 +1,23 @@
 <template>
   <header class="navbar" :class="{ 'is-scrolled': screen.isScrolled, 'is-open': isMenuOpen }">
     <div class="navbar__inner container">
-      <!-- Logo using RLink -->
-      <RLink to="/" class="navbar__logo" @click="closeMenu">
+      <!-- Logo using NuxtLink -->
+      <NuxtLink :to="localePath('/')" class="navbar__logo" @click="closeMenu">
         <span class="navbar__logo-mark">RMF</span>
-      </RLink>
+      </NuxtLink>
 
       <!-- Desktop Primary Navigation -->
       <nav v-if="!screen.isMobile" class="navbar__menu" aria-label="Primary">
         <div v-for="item in menuList" :key="item.id" class="navbar__item">
           <!-- Level 0 Top Item -->
-          <RLink
-            :to="item.path || '/'"
+          <NuxtLink
+            :to="localePath(item.path || '/')"
             class="navbar__link"
             :class="{ 'is-active': isRouteActive(item.path) }"
           >
             {{ getLabel(item.label) }}
             <!-- <i v-if="item.children" class="ri-arrow-down-s-line navbar__caret"></i> -->
-          </RLink>
+          </NuxtLink>
 
           <!-- Level 1 Dropdown Menu -->
           <div v-if="item.children" class="navbar__dropdown">
@@ -26,25 +26,25 @@
               :key="child.id"
               class="navbar__dropdown-item"
             >
-              <RLink
-                :to="child.path || '/'"
+              <NuxtLink
+                :to="localePath(child.path || '/')"
                 class="navbar__dropdown-link"
                 :class="{ 'has-sub': child.children || child.subChildren }"
               >
                 <span>{{ getLabel(child.label) }}</span>
                 <!-- <i v-if="child.children || child.subChildren" class="ri-arrow-right-s-line navbar__sub-caret"></i> -->
-              </RLink>
+              </NuxtLink>
 
               <!-- Level 2 Sub-Dropdown Flyout Menu -->
               <div v-if="child.children || child.subChildren" class="navbar__sub-dropdown">
-                <RLink
+                <NuxtLink
                   v-for="subChild in (child.children || child.subChildren)"
                   :key="subChild.id"
-                  :to="subChild.path || '/'"
+                  :to="localePath(subChild.path || '/')"
                   class="navbar__sub-dropdown-link"
                 >
                   {{ getLabel(subChild.label) }}
-                </RLink>
+                </NuxtLink>
               </div>
             </div>
           </div>
@@ -57,9 +57,9 @@
         <ThemeToggle />
         <NotificationBell />
         <template v-if="auth.isLoggedIn">
-          <RLink to="/account" class="navbar__user">
+          <NuxtLink :to="localePath('/account')" class="navbar__user">
             <span class="navbar__user-avatar">{{ auth.userInitials }}</span>
-          </RLink>
+          </NuxtLink>
         </template>
         <template v-else>
           <button class="btn btn--ghost navbar__btn-login" @click="openLogin">{{ t('common.login') || 'Login' }}</button>
@@ -80,13 +80,13 @@
       <nav v-if="isMenuOpen" class="navbar__mobile">
         <div v-for="item in menuList" :key="item.id" class="navbar__mobile-group">
           <div class="navbar__mobile-head">
-            <RLink
-              :to="item.path || '/'"
+            <NuxtLink
+              :to="localePath(item.path || '/')"
               class="navbar__mobile-link"
               @click="closeMenu"
             >
               {{ getLabel(item.label) }}
-            </RLink>
+            </NuxtLink>
             <button
               v-if="item.children"
               class="navbar__mobile-expand-btn"
@@ -99,25 +99,25 @@
           <!-- Mobile Sub-Menu Level 1 -->
           <div v-if="item.children && expandedMobileSubs.includes(item.id)" class="navbar__mobile-sub">
             <div v-for="child in item.children" :key="child.id" class="navbar__mobile-sub-item">
-              <RLink
-                :to="child.path || '/'"
+              <NuxtLink
+                :to="localePath(child.path || '/')"
                 class="navbar__mobile-sub-link"
                 @click="closeMenu"
               >
                 {{ getLabel(child.label) }}
-              </RLink>
+              </NuxtLink>
 
               <!-- Mobile Sub-Children Level 2 -->
               <div v-if="child.children || child.subChildren" class="navbar__mobile-subchild-list">
-                <RLink
+                <NuxtLink
                   v-for="subChild in (child.children || child.subChildren)"
                   :key="subChild.id"
-                  :to="subChild.path || '/'"
+                  :to="localePath(subChild.path || '/')"
                   class="navbar__mobile-subchild-link"
                   @click="closeMenu"
                 >
                   └ {{ getLabel(subChild.label) }}
-                </RLink>
+                </NuxtLink>
               </div>
             </div>
           </div>

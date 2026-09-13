@@ -35,14 +35,14 @@
     "system": "System"
   },
   "hero": {
-    "badge": "Premium Cambodian Martial Arts & Fitness",
+    "badge": "Premium Cambodian Fitness",
     "title": "Master Your Body. Forge Your Spirit.",
     "subtitle": "Professional martial arts and fitness training rooted in Cambodia's ancient warrior traditions, led by Mr. Ny Rithy.",
     "ctaPrimary": "Start Training Today",
     "ctaSecondary": "Explore Programs",
-    "slide1Title": "Welcome to Rithy Dragon Martial Arts & Fitness Club",
-    "slide1Desc": "Rithy Dragon Martial Arts & Fitness Club is a martial arts and fitness club located in Cambodia. Our club was founded by Mr. Ny Rithy, a certified martial arts instructor with many years of experience in teaching and training.",
-    "slide2Title": "Pradal Serey — Kun Khmer Boxing",
+    "slide1Title": "Welcome to Rithy Dragon Fitness Club",
+    "slide1Desc": "Rithy Dragon Fitness Club is a martial arts and fitness club located in Cambodia. Our club was founded by Mr. Ny Rithy, a certified martial arts instructor with many years of experience in teaching and training.",
+    "slide2Title": "高强度训练：爆发性跳跃与身体旋转。",
     "slide2Desc": "Master the devastating striking art of Cambodian kickboxing.",
     "slide3Title": "Strength & Conditioning",
     "slide3Desc": "Build elite-level fitness with proven training methodologies."
@@ -145,7 +145,7 @@
     "findUs": "Find Us"
   },
   "footer": {
-    "tagline": "Premium Cambodian Martial Arts & Fitness Training",
+    "tagline": "Premium Cambodian Fitness Training",
     "quickLinks": "Quick Links",
     "programs": "Programs",
     "followUs": "Follow Us",

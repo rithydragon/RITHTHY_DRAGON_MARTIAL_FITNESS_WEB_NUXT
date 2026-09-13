@@ -3,7 +3,7 @@
     <div class="footer__inner container">
       <div class="footer__grid">
         <div class="footer__brand" data-animate="fade">
-          <h3 class="footer__logo">Rithy Martial & Fitness</h3>
+          <h3 class="footer__logo">RITHTHY Fitness</h3>
           <p class="footer__tagline">{{ t('footer.tagline') }}</p>
           <p class="footer__made">{{ t('footer.madeWith') }}</p>
         </div>
@@ -12,7 +12,7 @@
           <h4 class="footer__heading">{{ t('footer.quickLinks') }}</h4>
           <ul class="footer__links">
             <li v-for="item in menuList.footer" :key="item.id">
-              <RLink :to="item.href" class="footer__link" :target="item.blank ? '_blank' : '_self'" :rel="item.blank ? 'noopener noreferrer' : ''">{{ t(item.label) }}</RLink>
+              <NuxtLink :to="localePath(item.href)" class="footer__link" :target="item.blank ? '_blank' : '_self'" :rel="item.blank ? 'noopener noreferrer' : ''">{{ t(item.label) }}</NuxtLink>
             </li>
           </ul>
         </div>
@@ -21,7 +21,7 @@
           <h4 class="footer__heading">{{ t('footer.programs') }}</h4>
           <ul class="footer__links">
             <li v-for="item in menuList.service" :key="item.id">
-              <RLink :to="item.path" class="footer__link" :target="item.blank ? '_blank' : '_self'" :rel="item.blank ? 'noopener noreferrer' : ''">{{ t(item.label) }}</RLink>
+              <NuxtLink :to="localePath(item.path)" class="footer__link" :target="item.blank ? '_blank' : '_self'" :rel="item.blank ? 'noopener noreferrer' : ''">{{ t(item.label) }}</NuxtLink>
             </li>
           </ul>
         </div>
@@ -29,14 +29,14 @@
         <div class="footer__col" data-animate="fade" data-delay="300">
           <h4 class="footer__heading">{{ t('footer.followUs') }}</h4>
           <div class="footer__socials">
-            <a v-for="item in menuList.contact" :key="item.id" :href="localePath(item.href)" class="footer__social" :aria-label="item.name"><i :class="item.icon" ></i></a>
+            <NuxtLink v-for="item in menuList.contact" :key="item.id" :to="localePath(item.href)" :target="item.blank ? '_blank' : '_self'" :rel="item.blank ? 'noopener noreferrer' : ''" class="footer__social" :aria-label="item.name"><i :class="item.icon" ></i></NuxtLink>
           </div>
           <p class="footer__contact">{{ t('contact.addressValue') }}</p>
         </div>
       </div>
 
       <div class="footer__bottom">
-        <p>&copy; {{ year }} Rithy Martial & Fitness. {{ t('footer.rights') }}</p>
+        <p>&copy; {{ year }} RITHTHY Fitness. {{ t('footer.rights') }}</p>
       </div>
     </div>
   </footer>

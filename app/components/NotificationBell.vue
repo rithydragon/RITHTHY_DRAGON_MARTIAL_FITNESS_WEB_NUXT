@@ -42,7 +42,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
-import type { Notification } from '~/app/stores/notifications'
 
 const { t } = useI18n()
 const notifications = useNotificationStore()
@@ -66,7 +65,7 @@ function handleClick(item: Notification) {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .notif-bell {
   position: relative;
 }
@@ -76,8 +75,8 @@ function handleClick(item: Notification) {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: var(--radius-full);
   border: 1px solid var(--c-border);
   color: var(--c-muted);
@@ -91,15 +90,15 @@ function handleClick(item: Notification) {
 
 .notif-bell__badge {
   position: absolute;
-  top: -2px;
-  right: -2px;
-  min-width: 18px;
-  height: 18px;
-  padding: 0 5px;
+  top: -4px;
+  right: -5px;
+  height: 17px !important;
+  width: 17px !important;
+  padding: 0 2px;
   border-radius: var(--radius-full);
   background: var(--c-secondary);
   color: #fff;
-  font-size: 0.625rem;
+  font-size: 10px;
   font-weight: 700;
   display: flex;
   align-items: center;

@@ -1,7 +1,7 @@
 <template>
   <div class="lang-switcher" :class="{ 'is-open': isOpen }" ref="targetRef">
     <button class="lang-switcher__btn" @click="isOpen = !isOpen" :aria-label="t('common.language')">
-      <span class="lang-switcher__current">{{ locale.toUpperCase() }}</span>
+      <img :src="currentLang(locale)?.flag"/>
     </button>
     <Transition name="fade">
       <ul v-if="isOpen" class="lang-switcher__menu">
@@ -9,10 +9,10 @@
           <button
             class="lang-switcher__option"
             :class="{ 'is-active': locale === l.code }"
+            :disabled="locale === l.code"
             @click="select(l.code)"
           >
-            <span class="lang-switcher__code">{{ l.code.toUpperCase() }}</span>
-            <span class="lang-switcher__name">{{ l.name }}</span>
+            <img :src="l.flag" /> <span class="lang-switcher__name">{{ l.name }}</span>
           </button>
         </li>
       </ul>
@@ -25,7 +25,7 @@ import { ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 
 const { locale, locales,setLocale, t } = useI18n()
-console.log(" Locales ======================> ", locales.value)
+console.log(" locale ======================> ", locale)
 const isOpen = ref(false)
 const targetRef = ref(null)
 onClickOutside(targetRef, () => {
@@ -34,6 +34,13 @@ onClickOutside(targetRef, () => {
 
 const i18n_redirected = useCookie('i18n_redirected')
 console.log(" i18n_redirected ======================> ", i18n_redirected.value)
+const currentLang = (lang) => {
+  const item = locales.value?.find((e) => e.code === lang)
+
+  return item
+    ? { code: item.code, flag: item.flag, name: item.name }
+    : null
+}
 
 const locales1 = [
   { code: 'en' , name: 'English' ,img:''},
@@ -53,8 +60,6 @@ const localesLangs = computed(() => {
   }))
 })
 
-console.log(" localesLangs ======================> ", localesLangs.value)
-
 function select(l) {
   setLocale(l)
   i18n_redirected.value = l
@@ -62,7 +67,7 @@ function select(l) {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .lang-switcher {
   position: relative;
 }
@@ -71,8 +76,9 @@ function select(l) {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 0.75rem;
-  height: 40px;
+  padding: 3px;
+  // height: 40px !important;
+  // width: 40px !important;
   border-radius: var(--radius-full);
   border: 1px solid var(--c-border);
   color: var(--c-muted);
@@ -84,6 +90,10 @@ function select(l) {
     color: var(--c-primary);
     border-color: var(--c-primary);
   }
+  // @media (max-width: 768px) {
+  //   width: 30px !important;
+  //   height: 30px !important;
+  // }
 }
 
 .lang-switcher__menu {
@@ -118,7 +128,25 @@ function select(l) {
   &.is-active {
     color: var(--c-primary);
     font-weight: 600;
+    pointer-events: none;
+    opacity: 0.8;
   }
+}
+
+.lang-switcher__btn img{
+  min-width: 25px !important;
+  min-height: 25px !important;
+  border-radius: 50%;
+  object-fit:cover;
+}
+
+.lang-switcher__option img{
+  width: 25px !important;
+  height: 25px !important;
+  border-radius: 50%;
+  object-fit: cover;
+  padding: 2px;
+  border: 1px solid green;
 }
 
 .lang-switcher__code {

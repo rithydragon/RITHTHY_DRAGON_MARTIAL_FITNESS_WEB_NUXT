@@ -92,7 +92,7 @@ export default defineNuxtConfig({
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: 'Rithy Martial & Fitness' },
         { name: 'twitter:description', content: 'Cambodian Martial Arts, Bokator, Kun Khmer, BJJ & Strength Conditioning in Phnom Penh.' },
-        { name: 'twitter:image', content: 'https://images.pexels.com/photos/7045699/pexels-photo-7045699.jpeg' },
+        { name: 'twitter:image', content: '/images/Home1.jpg' },
       ],
 
       script: [

@@ -116,6 +116,7 @@ const form = reactive({
 })
 
 const plans = [
+  { id: 'free', label: 'Free', price: 0 },
   { id: 'basic', label: 'Basic', price: 49 },
   { id: 'pro', label: 'Pro', price: 99 },
   { id: 'elite', label: 'Elite', price: 199 },

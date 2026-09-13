@@ -16,7 +16,7 @@
             <RLink to="/about" class="btn btn--secondary">{{ t('common.learnMore') }}</RLink>
           </div>
           <div class="home__intro-image" data-animate="slide-left" data-delay="200">
-            <RImage src="/images/Home3.jpg" alt="Mr. Ny Rithy"/>
+            <img src="/images/riththy_preykuk.jpg" alt="Mr. Ny Rithy"/>
           </div>
         </div>
       </div>

@@ -29,7 +29,7 @@
 
           <div class="hero__slide-content container">
             <span class="hero__slide-badge eyebrow" data-animate="slide-down">{{ t('hero.badge') }}</span>
-            <h1 class="hero__slide-title" data-animate="slide-up">{{ t(slide.titleKey) }}</h1>
+            <p class="hero__slide-title" data-animate="slide-up">{{ t(slide.titleKey) }}</p>
             <p class="hero__slide-desc" data-animate="slide-up" data-delay="100">{{ t(slide.descKey) }}</p>
           </div>
         </div>
@@ -39,7 +39,7 @@
     <!-- ── Centre copy ────────────────────────────────────────── -->
     <div class="hero__content container">
       <div class="hero__main">
-        <h2 class="hero__title" data-animate="slide-up">{{ t('hero.title') }}</h2>
+        <h4 class="hero__title" data-animate="slide-up">{{ t('hero.title') }}</h4>
         <p class="hero__subtitle" data-animate="slide-up" data-delay="100">{{ t('hero.subtitle') }}</p>
         <div class="hero__cta" data-animate="slide-up" data-delay="200">
           <button class="btn btn--primary"   @click="scrollTo('services')">{{ t('hero.ctaPrimary') }}</button>
@@ -271,6 +271,7 @@ function scrollTo(id: string) {
 }
 
 .hero__title {
+  font-family: var(--font-400);
   font-size: clamp(2.5rem, 6vw, 5rem);
   line-height: 1.1;
   color: #f5f5f5;

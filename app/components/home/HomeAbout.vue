@@ -5,7 +5,7 @@
       <div data-animate class="about__media">
         <div class="about__frame">
           <img
-            src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?q=80&w=800&auto=format&fit=crop"
+            src="/images/Home1.jpg"
             alt="Gym training"
             class="about__image"
           />

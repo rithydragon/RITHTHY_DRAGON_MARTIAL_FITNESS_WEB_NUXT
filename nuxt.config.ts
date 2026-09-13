@@ -85,7 +85,7 @@ export default defineNuxtConfig({
         { property: 'og:title', content: 'Rithy Martial & Fitness — Premier Combat Training' },
         { property: 'og:description', content: 'Train in traditional Bokator, Kun Khmer kickboxing, BJJ, and high-performance athletic conditioning with Master Ny Rithy.' },
         { property: 'og:locale', content: 'en_US' },
-        { property: 'og:image', content: 'https://images.pexels.com/photos/7045699/pexels-photo-7045699.jpeg' },
+        { property: 'og:image', content: '/images/Home1.jpg' },
         { property: 'og:url', content: 'https://rithymartialfitness.com' },
         
         // Twitter Card

@@ -1,6 +1,6 @@
 <template>
-  <div class="relative theme-toggle-btn">
-    <button :aria-label="theme.isDark ? 'Switch to light' : 'Switch to dark'" @click="theme.toggle()">
+  <div class="relative">
+    <button :aria-label="theme.isDark ? 'Switch to light' : 'Switch to dark'" @click="theme.toggle()" class="theme-toggle-btn">
       <i :class="theme.isDark ? 'ri-sun-line' : 'ri-moon-line'" class="icon"></i>
     </button>
   </div>
@@ -37,14 +37,14 @@ const theme = useThemeStore()
     font-size: 18px;
   }
 
-  @media (max-width: 768px) {
-    width: 30px !important;
-    height: 30px !important;
+  // @media (max-width: 768px) {
+  //   width: 30px !important;
+  //   height: 30px !important;
 
-    .icon {
-      font-size: 15px;
-    }
-  }
+  //   .icon {
+  //     font-size: 15px;
+  //   }
+  // }
 }
 
 </style>

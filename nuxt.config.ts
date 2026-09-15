@@ -151,6 +151,14 @@ export default defineNuxtConfig({
       tiktokClientKey: process.env.NUXT_PUBLIC_TIKTOK_CLIENT_KEY || '',
       telegramBotName: process.env.NUXT_PUBLIC_TELEGRAM_BOT_NAME || 'RithyMartialBot',
     },
+    telegramClientId: process.env.TELEGRAM_CLIENT_ID,
+    telegramClientSecret: process.env.TELEGRAM_CLIENT_SECRET,
+
+    sessionSecret: process.env.NUXT_SESSION_SECRET,
+
+    public: {
+      telegramClientId: process.env.TELEGRAM_CLIENT_ID,
+    },
   },
 
   nitro: {

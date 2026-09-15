@@ -25,7 +25,6 @@ import { ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 
 const { locale, locales,setLocale, t } = useI18n()
-console.log(" locale ======================> ", locale)
 const isOpen = ref(false)
 const targetRef = ref(null)
 onClickOutside(targetRef, () => {
@@ -33,7 +32,6 @@ onClickOutside(targetRef, () => {
 })
 
 const i18n_redirected = useCookie('i18n_redirected')
-console.log(" i18n_redirected ======================> ", i18n_redirected.value)
 const currentLang = (lang) => {
   const item = locales.value?.find((e) => e.code === lang)
 

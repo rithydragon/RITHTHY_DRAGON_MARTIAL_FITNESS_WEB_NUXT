@@ -22,7 +22,7 @@
                 :class="['auth-modal__oauth-btn', `auth-modal__oauth-btn--${provider.id}`]"
                 @click="handleOAuth(provider.id)"
                 :disabled="auth.loading"
-                :aria-label="provider.name"
+                :aria-label="provider.Name"
               >
                 <i :class="provider.icon"></i>
                 <span>{{ provider.name }}</span>
@@ -37,27 +37,27 @@
           <form class="auth-modal__form" @submit.prevent="handleSubmit">
             <div v-if="mode === 'register' || mode === 'join'" class="auth-modal__field">
               <label>{{ t('auth.fullName') }}</label>
-              <input v-model="form.name" type="text" required :placeholder="t('auth.fullName')" />
+              <input v-model="form.Name" type="text" required :placeholder="t('auth.fullName')" />
             </div>
 
             <div class="auth-modal__field">
               <label>{{ t('auth.email') }}</label>
-              <input v-model="form.email" type="email" required :placeholder="t('auth.email')" />
+              <input v-model="form.Email" type="email" required :placeholder="t('auth.email')" />
             </div>
 
             <div v-if="mode === 'register' || mode === 'join'" class="auth-modal__field">
               <label>{{ t('auth.phone') }}</label>
-              <input v-model="form.phone" type="tel" :placeholder="t('auth.phone')" />
+              <input v-model="form.Phone" type="tel" :placeholder="t('auth.phone')" />
             </div>
 
             <div class="auth-modal__field">
               <label>{{ t('auth.password') }}</label>
-              <input v-model="form.password" type="password" required :placeholder="t('auth.password')" />
+              <input v-model="form.Password" type="password" required :placeholder="t('auth.password')" />
             </div>
 
             <div v-if="mode === 'register'" class="auth-modal__field">
               <label>{{ t('auth.confirmPassword') }}</label>
-              <input v-model="form.confirmPassword" type="password" required :placeholder="t('auth.confirmPassword')" />
+              <input v-model="form.ConfirmPassword" type="password" required :placeholder="t('auth.confirmPassword')" />
             </div>
 
             <div v-if="mode === 'join'" class="auth-modal__plans">
@@ -108,11 +108,11 @@ const { t } = useI18n()
 const auth = useAuthStore()
 
 const form = reactive({
-  name: '',
-  email: '',
-  phone: '',
-  password: '',
-  confirmPassword: '',
+  Name: '',
+  Email: '',
+  Phone: '',
+  Password: '',
+  ConfirmPassword: '',
 })
 
 const plans = [
@@ -173,13 +173,13 @@ function switchMode() {
 async function handleSubmit() {
   try {
     if (props.mode === 'login') {
-      await auth.login(form.email, form.password)
+      await auth.login(form.Email, form.Password)
     } else if (props.mode === 'register') {
       await auth.register({
-        name: form.name,
-        email: form.email,
-        password: form.password,
-        phone: form.phone,
+        Name: form.Name,
+        Email: form.Email,
+        Password: form.Password,
+        Phone: form.Phone,
       })
     } else if (props.mode === 'join') {
       await auth.joinPlan(selectedPlan.value)

@@ -43,12 +43,20 @@ export const useAuthStore = defineStore('auth', {
   },
 
   actions: {
+    apiBase() {
+      const config = useRuntimeConfig()
+      return String(config.apiBase ?? 'http://localhost:8080').replace(/\/+$/, '')
+    },
     async login(email: string, password: string) {
+      console.log("login ====> ", email, password)
       this.loading = true
       this.error = null
       try {
-        const { $http } = useNuxtApp()
-        const res = await ($http as any).post('/auth/login', { email, password })
+        const res = await $fetch(getUrl('/api/v1/auth/login'), {
+          method: 'POST',
+          body: { Email: email, Password: password }
+        })
+        console.log("response login ====> ", res)
         this.setSession(res.data)
         return res
       } catch (err: any) {
@@ -59,12 +67,14 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    async register(data: { name: string; email: string; password: string; phone?: string }) {
+    async register(data: { Name: string; Email: string; Password: string; Phone?: string }) {
       this.loading = true
       this.error = null
       try {
-        const { $http } = useNuxtApp()
-        const res = await ($http as any).post('/auth/register', data)
+        const res = await $fetch(getUrl('/api/v1/auth/register'), {
+          method: 'POST',
+          body: data
+        })
         this.setSession(res.data)
         return res
       } catch (err: any) {
@@ -79,8 +89,7 @@ export const useAuthStore = defineStore('auth', {
       this.loading = true
       this.error = null
       try {
-        const { $http } = useNuxtApp()
-        const res = await ($http as any).post(`/auth/oauth/${provider}/initiate`)
+        const res = await $fetch(getUrl(`/api/v1/auth/oauth/${provider}/initiate`))
         if (res.data?.redirectUrl && typeof window !== 'undefined') {
           window.location.href = res.data.redirectUrl
         }
@@ -113,8 +122,10 @@ export const useAuthStore = defineStore('auth', {
       this.loading = true
       this.error = null
       try {
-        const { $http } = useNuxtApp()
-        const res = await ($http as any).post('/memberships/join', { plan })
+        const res = await $fetch(getUrl('/api/v1/memberships/join'), {
+          method: 'POST',
+          body: { plan }
+        })
         return res
       } catch (err: any) {
         this.error = err?.message || 'Failed to join plan'
@@ -127,8 +138,7 @@ export const useAuthStore = defineStore('auth', {
     async fetchProfile() {
       if (!this.token) return
       try {
-        const { $http } = useNuxtApp()
-        const res = await ($http as any).get('/auth/me')
+        const res = await $fetch(getUrl('/api/v1/auth/me'))
         this.user = res.data
       } catch {
         this.logout()

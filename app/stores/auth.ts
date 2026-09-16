@@ -118,14 +118,29 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    async joinPlan(plan: 'basic' | 'pro' | 'elite') {
+    async joinPlan(
+      plan: 'free' | 'basic' | 'pro' | 'elite',
+      // plan: 'FREE' | 'BASIC' | 'PROFESSIONAL' | 'ELITE',
+      userData?: { Name?: string; Email?: string; Password?: string; Phone?: string }
+    ) {
       this.loading = true
       this.error = null
       try {
-        const res = await $fetch(getUrl('/api/v1/memberships/join'), {
+        const headers: Record<string, string> = {}
+        if (this.token) {
+          headers['Authorization'] = `Bearer ${this.token}`
+        }
+        const res: any = await $fetch(getUrl('/api/v1/memberships/join'), {
           method: 'POST',
-          body: { plan }
+          headers,
+          body: {
+            plan,
+            ...(userData || {}),
+          },
         })
+        if (res?.data?.token) {
+          this.setSession(res.data)
+        }
         return res
       } catch (err: any) {
         this.error = err?.message || 'Failed to join plan'
@@ -134,6 +149,24 @@ export const useAuthStore = defineStore('auth', {
         this.loading = false
       }
     },
+
+    async completePayment(paymentId: number, paymentMethod = 'aba_khqr') {
+      this.loading = true
+      this.error = null
+      try {
+        const res: any = await $fetch(getUrl(`/api/v1/memberships/payments/${paymentId}/complete`), {
+          method: 'POST',
+          body: { payment_method: paymentMethod },
+        })
+        return res
+      } catch (err: any) {
+        this.error = err?.message || 'Failed to complete payment'
+        throw err
+      } finally {
+        this.loading = false
+      }
+    },
+
 
     async fetchProfile() {
       if (!this.token) return

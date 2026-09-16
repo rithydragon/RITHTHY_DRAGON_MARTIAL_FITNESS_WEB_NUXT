@@ -31,7 +31,7 @@
             </li>
           </ul>
 
-          <RLink to="/contact" :class="['btn', plan.popular ? 'btn--primary' : 'btn--outline', 'btn--full']">
+          <RLink :to="'/?auth=join'" :class="['btn', plan.popular ? 'btn--primary' : 'btn--outline', 'btn--full']">
             Select Plan
           </RLink>
         </div>

@@ -93,7 +93,12 @@
 import { ref, reactive, computed } from 'vue'
 
 type AuthMode = 'login' | 'register' | 'join'
-
+type PlanCode =
+  | 'FREE'
+  | 'BASIC'
+  | 'PROFESSIONAL'
+  | 'ELITE'
+  
 const props = defineProps<{
   isOpen: boolean
   mode: AuthMode
@@ -116,13 +121,14 @@ const form = reactive({
 })
 
 const plans = [
-  { id: 'free', label: 'Free', price: 0 },
-  { id: 'basic', label: 'Basic', price: 49 },
-  { id: 'pro', label: 'Pro', price: 99 },
-  { id: 'elite', label: 'Elite', price: 199 },
+  { id: 'free', code: 'FREE', label: 'Free', price: 0 },
+  { id: 'basic', code: 'BASIC', label: 'Basic', price: 49 },
+  { id: 'pro', code: 'PRO', label: 'Pro', price: 99 },
+  { id: 'elite', code: 'ELITE', label: 'Elite', price: 199 },
 ] as const
 
-const selectedPlan = ref<'basic' | 'pro' | 'elite'>('pro')
+// const selectedPlan = ref<'free' | 'basic' | 'pro' | 'elite'>('pro')
+const selectedPlan = ref<PlanCode>('FREE')
 
 const providers = [
   { id: 'google', name: 'Google', icon: 'ri-google-fill' },
@@ -130,6 +136,8 @@ const providers = [
   { id: 'tiktok', name: 'TikTok', icon: 'ri-tiktok-fill' },
   { id: 'facebook', name: 'Facebook', icon: 'ri-facebook-circle-fill' },
 ] as const
+
+const router = useRouter()
 
 const titleText = computed(() => {
   const map: Record<AuthMode, string> = {
@@ -174,6 +182,7 @@ async function handleSubmit() {
   try {
     if (props.mode === 'login') {
       await auth.login(form.Email, form.Password)
+      close()
     } else if (props.mode === 'register') {
       await auth.register({
         Name: form.Name,
@@ -181,14 +190,30 @@ async function handleSubmit() {
         Password: form.Password,
         Phone: form.Phone,
       })
+      close()
     } else if (props.mode === 'join') {
-      await auth.joinPlan(selectedPlan.value)
+      const res: any = await auth.joinPlan(selectedPlan.value, {
+        Name: form.Name,
+        Email: form.Email,
+        Password: form.Password,
+        Phone: form.Phone,
+      })
+
+      if (res?.RequiresPayment) {
+        // PAID PLAN: Close modal & take user directly to payment/checkout page
+        close()
+        const checkoutUrl = res.checkoutUrl || `/checkout?subscriptionId=${res.subscriptionId}&paymentId=${res.paymentId}`
+        router.push(checkoutUrl)
+      } else {
+        // FREE PLAN: Immediately authenticate & close modal
+        close()
+      }
     }
-    close()
   } catch {
     // error is stored in auth.error
   }
 }
+
 
 async function handleOAuth(providerId: 'google' | 'telegram' | 'facebook' | 'tiktok') {
   try {
@@ -386,8 +411,8 @@ async function handleOAuth(providerId: 'google' | 'telegram' | 'facebook' | 'tik
 
 .auth-modal__plans {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.4rem;
   margin-bottom: 1rem;
 }
 

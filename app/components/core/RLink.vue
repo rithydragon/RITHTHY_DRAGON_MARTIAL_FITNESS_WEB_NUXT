@@ -34,8 +34,6 @@ const computedTo = computed(() => {
   // Internal route
   return localePath(props.to)
 })
-
-console.log(" ===== RLink ===== ",computedTo.value)
 </script>
 
 <template>

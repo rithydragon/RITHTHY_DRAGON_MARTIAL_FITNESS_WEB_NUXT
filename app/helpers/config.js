@@ -5,9 +5,9 @@ const BASE_URL =
 console.log("Basic URL =====================> ", BASE_URL)
 
 export default {
-  BASE_URL: BASE_URL || 'http://localhost:8000/', // Base URL for the API 45686
+  BASE_URL: BASE_URL || 'http://localhost:58721/', // Base URL for the API 45686
   webUrl: BASE_URL || 'http://localhost:3001/', // Base URL for the web app
-  apiUrl: BASE_URL || 'http://localhost:8000/', // Base URL for the API
+  apiUrl: BASE_URL || 'http://localhost:58721/', // Base URL for the API
   wsUrl: 'ws://localhost:8000/', // WebSocket URL
   basicKey: process.env.BASIC_KEY || 'xxfbghvhbkjlktyiopopýVCXsdwa$334345324#weFZcZVFXB', // Basic key for authentication 
   apiPaths: {

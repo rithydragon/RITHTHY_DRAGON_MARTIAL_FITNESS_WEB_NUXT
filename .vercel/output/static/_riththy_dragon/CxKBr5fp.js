@@ -1,1 +1,0 @@
-import{W as c}from"./CMIbcI-X.js";const s=["en","km","zh"],r="en",u=(e="/")=>{const o=c("i18n_redirected").value;if(/^(https?:)?\/\//.test(e))return e;const t=e.startsWith("/")?e:`/${e}`,n=s.includes(o)?o:r;return n===r?t:`/${n}${t}`};export{u as _};

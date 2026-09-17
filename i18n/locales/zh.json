@@ -150,7 +150,9 @@
     "programs": "课程",
     "followUs": "关注我们",
     "rights": "保留所有权利。",
-    "madeWith": "在柬埔寨以纪律铸造"
+    "madeWith": "在柬埔寨以纪律铸造",
+    "terms": "服务条款",
+    "privacy": "隐私政策"
   },
   "auth": {
     "loginTitle": "欢迎回来",
@@ -182,5 +184,15 @@
     "empty": "暂无通知。",
     "newArticle": "新文章已发布",
     "accountAlert": "账户提醒"
+  },
+  "terms": {
+    "title": "服务条款与健身房守则",
+    "subtitle": "在使用我们的服务或在 RITHTHY Fitness 训练之前，请仔细阅读这些条款与细则。",
+    "lastUpdated": "最后更新时间：2026年9月17日"
+  },
+  "privacy": {
+    "title": "隐私政策与数据保护",
+    "subtitle": "RITHTHY Fitness 如何收集、使用和保护您的个人数据以及 OAuth2 登录信息。",
+    "lastUpdated": "最后更新时间：2026年9月17日"
   }
 }

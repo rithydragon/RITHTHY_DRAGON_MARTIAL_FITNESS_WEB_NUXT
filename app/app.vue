@@ -5,7 +5,7 @@
     <NuxtLayout :transition="{ name: 'page', mode: 'out-in' }" :dark="!false">
       <NuxtPage />
     </NuxtLayout>
-    <AutoResponsePanel />
+    <!-- <AutoResponsePanel /> -->
   </div>
 </template>
 

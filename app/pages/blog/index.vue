@@ -139,7 +139,6 @@ import { ref, computed, onMounted } from 'vue'
 import articlesData from '~/assets/json/articles.json'
 
 const { t, locale } = useI18n()
-const { tBy } = useTBy()
 const animate = useAnimate()
 
 // useSeo('blog')

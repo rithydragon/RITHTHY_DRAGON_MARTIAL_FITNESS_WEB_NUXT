@@ -150,7 +150,9 @@
     "programs": "Programs",
     "followUs": "Follow Us",
     "rights": "All rights reserved.",
-    "madeWith": "Crafted with discipline in Cambodia"
+    "madeWith": "Crafted with discipline in Cambodia",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy"
   },
   "auth": {
     "loginTitle": "Welcome Back",
@@ -182,5 +184,15 @@
     "empty": "No notifications yet.",
     "newArticle": "New article published",
     "accountAlert": "Account alert"
+  },
+  "terms": {
+    "title": "Terms of Service & Rules",
+    "subtitle": "Please read these terms and conditions carefully before using our services or training at RITHTHY Fitness.",
+    "lastUpdated": "Last Updated: September 17, 2026"
+  },
+  "privacy": {
+    "title": "Privacy Policy & Data Protection",
+    "subtitle": "How RITHTHY Fitness collects, uses, and safeguards your personal data during account creation, OAuth login, and class bookings.",
+    "lastUpdated": "Last Updated: September 17, 2026"
   }
 }

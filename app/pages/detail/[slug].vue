@@ -106,7 +106,6 @@ import gymData from '~/assets/json/gymData.json'
 
 const route = useRoute()
 const { t, locale } = useI18n()
-const { tBy } = useTBy()
 
 const fallbackImage = 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=800&auto=format&fit=crop'
 

@@ -35,7 +35,6 @@
 import { ref } from 'vue'
 
 const { t } = useI18n()
-const { tBy } = useTBy()
 const openIndex = ref(0)
 
 function toggleFaq(idx) {

@@ -54,7 +54,6 @@ import articlesData from '~/assets/json/articles.json'
 
 const route = useRoute()
 const { t } = useI18n()
-const { tBy } = useTBy()
 const animate = useAnimate()
 
 const articles = Array.isArray(articlesData)

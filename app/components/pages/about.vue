@@ -60,7 +60,6 @@
 import { onMounted } from 'vue'
 
 const { t } = useI18n()
-const { tBy } = useTBy()
 const animate = useAnimate()
 
 onMounted(() => {

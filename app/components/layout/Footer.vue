@@ -37,6 +37,11 @@
 
       <div class="footer__bottom">
         <p>&copy; {{ year }} RITHTHY Fitness. {{ t('footer.rights') }}</p>
+        <div class="footer__bottom-links">
+          <NuxtLink :to="localePath('/terms')" class="footer__bottom-link">{{ t('footer.terms') }}</NuxtLink>
+          <span class="footer__divider">•</span>
+          <NuxtLink :to="localePath('/privacy-policy')" class="footer__bottom-link">{{ t('footer.privacy') }}</NuxtLink>
+        </div>
       </div>
     </div>
   </footer>
@@ -45,6 +50,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 const { t } = useI18n()
+const localePath = useLocalePath()
 const menu = await useMenuData()
 const year = new Date().getFullYear()
 
@@ -156,11 +162,41 @@ onMounted(() => {
   margin-top: var(--space-5);
   padding-top: var(--space-3);
   border-top: 1px solid var(--c-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
   text-align: center;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 
   p {
     color: var(--c-muted);  
     font-size: 0.75rem;
   }
+}
+
+.footer__bottom-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.footer__bottom-link {
+  color: var(--c-muted);
+  font-size: 0.75rem;
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--c-primary);
+  }
+}
+
+.footer__divider {
+  color: var(--c-border);
+  font-size: 0.75rem;
 }
 </style>

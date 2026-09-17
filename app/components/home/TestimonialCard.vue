@@ -34,7 +34,6 @@ interface Testimonial {
 }
 
 defineProps<{ testimonial: Testimonial }>()
-const { tBy } = useTBy()
 </script>
 
 <style scoped>

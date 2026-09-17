@@ -175,13 +175,23 @@
     "footer": [
       {
         "id": "about",
-        "label": "about",
+        "label": "nav.about",
         "href": "/about"
       },
       {
         "id": "contact",
-        "label": "contact",
+        "label": "nav.contact",
         "href": "/contact"
+      },
+      {
+        "id": "terms",
+        "label": "footer.terms",
+        "href": "/terms"
+      },
+      {
+        "id": "privacy",
+        "label": "footer.privacy",
+        "href": "/privacy-policy"
       }
     ]
   },

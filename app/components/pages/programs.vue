@@ -47,7 +47,6 @@
 
 <script setup>
 const { t } = useI18n()
-const { tBy } = useTBy()
 
 // useSeo('programs')
 

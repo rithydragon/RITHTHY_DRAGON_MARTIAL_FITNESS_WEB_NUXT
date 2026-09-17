@@ -35,7 +35,6 @@ interface Article {
 
 const props = defineProps<{ article: Article }>()
 const { t } = useI18n()
-const { tBy } = useTBy()
 
 function formatDate(date: string): string {
   return new Date(date).toLocaleDateString('en-US', {

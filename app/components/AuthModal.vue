@@ -225,7 +225,7 @@ async function handleOAuth(providerId: 'google' | 'telegram' | 'facebook' | 'tik
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .auth-modal__overlay {
   position: fixed;
   inset: 0;

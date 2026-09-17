@@ -56,9 +56,6 @@
         <LanguageSwitcher />
         <ThemeToggle />
         <NotificationBell />
-        <TelegramLogin
-          @success="onTelegramSuccess"
-        />
         <template v-if="auth.isLoggedIn">
           <NuxtLink :to="localePath('/account')" class="navbar__user">
             <span class="navbar__user-avatar">{{ auth.userInitials }}</span>

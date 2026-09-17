@@ -59,10 +59,12 @@ export const useAuthStore = defineStore('auth', {
         })
 
         console.log("response login ====> ", res)
-        this.setSession(res.data)
+      // useCookie('access_token', this.cookieOptions(60 * 60)).value = res.data.access_token
+      // useCookie('refresh_token', this.cookieOptions(60 * 60 * 24 * 30)).value = res.data.refreshToken
+        await this.setSession(res.data)
         return res
       } catch (err: any) {
-        this.error = err?.message || 'Login failed'
+        err?.response?.data?.message ?? err?.message ?? 'Login failed'
         throw err
       } finally {
         this.loading = false
@@ -73,9 +75,11 @@ export const useAuthStore = defineStore('auth', {
       this.loading = true
       this.error = null
       try {
-        const res = await $fetch(getUrl('/api/v1/auth/register'), {
-          method: 'POST',
-          body: data
+        const res = await axios.post(getUrl('/api/v1/auth/register'), {
+          Name: data.Name,
+          Email: data.Email,
+          Password: data.Password,
+          Phone: data.Phone
         })
         this.setSession(res.data)
         return res
@@ -94,9 +98,8 @@ export const useAuthStore = defineStore('auth', {
       if (!this.refreshToken) return false
 
       try {
-        const res: any = await $fetch(getUrl('/api/v1/auth/refresh'), {
-          method: 'POST',
-          body: { RefreshToken: this.refreshToken },
+        const res: any = await axios.post(getUrl('/api/v1/auth/refresh'), {
+          RefreshToken: this.refreshToken,
         })
 
         const d = res?.data ?? res
@@ -120,11 +123,8 @@ export const useAuthStore = defineStore('auth', {
       this.loading = true
       this.error = null
       try {
-        const res = await $fetch(getUrl(`/api/v1/auth/oauth/initiate`), {
-          method: 'POST',
-          body: {
-            Provider: provider
-          }
+        const res = await axios.post(getUrl(`/api/v1/auth/oauth/initiate`), {
+          Provider: provider
         })
         if (res.data?.redirectUrl && typeof window !== 'undefined') {
           // Remember which provider initiated the flow so /oauth/callback
@@ -173,13 +173,10 @@ export const useAuthStore = defineStore('auth', {
         if (this.token) {
           headers['Authorization'] = `Bearer ${this.token}`
         }
-        const res: any = await $fetch(getUrl('/api/v1/memberships/join'), {
-          method: 'POST',
+        const res: any = await axios.post(getUrl('/api/v1/memberships/join'), {
           headers,
-          body: {
-            plan,
-            ...(userData || {}),
-          },
+          plan,
+          ...(userData || {}),
         })
         if (res?.data?.token) {
           this.setSession(res.data)
@@ -197,9 +194,8 @@ export const useAuthStore = defineStore('auth', {
       this.loading = true
       this.error = null
       try {
-        const res: any = await $fetch(getUrl(`/api/v1/memberships/payments/${paymentId}/complete`), {
-          method: 'POST',
-          body: { payment_method: paymentMethod },
+        const res: any = await axios.post(getUrl(`/api/v1/memberships/payments/${paymentId}/complete`), {
+          payment_method: paymentMethod,
         })
         return res
       } catch (err: any) {
@@ -236,6 +232,7 @@ export const useAuthStore = defineStore('auth', {
 
     setSession(data: any) {
       const d = data?.data ?? data
+      console.log("setSession data ====> ", d)
       const token = d?.token || d?.AccessToken || d?.Accesstoken || d?.access_token || null
       const refreshToken = d?.refreshToken || d?.RefreshToken || d?.Refreshtoken || d?.refresh_token || null
       const expiresIn = d?.expires_in ?? d?.ExpiresIn ?? d?.Expiresin ?? d?.expire_in ?? null
@@ -243,17 +240,25 @@ export const useAuthStore = defineStore('auth', {
       if (token) this.token = token
       if (refreshToken) this.refreshToken = refreshToken
       if (d?.user) this.user = d.user
+
       this.isAuthenticated = !!this.token
 
       // Persist tokens + user data to cookies (JS-readable, sameSite lax, secure in prod)
-      useCookie('access_token', this.cookieOptions(60 * 60)).value = token
-      useCookie('refresh_token', this.cookieOptions(60 * 60 * 24 * 30)).value = refreshToken
+      useCookie('access_token', this.cookieOptions()).value = token
+      useCookie('refresh_token', this.cookieOptions()).value = refreshToken
       if (expiresIn) useCookie('expire_in', this.cookieOptions()).value = String(expiresIn)
+
+      // Store complete Pinia session
       this.persist()
 
       // If the session payload already contains the profile, use it directly.
-      if (d?.user) return
-      this.fetchProfile()
+      // if (d?.user) return
+      // this.fetchProfile()
+
+      // Only fetch profile when backend didn't return user
+      if (!this.user && this.token) {
+        this.fetchProfile()
+      }
     },
 
     logout() {

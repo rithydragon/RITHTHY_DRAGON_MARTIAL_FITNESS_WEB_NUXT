@@ -31,7 +31,7 @@ export const useRefreshToken = async (force = false) => {
     // Both tokens gone — session fully expired, redirect to login
     resolveQueue(false);
     const authStore = useAuthStore();
-    authStore.clearAuthCookies();
+    authStore.logout();
     await navigateTo(localePath('/?auth=login'), { replace: true })
     return false;
   }
@@ -88,7 +88,7 @@ export const useRefreshToken = async (force = false) => {
     useCookie('refresh_token', { maxAge: 0, sameSite: 'lax', secure: isProdClear, path: '/' }).value = null;
 
     const authStore = useAuthStore();
-    authStore.clearAuthCookies();
+    authStore.logout();
 
     await navigateTo(localePath('/?auth=login'), { replace: true })
     // await navigateTo('/', { replace: true });

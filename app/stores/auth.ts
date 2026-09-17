@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { defineStore } from 'pinia'
 
 export interface AuthUser {
@@ -53,12 +54,12 @@ export const useAuthStore = defineStore('auth', {
       this.loading = true
       this.error = null
       try {
-        const res = await $fetch(getUrl('/api/v1/auth/login'), {
-          method: 'POST',
-          body: { Email: email, Password: password }
+        const res = await axios.post(getUrl('/api/v1/auth/login'), {
+          Email: email, Password: password
         })
+
         console.log("response login ====> ", res)
-        this.setSession(res)
+        this.setSession(res.data)
         return res
       } catch (err: any) {
         this.error = err?.message || 'Login failed'
@@ -93,18 +94,20 @@ export const useAuthStore = defineStore('auth', {
       if (!this.refreshToken) return false
 
       try {
-        const config = useRuntimeConfig()
+        const res: any = await $fetch(getUrl('/api/v1/auth/refresh'), {
+          method: 'POST',
+          body: { RefreshToken: this.refreshToken },
+        })
 
-        const { data } = await axios.post(
-          `${config.public.apiBase}/api/auth/refresh`,
-          {
-            RefreshToken: this.refreshToken,
-          }
-        )
+        const d = res?.data ?? res
+        const token = d?.token || d?.AccessToken || d?.access_token
+        const refreshToken = d?.refreshToken || d?.RefreshToken || d?.refresh_token
 
-        this.token = data.AccessToken
-        useCookie('rama_access_token').value =
-          data.AccessToken
+        if (!token) return false
+
+        this.token = token
+        if (refreshToken) this.refreshToken = refreshToken
+        this.persist()
 
         return true
       } catch (error) {
@@ -126,13 +129,11 @@ export const useAuthStore = defineStore('auth', {
         if (res.data?.redirectUrl && typeof window !== 'undefined') {
           // Remember which provider initiated the flow so /oauth/callback
           // can verify the access token and fetch the right user profile.
-          if (typeof localStorage !== 'undefined') {
-            useCookie('rmf-oauth-pending', JSON.stringify({
-              provider,
-              redirect: '/',
-              ts: Date.now(),
-            }))
-          }
+          localStorage.setItem('rmf-oauth-pending', JSON.stringify({
+            provider,
+            redirect: '/',
+            ts: Date.now(),
+          }))
           window.location.href = res.data.redirectUrl
         }
         return res
@@ -213,27 +214,46 @@ export const useAuthStore = defineStore('auth', {
     async fetchProfile() {
       if (!this.token) return
       try {
-        const { data } = await useWeb('/api/v1/auth/me')
-        useUserData(data)
-        console.log("fetchProfile ====> ", data)
-        this.user = data
+        const { data: ref } = await useWeb('/api/v1/auth/me')
+        const body = ref?.value
+        const raw = body?.data ?? body
+        if (raw) {
+          this.user = {
+            id: raw.id ?? raw.Id ?? 'member',
+            name: raw.name ?? raw.Name ?? raw.email ?? raw.Email ?? 'Member',
+            email: raw.email ?? raw.Email ?? '',
+            avatar: raw.avatar ?? raw.Avatar ?? raw.image ?? raw.Image ?? undefined,
+            role: raw.role ?? raw.Role ?? 'member',
+            plan: raw.plan ?? raw.Plan ?? undefined,
+          }
+          this.persist()
+        }
       } catch (err) {
-        console.log("fetchProfile error ====> ", err)
+        console.error('fetchProfile error ====> ', err)
         this.logout()
       }
     },
 
     setSession(data: any) {
-      console.log("setSession ====> ", data)
-      useCookie('access_token').value = data.Accesstoken
-      useCookie('refresh_token').value = data.Refreshtoken
-      useCookie('expire_in').value = data.Expiresin
-      this.token = data.Accesstoken
-      this.refreshToken = data.Refreshtoken
-      // this.user = data.user
-      this.fetchProfile();
-      this.isAuthenticated = true
+      const d = data?.data ?? data
+      const token = d?.token || d?.AccessToken || d?.Accesstoken || d?.access_token || null
+      const refreshToken = d?.refreshToken || d?.RefreshToken || d?.Refreshtoken || d?.refresh_token || null
+      const expiresIn = d?.expires_in ?? d?.ExpiresIn ?? d?.Expiresin ?? d?.expire_in ?? null
+
+      if (token) this.token = token
+      if (refreshToken) this.refreshToken = refreshToken
+      if (d?.user) this.user = d.user
+      this.isAuthenticated = !!this.token
+
+      // Persist tokens + user data to cookies (JS-readable, sameSite lax, secure in prod)
+      useCookie('access_token', this.cookieOptions(60 * 60)).value = token
+      useCookie('refresh_token', this.cookieOptions(60 * 60 * 24 * 30)).value = refreshToken
+      if (expiresIn) useCookie('expire_in', this.cookieOptions()).value = String(expiresIn)
       this.persist()
+
+      // If the session payload already contains the profile, use it directly.
+      if (d?.user) return
+      this.fetchProfile()
     },
 
     logout() {
@@ -241,27 +261,45 @@ export const useAuthStore = defineStore('auth', {
       this.token = null
       this.refreshToken = null
       this.isAuthenticated = false
-      this.clearPersisted()
+      this.clearAuthCookies()
+    },
+
+    cookieOptions(maxAge = 60 * 60 * 24 * 30) {
+      return {
+        maxAge,
+        sameSite: 'lax' as const,
+        secure: import.meta.env.PROD,
+        path: '/',
+      }
+    },
+
+    clearAuthCookies() {
+      for (const name of ['access_token', 'refresh_token', 'expire_in', 'rmf-auth', 'rama_access_token', 'user_data']) {
+        useCookie(name, { ...this.cookieOptions(), maxAge: 0 }).value = null
+        if (typeof document !== 'undefined') {
+          document.cookie = `${name}=; Max-Age=0; Path=/; SameSite=Lax`
+        }
+      }
     },
 
     persist() {
-      if (typeof localStorage === 'undefined') return
-      useCookie('rmf-auth').value = JSON.stringify({
-        token: this.token,
-        refreshToken: this.refreshToken,
-        user: this.user,
-      })
+      try {
+        useCookie('rmf-auth', this.cookieOptions()).value = JSON.stringify({
+          token: this.token,
+          refreshToken: this.refreshToken,
+          user: this.user,
+        })
+      } catch { /* ignore */ }
     },
 
     restore() {
-      if (typeof localStorage === 'undefined') return
-      const raw = localStorage.getItem('rmf-auth')
+      const raw = useCookie('rmf-auth').value
       if (!raw) return
       try {
         const data = JSON.parse(raw)
-        this.token = data.token
-        this.refreshToken = data.refreshToken
-        this.user = data.user
+        this.token = data.token || null
+        this.refreshToken = data.refreshToken || null
+        this.user = data.user || null
         this.isAuthenticated = !!data.token
       } catch {
         this.clearPersisted()
@@ -269,8 +307,10 @@ export const useAuthStore = defineStore('auth', {
     },
 
     clearPersisted() {
-      if (typeof localStorage === 'undefined') return
-      localStorage.removeItem('rmf-auth')
+      useCookie('rmf-auth', { ...this.cookieOptions(), maxAge: 0 }).value = null
+      if (typeof document !== 'undefined') {
+        document.cookie = `rmf-auth=; Max-Age=0; Path=/; SameSite=Lax`
+      }
     },
   },
 })

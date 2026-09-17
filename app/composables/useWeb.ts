@@ -40,7 +40,8 @@ export async function useWeb<T = any>(
 
   const request = async (retry = true) => {
     try {
-      const accessToken = useCookie('access_token')
+      const accessToken = useCookie('access_token').value
+      console.log("Access Token: ", accessToken)
 
       const requestHeaders: Record<string, string> = {
         Accept: 'application/json',
@@ -48,8 +49,8 @@ export async function useWeb<T = any>(
         ...headers,
       }
 
-      if (auth && accessToken.value) {
-        requestHeaders.Authorization = `Bearer ${accessToken.value}`
+      if (auth && accessToken) {
+        requestHeaders.Authorization = `Bearer ${accessToken}`
       }
 
       const response = await axios({

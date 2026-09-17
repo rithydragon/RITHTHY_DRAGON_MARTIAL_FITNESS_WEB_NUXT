@@ -87,10 +87,7 @@ async function verifyAndStore(accessToken: string, refreshToken?: string | null)
     console.log("User in verifyAndStore function: ", user)
     if (!user?.id && !user?.Name && !user?.name) throw new Error('Invalid profile')
 
-    auth.token = accessToken
-    auth.refreshToken = refreshToken || null
     auth.setSession({ token: accessToken, refreshToken: refreshToken || '', user: normalizeUser(user) })
-    persistExtras(accessToken, refreshToken)
     return true
   } catch {
     // Try refresh
@@ -100,7 +97,6 @@ async function verifyAndStore(accessToken: string, refreshToken?: string | null)
         const user = await fetchProfile(auth.token)
         if (user?.id || user?.Id || user?.Name || user?.name) {
           auth.setSession({ token: auth.token, refreshToken: auth.refreshToken || '', user: normalizeUser(user) })
-          persistExtras(auth.token, auth.refreshToken)
           return true
         }
       }
@@ -117,13 +113,6 @@ function normalizeUser(raw: any) {
     avatar: raw.avatar ?? raw.Avatar ?? raw.image ?? raw.Image ?? null,
     role: raw.role ?? raw.Role ?? 'member',
   }
-}
-
-function persistExtras(token: string | null, refreshToken: string | null) {
-  try {
-    if (token) localStorage.setItem('access_token', token)
-    if (refreshToken) localStorage.setItem('refresh_token', refreshToken)
-  } catch { /* ignore */ }
 }
 
 // ---------------------------------------------------------------------------

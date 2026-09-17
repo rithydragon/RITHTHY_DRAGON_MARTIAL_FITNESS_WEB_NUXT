@@ -31,7 +31,7 @@ export const useRefreshToken = async (force = false) => {
     // Both tokens gone — session fully expired, redirect to login
     resolveQueue(false);
     const authStore = useAuthStore();
-    authStore.logout();
+    authStore.clearAuthCookies();
     await navigateTo(localePath('/?auth=login'), { replace: true })
     return false;
   }
@@ -53,7 +53,10 @@ export const useRefreshToken = async (force = false) => {
     const baseUrl = (useCookie('tmp_server').value || config.apiUrl).replace(/\/$/, '');
 
     const response = await axios.post(
-      `${baseUrl}/api/v1/auth/refresh?refreshToken=${encodeURIComponent(refreshToken)}`
+      `${getUrl('/api/v1/auth/refresh')}`,
+      {
+        refresh_token: encodeURIComponent(refreshToken)
+      }
     );
 
     const payload = response.data?.data ?? response.data;
@@ -72,8 +75,9 @@ export const useRefreshToken = async (force = false) => {
 
     // Sync Pinia store
     const authStore = useAuthStore();
-    authStore.access_token = payload.accessToken;
-    authStore.refreshTokenValue = payload.refreshToken;
+    authStore.token = payload.accessToken;
+    if (payload.refreshToken) authStore.refreshToken = payload.refreshToken;
+    authStore.persist();
 
     resolveQueue(true);
     return true;
@@ -84,7 +88,7 @@ export const useRefreshToken = async (force = false) => {
     useCookie('refresh_token', { maxAge: 0, sameSite: 'lax', secure: isProdClear, path: '/' }).value = null;
 
     const authStore = useAuthStore();
-    authStore.logout();
+    authStore.clearAuthCookies();
 
     await navigateTo(localePath('/?auth=login'), { replace: true })
     // await navigateTo('/', { replace: true });

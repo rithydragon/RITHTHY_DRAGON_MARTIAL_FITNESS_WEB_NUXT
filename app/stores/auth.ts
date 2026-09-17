@@ -29,7 +29,7 @@ export const useAuthStore = defineStore('auth', {
   }),
 
   getters: {
-    isLoggedIn: (state) => state.isAuthenticated && !!state.user,
+    isLoggedIn: (state) => state.isAuthenticated || !!state.user,
     userName: (state) => state.user?.name || '',
     userInitials: (state) => {
       if (!state.user?.name) return ''
@@ -47,6 +47,7 @@ export const useAuthStore = defineStore('auth', {
       const config = useRuntimeConfig()
       return String(config.apiBase ?? 'http://localhost:8080').replace(/\/+$/, '')
     },
+    
     async login(email: string, password: string) {
       console.log("login ====> ", email, password)
       this.loading = true
@@ -57,7 +58,7 @@ export const useAuthStore = defineStore('auth', {
           body: { Email: email, Password: password }
         })
         console.log("response login ====> ", res)
-        this.setSession(res.data)
+        this.setSession(res)
         return res
       } catch (err: any) {
         this.error = err?.message || 'Login failed'
@@ -85,12 +86,53 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
+    /* ------------------------------------------
+     REFRESH TOKEN
+    ------------------------------------------ */
+    async refreshAccessToken() {
+      if (!this.refreshToken) return false
+
+      try {
+        const config = useRuntimeConfig()
+
+        const { data } = await axios.post(
+          `${config.public.apiBase}/api/auth/refresh`,
+          {
+            RefreshToken: this.refreshToken,
+          }
+        )
+
+        this.token = data.AccessToken
+        useCookie('rama_access_token').value =
+          data.AccessToken
+
+        return true
+      } catch (error) {
+        await this.logout(false)
+        return false
+      }
+    },
+
     async loginWithProvider(provider: 'google' | 'telegram' | 'facebook' | 'tiktok') {
       this.loading = true
       this.error = null
       try {
-        const res = await $fetch(getUrl(`/api/v1/auth/oauth/${provider}/initiate`))
+        const res = await $fetch(getUrl(`/api/v1/auth/oauth/initiate`), {
+          method: 'POST',
+          body: {
+            Provider: provider
+          }
+        })
         if (res.data?.redirectUrl && typeof window !== 'undefined') {
+          // Remember which provider initiated the flow so /oauth/callback
+          // can verify the access token and fetch the right user profile.
+          if (typeof localStorage !== 'undefined') {
+            useCookie('rmf-oauth-pending', JSON.stringify({
+              provider,
+              redirect: '/',
+              ts: Date.now(),
+            }))
+          }
           window.location.href = res.data.redirectUrl
         }
         return res
@@ -171,17 +213,23 @@ export const useAuthStore = defineStore('auth', {
     async fetchProfile() {
       if (!this.token) return
       try {
-        const res = await $fetch(getUrl('/api/v1/auth/me'))
-        this.user = res.data
-      } catch {
+        const { data } = await useWeb('/api/v1/auth/me')
+        console.log("fetchProfile ====> ", data)
+        this.user = data
+      } catch (err) {
+        console.log("fetchProfile error ====> ", err)
         this.logout()
       }
     },
 
-    setSession(data: { token: string; refreshToken: string; user: AuthUser }) {
-      this.token = data.token
-      this.refreshToken = data.refreshToken
-      this.user = data.user
+    setSession(data: any) {
+      console.log("setSession ====> ", data)
+      useCookie('access_token').value = data.Accesstoken
+      useCookie('refresh_token').value = data.Refreshtoken
+      this.token = data.Accesstoken
+      this.refreshToken = data.Refreshtoken
+      // this.user = data.user
+      this.fetchProfile();
       this.isAuthenticated = true
       this.persist()
     },
@@ -196,11 +244,11 @@ export const useAuthStore = defineStore('auth', {
 
     persist() {
       if (typeof localStorage === 'undefined') return
-      localStorage.setItem('rmf-auth', JSON.stringify({
+      useCookie('rmf-auth').value = JSON.stringify({
         token: this.token,
         refreshToken: this.refreshToken,
         user: this.user,
-      }))
+      })
     },
 
     restore() {

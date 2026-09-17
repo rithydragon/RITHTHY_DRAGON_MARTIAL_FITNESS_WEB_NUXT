@@ -5,6 +5,7 @@ import { useThemeStore } from '../stores/theme'
 import { useScreenStore } from '../stores/screen'
 import { useAuthStore } from '../stores/auth'
 import { useNotificationStore } from '../stores/notifications'
+import { useWebSocketNotifications } from '../composables/useWebSocketNotifications'
 import { useHttp } from '../composables/useHttp'
 import { useI18n } from '#imports'
 import { useSession } from '../composables/useSession'
@@ -34,6 +35,9 @@ export default defineNuxtPlugin((nuxtApp) => {
   // Seed demo notifications
   notifications.fetchInitialNotifications()
 
+  // Try to replace seeded mocks with real notifications from the backend
+  notifications.fetchFromApi()
+
   // Provide $http globally
   const http = useHttp()
   nuxtApp.provide('http', http)
@@ -41,6 +45,11 @@ export default defineNuxtPlugin((nuxtApp) => {
   // Init animations after mount
   nuxtApp.hook('app:mounted', () => {
     animate.init()
+
+    // Start the WebSocket notification stream (client only)
+    if (import.meta.client) {
+      useWebSocketNotifications().connect()
+    }
   })
 
   // Re-observe [data-animate] elements on every route change

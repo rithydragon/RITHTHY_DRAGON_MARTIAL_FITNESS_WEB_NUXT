@@ -1,0 +1,1 @@
+import{W as t,ao as m,ap as n}from"./CMIbcI-X.js";function k(e){switch(t(m.langCode).value){case"km":return n(e.km)?e?.km:n(e.en)?e?.en:"";case"en":return n(e.en)?e?.en:n(e.km)?e?.km:"";case"zh":return n(e.zh)?e?.zh:n(e.km)?e?.km:"";default:return n(e.km)?e?.km:n(e.en)?e?.en:""}}export{k as _};

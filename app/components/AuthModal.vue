@@ -1,7 +1,7 @@
 <template>
   <Teleport to="body">
     <Transition name="modal">
-      <div v-if="isOpen" class="auth-modal__overlay" @click.self="close">
+      <div v-if="isOpen" class="auth-modal__overlay">
         <div class="auth-modal">
           <button class="auth-modal__close" @click="close" :aria-label="t('common.close')">
             <i class="ri-close-line"></i>
@@ -90,7 +90,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, watch } from 'vue'
+import { useEventListener } from '@vueuse/core'
 
 type AuthMode = 'login' | 'register' | 'join'
 type PlanCode =
@@ -173,6 +174,14 @@ const switchText = computed(() => {
 function close() {
   emit('close')
 }
+
+useEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && props.isOpen) close()
+})
+
+watch(() => auth.isLoggedIn, (loggedIn) => {
+  if (loggedIn && props.isOpen) close()
+})
 
 function switchMode() {
   emit('switchMode', props.mode === 'login' ? 'register' : 'login')

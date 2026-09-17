@@ -9,6 +9,8 @@
     "testimonials": "មតិយោបល់",
     "contact": "ទំនាក់ទំនង",
     "programs": "កម្មវិធី",
+    "pricing": "តម្លៃ",
+    "trainers": "គ្រូបង្វឹក",
     "schedule_pricing":"តារាងតម្លៃ",
     "pricing_plans":"ផែនការតម្លៃ",
     "contact_us":"ទំនាក់ទំនង",
@@ -181,9 +183,16 @@
   "notifications": {
     "title": "ការជូនដំណឹង",
     "markAllRead": "សម្គាល់ទាំងអស់ថាបានអាន",
+    "mark_all_read": "សម្គាល់ទាំងអស់ថាបានអាន",
     "empty": "មិនទាន់មានការជូនដំណឹងទេ។",
     "newArticle": "បានបោះពុម្ពអត្ថបទថ្មី",
-    "accountAlert": "ការជូនដំណឹងគណនី"
+    "accountAlert": "ការជូនដំណឹងគណនី",
+    "all": "ទាំងអស់",
+    "unread": "មិនទាន់អាន",
+    "unread_notifications": "ការជូនដំណឹងមិនទាន់អាន",
+    "read": "បានអាន",
+    "no_notifications": "មិនទាន់មានការជូនដំណឹងទេ។",
+    "live": "ផ្សាយផ្ទាល់"
   },
   "terms": {
     "title": "លក្ខខណ្ឌសេវាកម្ម និងវិន័យក្លឹប",

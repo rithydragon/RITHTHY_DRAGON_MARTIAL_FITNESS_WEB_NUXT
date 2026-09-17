@@ -1,0 +1,215 @@
+{
+  "version": 3,
+  "overrides": {},
+  "routes": [
+    {
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      },
+      "src": "/_riththy_dragon/builds/meta/(.*)"
+    },
+    {
+      "headers": {
+        "cache-control": "public, max-age=1, immutable"
+      },
+      "src": "/_riththy_dragon/builds/(.*)"
+    },
+    {
+      "status": 307,
+      "headers": {
+        "Location": "/sitemap_index.xml"
+      },
+      "src": "/sitemap.xml"
+    },
+    {
+      "headers": {
+        "X-Robots-Tag": "noindex"
+      },
+      "src": "/_riththy_dragon"
+    },
+    {
+      "headers": {
+        "X-Robots-Tag": "noindex"
+      },
+      "src": "/_riththy_dragon**"
+    },
+    {
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      },
+      "src": "/_riththy_dragon/(.*)"
+    },
+    {
+      "src": "/_riththy_dragon/builds/meta(.*)",
+      "headers": {
+        "cache-control": "public,max-age=31536000,immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "/_riththy_dragon/builds(.*)",
+      "headers": {
+        "cache-control": "public,max-age=31536000,immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "/_riththy_dragon(.*)",
+      "headers": {
+        "cache-control": "public,max-age=31536000,immutable"
+      },
+      "continue": true
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "(?<__isr_route>/__nuxt_error)",
+      "dest": "/__fallback"
+    },
+    {
+      "src": "/zh/terms",
+      "dest": "/zh/terms"
+    },
+    {
+      "src": "/zh/privacy-policy",
+      "dest": "/zh/privacy-policy"
+    },
+    {
+      "src": "/zh/oauth/callback",
+      "dest": "/zh/oauth/callback"
+    },
+    {
+      "src": "/zh/blog",
+      "dest": "/zh/blog"
+    },
+    {
+      "src": "/zh",
+      "dest": "/zh"
+    },
+    {
+      "src": "/terms",
+      "dest": "/terms"
+    },
+    {
+      "src": "/sitemap.xml",
+      "dest": "/sitemap.xml"
+    },
+    {
+      "src": "/sitemap_index.xml",
+      "dest": "/sitemap_index.xml"
+    },
+    {
+      "src": "/robots.txt",
+      "dest": "/robots.txt"
+    },
+    {
+      "src": "/privacy-policy",
+      "dest": "/privacy-policy"
+    },
+    {
+      "src": "/oauth/callback",
+      "dest": "/oauth/callback"
+    },
+    {
+      "src": "/km/terms",
+      "dest": "/km/terms"
+    },
+    {
+      "src": "/km/privacy-policy",
+      "dest": "/km/privacy-policy"
+    },
+    {
+      "src": "/km/oauth/callback",
+      "dest": "/km/oauth/callback"
+    },
+    {
+      "src": "/km/blog",
+      "dest": "/km/blog"
+    },
+    {
+      "src": "/km",
+      "dest": "/km"
+    },
+    {
+      "src": "/blog",
+      "dest": "/blog"
+    },
+    {
+      "src": "/__sitemap__/style.xsl",
+      "dest": "/__sitemap__/style.xsl"
+    },
+    {
+      "src": "/__nuxt_error",
+      "dest": "/__nuxt_error"
+    },
+    {
+      "src": "/",
+      "dest": "/index"
+    },
+    {
+      "src": "/zh/detail/(?<slug>[^/]+)",
+      "dest": "/zh/detail/[slug]"
+    },
+    {
+      "src": "/zh/blog/(?<slug>[^/]+)",
+      "dest": "/zh/blog/[slug]"
+    },
+    {
+      "src": "/zh/(?<slug>[^/]+)/(?<name>[^/]+)/(?<slug>[^/]+)",
+      "dest": "/zh/[slug]/[name]/[slug]"
+    },
+    {
+      "src": "/zh/(?<slug>[^/]+)",
+      "dest": "/zh/[slug]"
+    },
+    {
+      "src": "/km/detail/(?<slug>[^/]+)",
+      "dest": "/km/detail/[slug]"
+    },
+    {
+      "src": "/km/blog/(?<slug>[^/]+)",
+      "dest": "/km/blog/[slug]"
+    },
+    {
+      "src": "/km/(?<slug>[^/]+)/(?<name>[^/]+)/(?<slug>[^/]+)",
+      "dest": "/km/[slug]/[name]/[slug]"
+    },
+    {
+      "src": "/km/(?<slug>[^/]+)",
+      "dest": "/km/[slug]"
+    },
+    {
+      "src": "/detail/(?<slug>[^/]+)",
+      "dest": "/detail/[slug]"
+    },
+    {
+      "src": "/blog/(?<slug>[^/]+)",
+      "dest": "/blog/[slug]"
+    },
+    {
+      "src": "/(?<slug>[^/]+)/(?<name>[^/]+)/(?<slug>[^/]+)",
+      "dest": "/[slug]/[name]/[slug]"
+    },
+    {
+      "src": "/(?<slug>[^/]+)",
+      "dest": "/[slug]"
+    },
+    {
+      "src": "/_i18n/(?<hash>[^/]+)/(?<locale>[^/]+)/messages.json",
+      "dest": "/_i18n/[hash]/[locale]/messages.json"
+    },
+    {
+      "src": "/__sitemap__/?(?<sitemap>.+)",
+      "dest": "/__sitemap__/[...sitemap]"
+    },
+    {
+      "src": "/__nuxt_island/(?:.*)",
+      "dest": "/__nuxt_island/[...]"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/__fallback"
+    }
+  ]
+}

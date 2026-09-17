@@ -9,6 +9,8 @@
     "testimonials": "Testimonials",
     "contact": "Contact",
     "programs":"Programs",
+    "pricing": "Pricing",
+    "trainers": "Trainers",
     "schedule_pricing":"Schedule Pricing",
     "pricing_plans":"Pricing Plans",
     "contact_us":"Contact Us",
@@ -181,9 +183,16 @@
   "notifications": {
     "title": "Notifications",
     "markAllRead": "Mark all as read",
+    "mark_all_read": "Mark all as read",
     "empty": "No notifications yet.",
     "newArticle": "New article published",
-    "accountAlert": "Account alert"
+    "accountAlert": "Account alert",
+    "all": "All",
+    "unread": "Unread",
+    "unread_notifications": "unread notifications",
+    "read": "Read",
+    "no_notifications": "No notifications yet.",
+    "live": "Live"
   },
   "terms": {
     "title": "Terms of Service & Rules",

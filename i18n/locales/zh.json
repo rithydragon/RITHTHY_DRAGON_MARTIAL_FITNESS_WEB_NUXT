@@ -9,6 +9,8 @@
     "testimonials": "学员评价",
     "contact": "联系",
     "programs":"课程",
+    "pricing": "价格",
+    "trainers": "教练",
     "schedule_pricing":"课程表与价格",
     "pricing_plans":"价格计划",
     "contact_us":"联系我们",
@@ -181,9 +183,16 @@
   "notifications": {
     "title": "通知",
     "markAllRead": "全部标记为已读",
+    "mark_all_read": "全部标记为已读",
     "empty": "暂无通知。",
     "newArticle": "新文章已发布",
-    "accountAlert": "账户提醒"
+    "accountAlert": "账户提醒",
+    "all": "全部",
+    "unread": "未读",
+    "unread_notifications": "条未读通知",
+    "read": "已读",
+    "no_notifications": "暂无通知。",
+    "live": "实时"
   },
   "terms": {
     "title": "服务条款与健身房守则",

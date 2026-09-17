@@ -27,7 +27,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   future: { compatibilityVersion: 4 },
   devtools: { enabled: false },
-  ssr: true,
+  ssr: false,
 
   site: {
     url: 'https://rithymartialfitness.com',
@@ -143,7 +143,6 @@ export default defineNuxtConfig({
     apiInternalSecret: process.env.API_INTERNAL_SECRET || '',
     // apiBase: `http://${getLocalIp()}:58721`,
     apiBase: process.env.NUXT_PUBLIC_API_BASE || 'https://api.rithymartialfitness.com',
-    wsBase: process.env.NUXT_PUBLIC_WS_BASE || 'wss://api.rithymartialfitness.com/ws',
     siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://rithymartialfitness.com',
     oauth: {
       googleClientId: process.env.NUXT_PUBLIC_GOOGLE_CLIENT_ID || '',
@@ -158,6 +157,7 @@ export default defineNuxtConfig({
 
     public: {
       telegramClientId: process.env.TELEGRAM_CLIENT_ID,
+      wsBase: process.env.NUXT_PUBLIC_WS_BASE || 'ws://localhost:58721/ws',
     },
   },
 

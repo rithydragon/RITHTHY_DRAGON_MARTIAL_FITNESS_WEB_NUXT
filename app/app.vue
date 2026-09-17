@@ -6,6 +6,8 @@
       <NuxtPage />
     </NuxtLayout>
     <!-- <AutoResponsePanel /> -->
+    <NotifPanel />
+    <AIAssistantFloat />
   </div>
 </template>
 

@@ -45,3 +45,4 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 
 npm install crypto-js
 npm install uuid
+npm install axios

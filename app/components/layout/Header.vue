@@ -57,9 +57,37 @@
         <ThemeToggle />
         <NotificationBell />
         <template v-if="auth.isLoggedIn">
-          <NuxtLink :to="localePath('/account')" class="navbar__user">
-            <span class="navbar__user-avatar">{{ auth.userInitials }}</span>
-          </NuxtLink>
+          <div class="navbar__user" ref="userMenuRef">
+            <button class="navbar__user-avatar-btn" @click="userMenuOpen = !userMenuOpen" :aria-label="auth.userName">
+              <img v-if="auth.user?.avatar" :src="auth.user.avatar" :alt="auth.userName" class="navbar__user-avatar" />
+              <span v-else class="navbar__user-avatar">{{ auth.userInitials }}</span>
+            </button>
+            <Transition name="dropdown">
+              <div v-if="userMenuOpen" class="navbar__user-menu">
+                <div class="navbar__user-info">
+                  <span class="navbar__user-name">{{ auth.userName || 'User Name'}}</span>
+                  <span class="navbar__user-email">{{ auth.user?.email || 'User Email'}}</span>
+                </div>
+                <div class="navbar__user-divider"></div>
+                <button class="navbar__user-menu-item" @click="ui.toggleNotifPanel(); userMenuOpen = false">
+                  <i class="ri-notification-3-line"></i> {{ t('notifications.title') }}
+                </button>
+                <NuxtLink :to="localePath('/pricing')" class="navbar__user-menu-item" @click="userMenuOpen = false">
+                  <i class="ri-vip-crown-line"></i> {{ t('nav.pricing') }}
+                </NuxtLink>
+                <NuxtLink :to="localePath('/schedule')" class="navbar__user-menu-item" @click="userMenuOpen = false">
+                  <i class="ri-calendar-line"></i> {{ t('nav.schedule') }}
+                </NuxtLink>
+                <NuxtLink :to="localePath('/trainers')" class="navbar__user-menu-item" @click="userMenuOpen = false">
+                  <i class="ri-user-star-line"></i> {{ t('nav.trainers') }}
+                </NuxtLink>
+                <div class="navbar__user-divider"></div>
+                <button class="navbar__user-menu-item navbar__user-menu-item--logout" @click="auth.logout(); userMenuOpen = false; navigateTo(localePath('/'))">
+                  <i class="ri-logout-box-r-line"></i> {{ t('common.logout') }}
+                </button>
+              </div>
+            </Transition>
+          </div>
         </template>
         <template v-else>
           <button class="btn btn--ghost navbar__btn-login" @click="openLogin">{{ t('common.login') || 'Login' }}</button>
@@ -134,15 +162,24 @@
 
 <script setup>
 import { ref, onMounted, watch } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 
 const screen = useScreenStore()
 const auth = useAuthStore()
+console.log("auth ==================> ", auth.isLoggedIn)
+const ui = useUIStore()
 const menu = await useMenuData()
 const { t } = useI18n()
 const route = useRoute()
 const menuList = ref([])
 const isMenuOpen = ref(false)
 const expandedMobileSubs = ref([])
+const userMenuRef = ref(null)
+const userMenuOpen = ref(false)
+
+onClickOutside(userMenuRef, () => {
+  userMenuOpen.value = false
+})
 
 onMounted(() => {
   menuList.value = Array.isArray(menu.navbar) ? menu.navbar : []
@@ -191,7 +228,10 @@ function openJoin() {
   navigateTo(localePath('/?auth=join'))
 }
 
-watch(() => route.path, () => closeMenu())
+watch(() => route.path, () => {
+  closeMenu()
+  userMenuOpen.value = false
+})
 </script>
 
 <style scoped>
@@ -369,18 +409,128 @@ watch(() => route.path, () => closeMenu())
   font-size: 0.8125rem;
 }
 
-.navbar__user-avatar {
+.navbar__user {
+  position: relative;
+}
+
+.navbar__user-avatar-btn {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(234, 179, 8, 0.15);
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: var(--c-primary, #eab308);
+    box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.15);
+  }
+}
+
+.navbar__user-avatar {
   width: 36px;
   height: 36px;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: rgba(234, 179, 8, 0.15);
   color: var(--c-primary, #eab308);
   font-weight: 700;
   font-size: 0.75rem;
-  border: 1px solid rgba(234, 179, 8, 0.3);
+  object-fit: cover;
+}
+
+.navbar__user-menu {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  min-width: 220px;
+  padding: 0.5rem;
+  background: var(--c-surface);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--c-border);
+  border-radius: 12px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+}
+
+.navbar__user-info {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0.75rem;
+}
+
+.navbar__user-name {
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--c-text);
+}
+
+.navbar__user-email {
+  font-size: 0.75rem;
+  color: var(--c-muted, #9ca3af);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.navbar__user-divider {
+  height: 1px;
+  background: var(--c-border);
+  margin: 0.35rem 0;
+}
+
+.navbar__user-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--c-text);
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+
+  i {
+    font-size: 1rem;
+  }
+
+  &:hover {
+    background: var(--c-primary-soft);
+    color: var(--c-primary, #eab308);
+  }
+}
+
+.navbar__user-menu-item--logout {
+  color: var(--c-danger, #ef4444);
+
+  &:hover {
+    background: rgba(239, 68, 68, 0.12);
+    color: var(--c-danger, #ef4444);
+  }
+}
+
+.dropdown-enter-active,
+.dropdown-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.dropdown-enter-from,
+.dropdown-leave-to {
+  opacity: 0;
+  transform: translateY(-6px);
 }
 
 /* Burger Button */

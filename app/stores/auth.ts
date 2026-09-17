@@ -214,6 +214,7 @@ export const useAuthStore = defineStore('auth', {
       if (!this.token) return
       try {
         const { data } = await useWeb('/api/v1/auth/me')
+        useUserData(data)
         console.log("fetchProfile ====> ", data)
         this.user = data
       } catch (err) {
@@ -226,6 +227,7 @@ export const useAuthStore = defineStore('auth', {
       console.log("setSession ====> ", data)
       useCookie('access_token').value = data.Accesstoken
       useCookie('refresh_token').value = data.Refreshtoken
+      useCookie('expire_in').value = data.Expiresin
       this.token = data.Accesstoken
       this.refreshToken = data.Refreshtoken
       // this.user = data.user

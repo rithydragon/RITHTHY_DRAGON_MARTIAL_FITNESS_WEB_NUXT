@@ -32,7 +32,7 @@ export const useRefreshToken = async (force = false) => {
     resolveQueue(false);
     const authStore = useAuthStore();
     authStore.logout();
-    await navigateTo('/auth/login', { replace: true });
+    await navigateTo(localePath('/?auth=login'), { replace: true })
     return false;
   }
 
@@ -86,7 +86,8 @@ export const useRefreshToken = async (force = false) => {
     const authStore = useAuthStore();
     authStore.logout();
 
-    await navigateTo('/auth/login', { replace: true });
+    await navigateTo(localePath('/?auth=login'), { replace: true })
+    // await navigateTo('/', { replace: true });
 
     resolveQueue(false);
     return false;

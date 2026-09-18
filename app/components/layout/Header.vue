@@ -56,7 +56,7 @@
         <LanguageSwitcher />
         <ThemeToggle />
         <NotificationBell />
-        <template v-if="auth.isLoggedIn">
+        <template v-if="auth.isAuthenticated">
           <div class="navbar__user" ref="userMenuRef">
             <button class="navbar__user-avatar-btn" @click="userMenuOpen = !userMenuOpen" :aria-label="auth.userName">
               <img v-if="auth.user?.avatar" :src="auth.user.avatar" :alt="auth.userName" class="navbar__user-avatar" />
@@ -65,8 +65,8 @@
             <Transition name="dropdown">
               <div v-if="userMenuOpen" class="navbar__user-menu">
                 <div class="navbar__user-info">
-                  <span class="navbar__user-name">{{ auth.userName || 'User Name'}}</span>
-                  <span class="navbar__user-email">{{ auth.user?.email || 'User Email'}}</span>
+                  <span class="navbar__user-name">{{ auth.userName}}</span>
+                  <span class="navbar__user-email">{{ auth.user?.email}}</span>
                 </div>
                 <div class="navbar__user-divider"></div>
                 <button class="navbar__user-menu-item" @click="ui.toggleNotifPanel(); userMenuOpen = false">

@@ -11,15 +11,21 @@ import { useI18n } from '#imports'
 import { useSession } from '../composables/useSession'
 import { useAnimate } from '../composables/useAnimate'
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(async (nuxtApp) => {
   const theme = useThemeStore()
   const screen = useScreenStore()
   const auth = useAuthStore()
   const notifications = useNotificationStore()
   // const { initLocale } = useI18n()
-  const session = useSession()
+  // const session = useSession()
   const animate = useAnimate()
 
+  // auth.restore()
+ 
+  // Have a token but no profile yet (e.g. first SSR render after a reload)
+  // if (auth.token && !auth.user) {
+  //   await auth.fetchProfile()
+  // }
   // Init locale
   // initLocale()
 
@@ -30,7 +36,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   screen.init()
 
   // Restore session
-  session.init()
+  // session.init()
 
   // Seed demo notifications
   notifications.fetchInitialNotifications()

@@ -14,9 +14,126 @@ interface AuthState {
   user: AuthUser | null
   token: string | null
   refreshToken: string | null
-  isAuthenticated: boolean
   loading: boolean
   error: string | null
+}
+
+/* ------------------------------------------------------------------
+   Cookie names — ONE place, imported by every other file.
+------------------------------------------------------------------ */
+export const ACCESS_COOKIE = 'access_token'
+export const REFRESH_COOKIE = 'refresh_token'
+export const USER_COOKIE = 'auth_user'
+
+const LEGACY_COOKIES = ['expire_in', 'rmf-auth', 'rama_access_token', 'user_data']
+
+export const ACCESS_MAX_AGE = 60 * 60 * 24       // 1 day
+export const REFRESH_MAX_AGE = 60 * 60 * 24 * 30 // 30 days
+
+/* ------------------------------------------------------------------
+   secure flag must reflect the ACTUAL protocol, not the build mode.
+   A `secure` cookie on http:// is silently dropped by the browser —
+   one of the most common "the cookie is never stored" causes.
+------------------------------------------------------------------ */
+function isSecureContext(): boolean {
+  if (import.meta.client) return window.location.protocol === 'https:'
+  try {
+    return useRequestURL().protocol === 'https:'
+  } catch {
+    return false
+  }
+}
+
+export function cookieOptions(maxAge: number = REFRESH_MAX_AGE) {
+  return {
+    maxAge,
+    sameSite: 'lax' as const,
+    secure: isSecureContext(),
+    path: '/',
+    /**
+     * MUST stay false.
+     * Per RFC 6265 §5.3, a browser REJECTS any cookie carrying the HttpOnly
+     * attribute when it arrives from a non-HTTP API — i.e. from a client-side
+     * document.cookie write, which is exactly what useCookie does in the
+     * browser. With httpOnly: true the client-side write silently does
+     * nothing and the app also can no longer read the token back for the
+     * Authorization header.
+     * If you want real HttpOnly cookies, they have to come from the backend's
+     * Set-Cookie header — see the notes at the bottom of this file.
+     */
+    httpOnly: false,
+  }
+}
+
+/**
+ * Options for deleting a cookie.
+ * Deletion only matches on name + path + domain, so these must mirror the
+ * options the cookie was written with. Assigning null to the ref is what
+ * actually removes it — Nuxt serializes an already-expired cookie for us.
+ */
+export function expireCookieOptions() {
+  return {
+    sameSite: 'lax' as const,
+    secure: isSecureContext(),
+    path: '/',
+    maxAge: 0,
+  }
+}
+
+/* ------------------------------------------------------------------
+   Case-insensitive key lookup.
+   Backend sends Accesstoken / AccessToken / access_token depending on
+   the endpoint; the old code hard-coded one spelling per call site,
+   so half of them resolved to `undefined`.
+------------------------------------------------------------------ */
+function pickKey(src: any, ...names: string[]): string | null {
+  if (!src || typeof src !== 'object') return null
+  const lower = new Map(Object.keys(src).map((k) => [k.toLowerCase(), k]))
+  for (const n of names) {
+    const real = lower.get(n.toLowerCase())
+    const v = real ? src[real] : undefined
+    if (typeof v === 'string' && v.trim()) return v.trim()
+    if (typeof v === 'number') return String(v)
+  }
+  return null
+}
+
+export interface NormalizedSession {
+  token: string | null
+  refreshToken: string | null
+  expiresIn: number | null
+  user: AuthUser | null
+}
+
+/** Accepts res, res.data, or res.data.data and returns one flat shape. */
+export function normalizeSession(payload: any): NormalizedSession {
+  const d = payload?.data ?? payload ?? {}
+  const inner = d?.data && typeof d.data === 'object' ? d.data : d
+  const src = { ...inner, ...d }
+  return {
+    token: pickKey(src, 'accessToken', 'access_token', 'token', 'jwt'),
+    refreshToken: pickKey(src, 'refreshToken', 'refresh_token'),
+    expiresIn: Number(pickKey(src, 'expiresIn', 'expires_in', 'expire_in')) || null,
+    user: (src.user ?? src.User ?? src.profile ?? null) as AuthUser | null,
+  }
+}
+
+/* ------------------------------------------------------------------
+   Token cookie writer. Never assigns null/undefined unless clearing —
+   assigning a falsy value to a useCookie ref DELETES the cookie.
+------------------------------------------------------------------ */
+export function writeTokenCookies(
+  token: string | null,
+  refreshToken: string | null,
+  expiresIn: number | null = null,
+) {
+  if (token) {
+    const age = expiresIn && expiresIn > 60 ? expiresIn : ACCESS_MAX_AGE
+    useCookie(ACCESS_COOKIE, cookieOptions(age)).value = token
+  }
+  if (refreshToken) {
+    useCookie(REFRESH_COOKIE, cookieOptions(REFRESH_MAX_AGE)).value = refreshToken
+  }
 }
 
 export const useAuthStore = defineStore('auth', {
@@ -24,13 +141,14 @@ export const useAuthStore = defineStore('auth', {
     user: null,
     token: null,
     refreshToken: null,
-    isAuthenticated: false,
     loading: false,
     error: null,
   }),
 
   getters: {
-    isLoggedIn: (state) => state.isAuthenticated || !!state.user,
+    // derived, so it can never drift out of sync with the token
+    isAuthenticated: (state) => !!state.token,
+    isLoggedIn: (state) => !!state.token || !!state.user,
     userName: (state) => state.user?.name || '',
     userInitials: (state) => {
       if (!state.user?.name) return ''
@@ -44,27 +162,35 @@ export const useAuthStore = defineStore('auth', {
   },
 
   actions: {
-    apiBase() {
-      const config = useRuntimeConfig()
-      return String(config.apiBase ?? 'http://localhost:8080').replace(/\/+$/, '')
-    },
-    
+    /* --------------------------------------------------------------
+       LOGIN
+       Note: useNuxtApp() is captured BEFORE the await. Every composable
+       used after the await runs inside runWithContext, otherwise on SSR
+       you get "nuxt instance unavailable" and no cookie is ever written.
+    -------------------------------------------------------------- */
     async login(email: string, password: string) {
-      console.log("login ====> ", email, password)
+      const nuxtApp = useNuxtApp()
       this.loading = true
       this.error = null
       try {
-        const res = await axios.post(getUrl('/api/v1/auth/login'), {
-          Email: email, Password: password
+        const res: any = await axios.post(getUrl('/api/v1/auth/login'), {
+          Email: email,
+          Password: password,
         })
 
-        console.log("response login ====> ", res)
-      // useCookie('access_token', this.cookieOptions(60 * 60)).value = res.data.access_token
-      // useCookie('refresh_token', this.cookieOptions(60 * 60 * 24 * 30)).value = res.data.refreshToken
-        await this.setSession(res.data)
+        const applied = nuxtApp.runWithContext(() => this.applySession(res))
+        if (!applied) {
+          throw new Error('Login succeeded but no access token was returned')
+        }
+
+        if (!this.user) await this.fetchProfile()
         return res
       } catch (err: any) {
-        err?.response?.data?.message ?? err?.message ?? 'Login failed'
+        this.error =
+          err?.response?.data?.message ??
+          err?.response?.data?.detail ??
+          err?.message ??
+          'Login failed'
         throw err
       } finally {
         this.loading = false
@@ -72,90 +198,79 @@ export const useAuthStore = defineStore('auth', {
     },
 
     async register(data: { Name: string; Email: string; Password: string; Phone?: string }) {
+      const nuxtApp = useNuxtApp()
       this.loading = true
       this.error = null
       try {
-        const res = await axios.post(getUrl('/api/v1/auth/register'), {
+        const res: any = await axios.post(getUrl('/api/v1/auth/register'), {
           Name: data.Name,
           Email: data.Email,
           Password: data.Password,
-          Phone: data.Phone
+          Phone: data.Phone,
         })
-        this.setSession(res.data)
+        nuxtApp.runWithContext(() => this.applySession(res))
         return res
       } catch (err: any) {
-        this.error = err?.message || 'Registration failed'
+        this.error = err?.response?.data?.message || err?.message || 'Registration failed'
         throw err
       } finally {
         this.loading = false
       }
     },
 
-    /* ------------------------------------------
-     REFRESH TOKEN
-    ------------------------------------------ */
-    async refreshAccessToken() {
-      if (!this.refreshToken) return false
+    /* --------------------------------------------------------------
+       THE ONLY PLACE THAT WRITES AUTH COOKIES
+       Synchronous on purpose: no awaits, so the Nuxt context is alive.
+    -------------------------------------------------------------- */
+    applySession(payload: any): boolean {
+      const { token, refreshToken, expiresIn, user } = normalizeSession(payload)
 
-      try {
-        const res: any = await axios.post(getUrl('/api/v1/auth/refresh'), {
-          RefreshToken: this.refreshToken,
-        })
-
-        const d = res?.data ?? res
-        const token = d?.token || d?.AccessToken || d?.access_token
-        const refreshToken = d?.refreshToken || d?.RefreshToken || d?.refresh_token
-
-        if (!token) return false
-
-        this.token = token
-        if (refreshToken) this.refreshToken = refreshToken
-        this.persist()
-
-        return true
-      } catch (error) {
-        await this.logout(false)
+      if (!token) {
+        // Do NOT wipe an existing session just because one response was odd.
+        console.warn('[auth] applySession: no token found in payload', payload?.data ?? payload)
         return false
       }
+
+      this.token = token
+      if (refreshToken) this.refreshToken = refreshToken
+      if (user) this.user = user
+
+      writeTokenCookies(token, refreshToken ?? this.refreshToken, expiresIn)
+      this.persistUser()
+      return true
+    },
+
+    /* --------------------------------------------------------------
+       REFRESH (store-level). Delegates to the shared composable so
+       there is a single refresh implementation and a single in-flight
+       lock across the whole app.
+    -------------------------------------------------------------- */
+    async refreshAccessToken(): Promise<boolean> {
+      const newToken = await useRefreshToken(true)
+      return !!newToken
     },
 
     async loginWithProvider(provider: 'google' | 'telegram' | 'facebook' | 'tiktok') {
       this.loading = true
       this.error = null
       try {
-        const res = await axios.post(getUrl(`/api/v1/auth/oauth/initiate`), {
-          Provider: provider
+        const res: any = await axios.post(getUrl('/api/v1/auth/oauth/initiate'), {
+          Provider: provider,
         })
-        if (res.data?.redirectUrl && typeof window !== 'undefined') {
-          // Remember which provider initiated the flow so /oauth/callback
-          // can verify the access token and fetch the right user profile.
-          localStorage.setItem('rmf-oauth-pending', JSON.stringify({
-            provider,
-            redirect: '/',
-            ts: Date.now(),
-          }))
-          window.location.href = res.data.redirectUrl
+        const redirectUrl = res?.data?.redirectUrl ?? res?.data?.RedirectUrl
+        if (redirectUrl && import.meta.client) {
+          localStorage.setItem(
+            'oauth-pending',
+            JSON.stringify({ provider, redirect: '/', ts: Date.now() }),
+          )
+          window.location.href = redirectUrl
         }
         return res
-      } catch {
-        const names: Record<string, string> = {
-          google: 'Google User',
-          telegram: 'Telegram Fighter',
-          tiktok: 'TikTok Creator',
-          facebook: 'Facebook Member'
-        }
-        this.setSession({
-          token: `oauth_${provider}_token_` + Date.now(),
-          refreshToken: `oauth_${provider}_refresh_` + Date.now(),
-          user: {
-            id: `usr_${provider}_` + Date.now(),
-            name: names[provider] || 'Fighter User',
-            email: `member@${provider}.com`,
-            role: 'member',
-            plan: 'pro'
-          }
-        })
-        return { success: true }
+      } catch (err: any) {
+        // Previously this fabricated a fake session on failure, which put a
+        // bogus token in the store and cookies. Fail loudly instead.
+        this.error = err?.response?.data?.message || err?.message || 'OAuth initiation failed'
+        throw err
       } finally {
         this.loading = false
       }
@@ -163,27 +278,24 @@ export const useAuthStore = defineStore('auth', {
 
     async joinPlan(
       plan: 'free' | 'basic' | 'pro' | 'elite',
-      // plan: 'FREE' | 'BASIC' | 'PROFESSIONAL' | 'ELITE',
-      userData?: { Name?: string; Email?: string; Password?: string; Phone?: string }
+      userData?: { Name?: string; Email?: string; Password?: string; Phone?: string },
     ) {
+      const nuxtApp = useNuxtApp()
       this.loading = true
       this.error = null
       try {
-        const headers: Record<string, string> = {}
-        if (this.token) {
-          headers['Authorization'] = `Bearer ${this.token}`
-        }
-        const res: any = await axios.post(getUrl('/api/v1/memberships/join'), {
-          headers,
-          plan,
-          ...(userData || {}),
-        })
-        if (res?.data?.token) {
-          this.setSession(res.data)
+        // headers belong in the CONFIG argument, not in the body
+        const res: any = await axios.post(
+          getUrl('/api/v1/memberships/join'),
+          { plan, ...(userData || {}) },
+          { headers: this.token ? { Authorization: `Bearer ${this.token}` } : {} },
+        )
+        if (normalizeSession(res).token) {
+          nuxtApp.runWithContext(() => this.applySession(res))
         }
         return res
       } catch (err: any) {
-        this.error = err?.message || 'Failed to join plan'
+        this.error = err?.response?.data?.message || err?.message || 'Failed to join plan'
         throw err
       } finally {
         this.loading = false
@@ -194,128 +306,122 @@ export const useAuthStore = defineStore('auth', {
       this.loading = true
       this.error = null
       try {
-        const res: any = await axios.post(getUrl(`/api/v1/memberships/payments/${paymentId}/complete`), {
-          payment_method: paymentMethod,
-        })
-        return res
+        return await axios.post(
+          getUrl(`/api/v1/memberships/payments/${paymentId}/complete`),
+          { payment_method: paymentMethod },
+          { headers: this.token ? { Authorization: `Bearer ${this.token}` } : {} },
+        )
       } catch (err: any) {
-        this.error = err?.message || 'Failed to complete payment'
+        this.error = err?.response?.data?.message || err?.message || 'Failed to complete payment'
         throw err
       } finally {
         this.loading = false
       }
     },
 
-
+    /* --------------------------------------------------------------
+       PROFILE
+       A failed profile fetch must NOT log the user out. useWeb already
+       handles 401 + refresh; if it still fails it is a network/server
+       problem, not an invalid session.
+    -------------------------------------------------------------- */
     async fetchProfile() {
       if (!this.token) return
-      try {
-        const { data: ref } = await useWeb('/api/v1/auth/me')
-        const body = ref?.value
-        const raw = body?.data ?? body
-        if (raw) {
-          this.user = {
-            id: raw.id ?? raw.Id ?? 'member',
-            name: raw.name ?? raw.Name ?? raw.email ?? raw.Email ?? 'Member',
-            email: raw.email ?? raw.Email ?? '',
-            avatar: raw.avatar ?? raw.Avatar ?? raw.image ?? raw.Image ?? undefined,
-            role: raw.role ?? raw.Role ?? 'member',
-            plan: raw.plan ?? raw.Plan ?? undefined,
-          }
-          this.persist()
-        }
-      } catch (err) {
-        console.error('fetchProfile error ====> ', err)
-        this.logout()
+      const nuxtApp = useNuxtApp()
+      const { data, error } = await useWeb('/api/v1/auth/me')
+
+      if (error.value) {
+        console.warn('[auth] fetchProfile failed:', error.value)
+        return
       }
+
+      const body: any = data.value
+      const raw = body?.data ?? body
+      if (!raw) return
+
+      this.user = {
+        id: raw.id ?? raw.Id ?? 'member',
+        name: raw.name ?? raw.Name ?? raw.email ?? raw.Email ?? 'Member',
+        email: raw.email ?? raw.Email ?? '',
+        avatar: raw.avatar ?? raw.Avatar ?? raw.image ?? raw.Image ?? undefined,
+        role: raw.role ?? raw.Role ?? 'member',
+        plan: raw.plan ?? raw.Plan ?? undefined,
+      }
+      nuxtApp.runWithContext(() => this.persistUser())
     },
 
-    setSession(data: any) {
-      const d = data?.data ?? data
-      console.log("setSession data ====> ", d)
-      const token = d?.token || d?.AccessToken || d?.Accesstoken || d?.access_token || null
-      const refreshToken = d?.refreshToken || d?.RefreshToken || d?.Refreshtoken || d?.refresh_token || null
-      const expiresIn = d?.expires_in ?? d?.ExpiresIn ?? d?.Expiresin ?? d?.expire_in ?? null
-
-      if (token) this.token = token
-      if (refreshToken) this.refreshToken = refreshToken
-      if (d?.user) this.user = d.user
-
-      this.isAuthenticated = !!this.token
-
-      // Persist tokens + user data to cookies (JS-readable, sameSite lax, secure in prod)
-      useCookie('access_token', this.cookieOptions()).value = token
-      useCookie('refresh_token', this.cookieOptions()).value = refreshToken
-      if (expiresIn) useCookie('expire_in', this.cookieOptions()).value = String(expiresIn)
-
-      // Store complete Pinia session
-      this.persist()
-
-      // If the session payload already contains the profile, use it directly.
-      // if (d?.user) return
-      // this.fetchProfile()
-
-      // Only fetch profile when backend didn't return user
-      if (!this.user && this.token) {
-        this.fetchProfile()
-      }
-    },
-
-    logout() {
+    /**
+     * async so callers can `await auth.logout()` before navigating.
+     * useCookie writes through a watcher that flushes after the current
+     * synchronous block, so navigating immediately can outrun the deletion.
+     */
+    async logout() {
       this.user = null
       this.token = null
       this.refreshToken = null
-      this.isAuthenticated = false
+      this.error = null
       this.clearAuthCookies()
-    },
-
-    cookieOptions(maxAge = 60 * 60 * 24 * 30) {
-      return {
-        maxAge,
-        sameSite: 'lax' as const,
-        secure: import.meta.env.PROD,
-        path: '/',
-      }
+      await nextTick()
     },
 
     clearAuthCookies() {
-      for (const name of ['access_token', 'refresh_token', 'expire_in', 'rmf-auth', 'rama_access_token', 'user_data']) {
-        useCookie(name, { ...this.cookieOptions(), maxAge: 0 }).value = null
-        if (typeof document !== 'undefined') {
-          document.cookie = `${name}=; Max-Age=0; Path=/; SameSite=Lax`
+      const names = [ACCESS_COOKIE, REFRESH_COOKIE, USER_COOKIE, ...LEGACY_COOKIES]
+      for (const name of names) {
+        useCookie(name, expireCookieOptions()).value = null
+      }
+    },
+
+    /* --------------------------------------------------------------
+       Only the user profile goes in this cookie — never the tokens.
+       Duplicating tokens across three cookies was both a size risk
+       (>4 KB cookies are dropped silently) and a source of drift.
+    -------------------------------------------------------------- */
+    persistUser() {
+      if (!this.user) return
+      try {
+        const json = JSON.stringify(this.user)
+        if (json.length > 3000) {
+          console.warn('[auth] user payload too large for a cookie, skipping persist')
+          return
         }
-      }
-    },
-
-    persist() {
-      try {
-        useCookie('rmf-auth', this.cookieOptions()).value = JSON.stringify({
-          token: this.token,
-          refreshToken: this.refreshToken,
-          user: this.user,
-        })
-      } catch { /* ignore */ }
-    },
-
-    restore() {
-      const raw = useCookie('rmf-auth').value
-      if (!raw) return
-      try {
-        const data = JSON.parse(raw)
-        this.token = data.token || null
-        this.refreshToken = data.refreshToken || null
-        this.user = data.user || null
-        this.isAuthenticated = !!data.token
+        useCookie(USER_COOKIE, cookieOptions(REFRESH_MAX_AGE)).value = json
       } catch {
-        this.clearPersisted()
+        /* ignore */
       }
     },
 
-    clearPersisted() {
-      useCookie('rmf-auth', { ...this.cookieOptions(), maxAge: 0 }).value = null
-      if (typeof document !== 'undefined') {
-        document.cookie = `rmf-auth=; Max-Age=0; Path=/; SameSite=Lax`
+    /** Rehydrate the store from cookies. Call this from a plugin on every load. */
+    restore() {
+      this.token = useCookie<string | null>(ACCESS_COOKIE).value || null
+      this.refreshToken = useCookie<string | null>(REFRESH_COOKIE).value || null
+
+      const rawUser = useCookie<any>(USER_COOKIE).value
+      if (rawUser) {
+        try {
+          this.user = typeof rawUser === 'string' ? JSON.parse(rawUser) : rawUser
+        } catch {
+          this.user = null
+        }
       }
     },
   },
 })
+/* ------------------------------------------------------------------
+   NOTE — if you do want HttpOnly cookies
+
+   A cookie can only get the HttpOnly attribute from a Set-Cookie response
+   header. The browser rejects it from document.cookie, and in the browser
+   useCookie writes via document.cookie. The usual split is:
+
+   1. Backend sets ONLY the refresh token:
+        Set-Cookie: refresh_token=...; HttpOnly; Secure; SameSite=Lax; Path=/
+   2. Backend returns the access token in the JSON body.
+   3. Frontend keeps the access token in the Pinia store (memory only) and
+      sends it as Authorization: Bearer.
+   4. /auth/refresh is called with axios { withCredentials: true } and no
+      body — the browser attaches the HttpOnly refresh cookie itself.
+
+   That removes writeTokenCookies() and restore()'s ACCESS_COOKIE read.
+   The cost is that a page reload always needs one refresh round-trip before
+   the app is authenticated again.
+------------------------------------------------------------------ */

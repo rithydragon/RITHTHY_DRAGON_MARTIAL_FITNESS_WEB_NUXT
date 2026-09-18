@@ -1,95 +1,92 @@
 /**
  * useWeb
- * Rules:
- * GET  = delete
- * POST = list / create / update
+ *   GET  -> query params
+ *   POST -> JSON body
  *
- * Auto refresh token when 401
+ * Auto-refreshes the access token on 401 and retries ONCE with the
+ * freshly returned token (not with a re-read of the cookie, which can
+ * still be stale in the same tick).
  */
 
 import { ref, readonly } from 'vue'
 import axios from 'axios'
+import { ACCESS_COOKIE } from '~/stores/auth'
 
 interface UseWebOptions {
-  method?: 'GET' | 'POST'
-  data?: Record<string, any>   // ✅ renamed from body → data
-  body?: Record<string, any>   // legacy alias — maps onto data
+  method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
+  data?: Record<string, any>
+  body?: Record<string, any> // legacy alias
   auth?: boolean
   headers?: Record<string, string>
 }
 
-export async function useWeb<T = any>(
-  url: string,
-  options: UseWebOptions = {}
-) {
-  const config = useRuntimeConfig()
-  const authStore = useAuthStore()
-  console.log("URL _--------------------. ", url)
+export async function useWeb<T = any>(url: string, options: UseWebOptions = {}) {
+  const nuxtApp = useNuxtApp()
 
-  const {
-    method = 'GET',
-    data: _data,
-    body,
-    auth = true,
-    headers = {},
-  } = options
+  const { method = 'GET', data: _data, body, headers = {} } = options
+  const auth = options.auth ?? true
+  console.log("Auth ======================= ", auth)
   const payload = body ?? _data ?? {}
 
   const data = ref<T | null>(null)
   const error = ref<string | null>(null)
+  const status = ref<number | null>(null)
 
-  const request = async (retry = true) => {
+  console.log("ACCESS_COOKIE====================",useCookie(`'${ACCESS_COOKIE}'`).value)
+
+  // read once, synchronously, while the Nuxt context is guaranteed alive
+  let accessToken = useCookie('access_token').value
+  // let accessToken = auth ? useCookie<string | null>(ACCESS_COOKIE).value ?? null : null
+
+  console.log("AccessToken in useWeb f======================== ", accessToken)
+
+  const request = async (retry = true): Promise<void> => {
     try {
-      const accessToken = useCookie('access_token').value
-      console.log("Access Token: ", accessToken)
-
       const requestHeaders: Record<string, string> = {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         ...headers,
       }
-
-      if (auth && accessToken) {
+      if (accessToken) {
         requestHeaders.Authorization = `Bearer ${accessToken}`
       }
 
       const response = await axios({
-        // baseURL: String(config.public.apiBase || '').replace(/\/+$/, ''),
-        // baseURL: getUrl(url),
-        url:getUrl(url),
+        url: getUrl(url),
         method,
         headers: requestHeaders,
-        ...(method === 'GET'
-          ? { params: payload }
-          : { data: payload }),
+        ...(method === 'GET' ? { params: payload } : { data: payload }),
       })
 
+      status.value = response.status
       data.value = response.data
+      error.value = null
     } catch (err: any) {
-      /* AUTO REFRESH TOKEN */
+      status.value = err?.response?.status ?? null
+
       if (err?.response?.status === 401 && retry && auth) {
-        try {
-          await useRefreshToken(true)
+        const newToken = await nuxtApp.runWithContext(() => useRefreshToken(true))
+        if (newToken) {
+          accessToken = newToken // use it directly, do not re-read the cookie
           return await request(false)
-        } catch (refreshErr) {
-          error.value = 'Session expired'
-          return
         }
+        error.value = 'Session expired'
+        return
       }
 
       error.value =
         err?.response?.data?.message ||
         err?.response?.data?.detail ||
-        err.message ||
+        err?.message ||
         'Request failed'
     }
   }
 
-  // Await the request before returning
   await request()
 
   return {
     data: readonly(data),
     error: readonly(error),
+    status: readonly(status),
   }
 }

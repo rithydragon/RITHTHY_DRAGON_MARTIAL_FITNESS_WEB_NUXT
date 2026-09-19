@@ -121,6 +121,7 @@ function select(l) {
   &:hover {
     background: var(--c-primary-soft);
     color: var(--c-primary);
+    border-radius: 20px;
   }
 
   &.is-active {
@@ -128,6 +129,12 @@ function select(l) {
     font-weight: 600;
     pointer-events: none;
     opacity: 0.8;
+    border-radius: 20px;
+    :hover{
+      background: var(--c-primary-soft);
+      color: var(--c-primary);
+      border-radius: 20px;
+    }
   }
 }
 

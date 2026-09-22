@@ -37,27 +37,27 @@
           <form class="auth-modal__form" @submit.prevent="handleSubmit">
             <div v-if="mode === 'register' || mode === 'join'" class="auth-modal__field">
               <label>{{ t('auth.fullName') }}</label>
-              <input v-model="form.Name" type="text" required :placeholder="t('auth.fullName')" />
+              <input v-model="form.Name" type="text" required :placeholder="t('auth.fullName')" :disabled="auth.loading"/>
             </div>
 
             <div class="auth-modal__field">
               <label>{{ t('auth.email') }}</label>
-              <input v-model="form.Email" type="email" required :placeholder="t('auth.email')" />
+              <input v-model="form.Email" type="email" required :placeholder="t('auth.email')" :disabled="auth.loading"/>
             </div>
 
             <div v-if="mode === 'register' || mode === 'join'" class="auth-modal__field">
               <label>{{ t('auth.phone') }}</label>
-              <input v-model="form.Phone" type="tel" :placeholder="t('auth.phone')" />
+              <input v-model="form.Phone" type="tel" :placeholder="t('auth.phone')" :disabled="auth.loading"/>
             </div>
 
             <div class="auth-modal__field">
               <label>{{ t('auth.password') }}</label>
-              <input v-model="form.Password" type="password" required :placeholder="t('auth.password')" />
+              <input v-model="form.Password" type="password" required :placeholder="t('auth.password')" :disabled="auth.loading"/>
             </div>
 
             <div v-if="mode === 'register'" class="auth-modal__field">
               <label>{{ t('auth.confirmPassword') }}</label>
-              <input v-model="form.ConfirmPassword" type="password" required :placeholder="t('auth.confirmPassword')" />
+              <input v-model="form.ConfirmPassword" type="password" required :placeholder="t('auth.confirmPassword')" :disabled="auth.loading"/>
             </div>
 
             <div v-if="mode === 'join'" class="auth-modal__plans">
@@ -74,6 +74,9 @@
             </div>
 
             <button type="submit" class="btn btn--primary auth-modal__submit" :disabled="auth.loading">
+              <div v-if="auth.loading">
+                <i class="ri-loader-4-line animate-spin"></i>
+              </div>
               {{ submitText }}
             </button>
           </form>

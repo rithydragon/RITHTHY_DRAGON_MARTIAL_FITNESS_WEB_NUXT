@@ -22,9 +22,10 @@ interface UseWebOptions {
 
 export async function useWeb<T = any>(url: string, options: UseWebOptions = {}) {
   const nuxtApp = useNuxtApp()
+  let accessToken = useCookie('access_token').value
 
   const { method = 'GET', data: _data, body, headers = {} } = options
-  const auth = options.auth ?? true
+  const auth = options.auth  ?? (accessToken ? true : false)
   console.log("Auth ======================= ", auth)
   const payload = body ?? _data ?? {}
 
@@ -35,11 +36,10 @@ export async function useWeb<T = any>(url: string, options: UseWebOptions = {}) 
   console.log("ACCESS_COOKIE====================",useCookie(`'${ACCESS_COOKIE}'`).value)
 
   // read once, synchronously, while the Nuxt context is guaranteed alive
-  let accessToken = useCookie('access_token').value
+  // let accessToken = useCookie('access_token').value
   // let accessToken = auth ? useCookie<string | null>(ACCESS_COOKIE).value ?? null : null
 
-  console.log("AccessToken in useWeb f======================== ", accessToken)
-
+  
   const request = async (retry = true): Promise<void> => {
     try {
       const requestHeaders: Record<string, string> = {
@@ -47,6 +47,7 @@ export async function useWeb<T = any>(url: string, options: UseWebOptions = {}) 
         'Content-Type': 'application/json',
         ...headers,
       }
+      console.log("AccessToken in useWeb f======================== ", accessToken)
       if (accessToken) {
         requestHeaders.Authorization = `Bearer ${accessToken}`
       }

@@ -275,7 +275,7 @@
                 <div class="deletion-box">
                   <h4><i class="ri-delete-bin-6-line"></i> {{ tBy({ en: 'How to Request Immediate Account & Data Erasure', km: 'របៀបស្នើសុំលុបគណនី និងទិន្នន័យភ្លាមៗ', zh: '如何申请立即注销账户与擦除数据' }) }}</h4>
                   <ol>
-                    <li>{{ tBy({ en: 'Send an email to riththydragon@email.com with subject Data Deletion Request - [Username].', km: 'ផ្ញើសារអ៊ីមែលទៅកាន់ riththydragon@email.com ជាមួយប្រធានបទ Data Deletion Request - [ឈ្មោះអ្នកប្រើប្រាស់]។', zh: '发送电子邮件至 riththydragon@email.com，主题为 Data Deletion Request - [用户名]。' }) }}</li>
+                    <li>{{ tBy({ en: 'Send an email to thynydragon@email.com with subject Data Deletion Request - [Username].', km: 'ផ្ញើសារអ៊ីមែលទៅកាន់ thynydragon@email.com ជាមួយប្រធានបទ Data Deletion Request - [ឈ្មោះអ្នកប្រើប្រាស់]។', zh: '发送电子邮件至 thynydragon@email.com，主题为 Data Deletion Request - [用户名]。' }) }}</li>
                     <li>{{ tBy({ en: 'Alternatively, contact Master Ny Rithy via Telegram at @NY_RITHY or phone +855 97 905 3790.', km: 'ឬទំនាក់ទំនងលោក ញ៉ី រិទ្ធី តាម Telegram @NY_RITHY ឬទូរស័ព្ទ +855 97 905 3790។', zh: '或者通过 Telegram @NY_RITHY 或致电 +855 97 905 3790 联系 Ny Rithy 大师。' }) }}</li>
                     <li>{{ tBy({ en: 'Upon verification, your account, credentials, and associated data will be permanently purged within 48 hours.', km: 'បន្ទាប់ពីការផ្ទៀងផ្ទាត់ គណនី និងទិន្នន័យដែលទាក់ទងរបស់អ្នកនឹងត្រូវលុបជារៀងរហូតក្នុងរយៈពេល ៤៨ ម៉ោង។', zh: '在验证身份后，您的账户、凭据和关联数据将在 48 小时内被永久清除。' }) }}</li>
                   </ol>
@@ -312,7 +312,7 @@
                     <i class="ri-mail-send-line"></i>
                     <div>
                       <strong>{{ tBy({ en: 'Official Email & OAuth Support', km: 'អ៊ីមែលផ្លូវការ និងគាំទ្រ OAuth', zh: '官方邮箱与 OAuth 支持' }) }}</strong>
-                      <span>riththydragon@email.com</span>
+                      <span>thynydragon@email.com</span>
                     </div>
                   </div>
                 </div>

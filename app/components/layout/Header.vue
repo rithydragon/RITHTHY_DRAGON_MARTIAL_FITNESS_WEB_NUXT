@@ -56,10 +56,10 @@
         <LanguageSwitcher />
         <ThemeToggle />
         <NotificationBell />
-        <template v-if="auth.isAuthenticated">
+        <template v-if="isAuth">
           <div class="navbar__user" ref="userMenuRef">
             <button class="navbar__user-avatar-btn" @click="userMenuOpen = !userMenuOpen" :aria-label="auth.userName">
-              <img v-if="auth.user?.avatar" :src="auth.user.avatar" :alt="auth.userName" class="navbar__user-avatar" />
+              <img v-if="auth.user?.Avatarurl" :src="auth.user.Avatarurl" :alt="auth.userName" class="navbar__user-avatar" />
               <span v-else class="navbar__user-avatar">{{ auth.userInitials }}</span>
             </button>
             <Transition name="dropdown">
@@ -166,7 +166,6 @@ import { onClickOutside } from '@vueuse/core'
 
 const screen = useScreenStore()
 const auth = useAuthStore()
-console.log("auth ==================> ", auth.isLoggedIn)
 const ui = useUIStore()
 const menu = await useMenuData()
 const { t } = useI18n()
@@ -181,6 +180,11 @@ onClickOutside(userMenuRef, () => {
   userMenuOpen.value = false
 })
 
+const accessToken = useCookie(ACCESS_COOKIE)
+
+console.log("accessToken ==================> ", accessToken.value)
+
+const isAuth = computed(() => !!accessToken.value)
 onMounted(() => {
   menuList.value = Array.isArray(menu.navbar) ? menu.navbar : []
 })

@@ -318,7 +318,7 @@
                     <i class="ri-mail-line"></i>
                     <div>
                       <strong>{{ tBy({ en: 'Official Email', km: 'អ៊ីមែលផ្លូវការ', zh: '官方邮箱' }) }}</strong>
-                      <span>riththydragon@email.com</span>
+                      <span>thynydragon@email.com</span>
                     </div>
                   </div>
                 </div>

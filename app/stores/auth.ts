@@ -16,6 +16,7 @@ interface AuthState {
   refreshToken: string | null
   loading: boolean
   error: string | null
+  isUserLogged: boolean | null
 }
 
 /* ------------------------------------------------------------------
@@ -139,16 +140,18 @@ export function writeTokenCookies(
 export const useAuthStore = defineStore('auth', {
   state: (): AuthState => ({
     user: null,
-    token: null,
-    refreshToken: null,
+    token: useCookie<string | null>(ACCESS_COOKIE).value,
+    refreshToken: useCookie<string | null>(REFRESH_COOKIE).value,
     loading: false,
     error: null,
+    isUserLogged: null,
   }),
 
   getters: {
     // derived, so it can never drift out of sync with the token
     isAuthenticated: (state) => !!state.token,
-    isLoggedIn: (state) => !!state.token || !!state.user,
+    isLoggedIn: (state) => !!state.token && !!state.user,
+    useRole: (state) => state.user?.role || '',
     userName: (state) => state.user?.name || '',
     userInitials: (state) => {
       if (!state.user?.name) return ''
@@ -337,7 +340,15 @@ export const useAuthStore = defineStore('auth', {
 
       const body: any = data.value
       const raw = body?.data ?? body
-      if (!raw) return
+      if (!raw) {
+        console.warn('[auth] fetchProfile failed:', data.value)
+        this.user = null
+        this.token = null
+        this.refreshToken = null
+        this.error = null
+        this.clearAuthCookies()
+        return
+      }
 
       this.user = {
         id: raw.id ?? raw.Id ?? 'member',

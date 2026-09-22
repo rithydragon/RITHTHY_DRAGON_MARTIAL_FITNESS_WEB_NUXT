@@ -44,18 +44,54 @@ export function useWebSocketNotifications() {
 
   const isConnected = computed(() => status.value === 'connected')
 
+  // function getWsUrl(): string {
+  //   const rawWsBase = config.public?.wsBase || config.wsBase || 'ws://localhost:58721/ws'
+  //   const baseUrl = String(rawWsBase).replace(/\/+$/, '')
+
+  //   // If a user is logged in, connect to their personal notification socket.
+  //   if (authStore.user?.id) {
+  //     const token = authStore.token || ''
+  //     return `${baseUrl}/notifications/${authStore.user.id}?token=${encodeURIComponent(token)}`
+  //   }
+
+  //   console.log("baseUrl.endsWith('/ws') ? baseUrl : `${baseUrl}/ws` ==========> ",baseUrl.endsWith('/ws') ? baseUrl : `${baseUrl}/ws`)
+  //   // Fallback to the main broadcast websocket endpoint.
+  //   return baseUrl.endsWith('/ws') ? baseUrl : `${baseUrl}/ws`
+  // }
   function getWsUrl(): string {
-    const rawWsBase = config.public?.wsBase || config.wsBase || 'ws://127.0.0.1:8080/ws'
+    const rawWsBase =
+      config.public?.wsBase ||
+      config.wsBase ||
+      'ws://localhost:58721/ws'
+
     const baseUrl = String(rawWsBase).replace(/\/+$/, '')
 
-    // If a user is logged in, connect to their personal notification socket.
     if (authStore.user?.id) {
       const token = authStore.token || ''
-      return `${baseUrl}/notifications/${authStore.user.id}?token=${encodeURIComponent(token)}`
+
+      if (!token) {
+        console.warn(
+          '[WebSocket] User is authenticated but no access token is available.'
+        )
+        return baseUrl.endsWith('/ws')
+          ? baseUrl
+          : `${baseUrl}/ws`
+      }
+
+      const notificationsBase = baseUrl.endsWith('/ws')
+        ? baseUrl
+        : `${baseUrl}/ws`
+
+      return (
+        `${notificationsBase}/notifications/${authStore.user.id}` +
+        `?token=${encodeURIComponent(token)}`
+      )
     }
 
-    // Fallback to the main broadcast websocket endpoint.
-    return baseUrl.endsWith('/ws') ? baseUrl : `${baseUrl}/ws`
+    // Public system notification WebSocket.
+    return baseUrl.endsWith('/ws')
+      ? baseUrl
+      : `${baseUrl}/ws`
   }
 
   function ensureTelemetrySimulation() {

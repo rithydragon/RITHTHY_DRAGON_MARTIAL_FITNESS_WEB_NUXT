@@ -146,7 +146,7 @@
         "name": "email",
         "id": "email",
         "icon": "ri-mail-line",
-        "href": "mailto:riththydragon@email.com",
+        "href": "mailto:thynydragon@email.com",
         "color": "#EA4335",
         "roles": [
           "user",

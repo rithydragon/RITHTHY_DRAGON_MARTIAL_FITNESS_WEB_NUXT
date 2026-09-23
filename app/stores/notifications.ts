@@ -155,7 +155,7 @@ export const useNotificationStore = defineStore('notifications', {
       if (!authStore.token) return false
       try {
         const res: any = await useWeb(getUrl('/api/v1/notifications'))
-        console.log('NOTIFICATION RES', res)
+        console.log('NOTIFICATION STORE RES===================> ', res)
         const list = Array.isArray(res)
           ? res
           : Array.isArray(res?.data)

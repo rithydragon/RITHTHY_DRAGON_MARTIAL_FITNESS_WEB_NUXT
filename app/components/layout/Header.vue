@@ -58,15 +58,15 @@
         <NotificationBell />
         <template v-if="isAuth">
           <div class="navbar__user" ref="userMenuRef">
-            <button class="navbar__user-avatar-btn" @click="userMenuOpen = !userMenuOpen" :aria-label="auth.userName">
-              <img v-if="auth.user?.Avatarurl" :src="auth.user.Avatarurl" :alt="auth.userName" class="navbar__user-avatar" />
+            <button class="navbar__user-avatar-btn" @click="userMenuOpen = !userMenuOpen" :aria-label="auth.Username">
+              <img v-if="auth.user?.Avatarurl" :src="auth.user?.Avatarurl" :alt="auth.Username" referrerpolicy="no-referrer" class="navbar__user-avatar" />
               <span v-else class="navbar__user-avatar">{{ auth.userInitials }}</span>
             </button>
             <Transition name="dropdown">
               <div v-if="userMenuOpen" class="navbar__user-menu">
                 <div class="navbar__user-info">
-                  <span class="navbar__user-name">{{ auth.userName}}</span>
-                  <span class="navbar__user-email">{{ auth.user?.email}}</span>
+                  <span class="navbar__user-name">{{ auth.user?.Username}}</span>
+                  <span class="navbar__user-email">{{ auth.user?.Email}}</span>
                 </div>
                 <div class="navbar__user-divider"></div>
                 <button class="navbar__user-menu-item" @click="ui.toggleNotifPanel(); userMenuOpen = false">

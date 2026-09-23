@@ -331,17 +331,19 @@ export const useAuthStore = defineStore('auth', {
     async fetchProfile() {
       if (!this.token) return
       const nuxtApp = useNuxtApp()
-      const { data, error } = await useWeb('/api/v1/auth/me')
+      const { data } = await axios.get(getUrl('/api/v1/auth/me'), {
+        withCredentials: true,
+      })
 
-      if (error.value) {
-        console.warn('[auth] fetchProfile failed:', error.value)
-        return
-      }
+      // if (error.value) {
+      //   console.warn('[auth] fetchProfile failed:', error.value)
+      //   return
+      // }
 
-      const body: any = data.value
+      const body: any = data
       const raw = body?.data ?? body
       if (!raw) {
-        console.warn('[auth] fetchProfile failed:', data.value)
+        console.warn('[auth] fetchProfile failed:', data)
         this.user = null
         this.token = null
         this.refreshToken = null
@@ -349,15 +351,16 @@ export const useAuthStore = defineStore('auth', {
         this.clearAuthCookies()
         return
       }
+      this.user = raw
 
-      this.user = {
-        id: raw.id ?? raw.Id ?? 'member',
-        name: raw.name ?? raw.Name ?? raw.email ?? raw.Email ?? 'Member',
-        email: raw.email ?? raw.Email ?? '',
-        avatar: raw.avatar ?? raw.Avatar ?? raw.image ?? raw.Image ?? undefined,
-        role: raw.role ?? raw.Role ?? 'member',
-        plan: raw.plan ?? raw.Plan ?? undefined,
-      }
+      // this.user = {
+      //   id: raw.id ?? raw.Id ?? 'member',
+      //   name: raw.name ?? raw.Name ?? raw.email ?? raw.Email ?? 'Member',
+      //   email: raw.email ?? raw.Email ?? '',
+      //   avatar: raw.avatar ?? raw.Avatar ?? raw.image ?? raw.Image ?? undefined,
+      //   role: raw.role ?? raw.Role ?? 'member',
+      //   plan: raw.plan ?? raw.Plan ?? undefined,
+      // }
       nuxtApp.runWithContext(() => this.persistUser())
     },
 

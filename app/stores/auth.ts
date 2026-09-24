@@ -387,12 +387,7 @@ export const useAuthStore = defineStore('auth', {
       this.loading = true
       this.error = null
       try {
-        const res: any = await axios.get(
-          getUrl(
-            '/api/v1/auth/oauth/telegram/config?origin=' +
-              encodeURIComponent(window.location.origin),
-          ),
-        )
+        const res: any = await axios.get(getUrl('/api/v1/auth/oauth/telegram/config'))
         const configured = res?.data?.data?.configured !== false
         if (!configured) {
           throw new Error(
@@ -401,15 +396,9 @@ export const useAuthStore = defineStore('auth', {
               : 'Telegram login is not configured',
           )
         }
-        // Telegram's widget rejects any origin that is not an HTTPS public
-        // domain registered in BotFather ("Bot domain invalid"). Warn early
-        // instead of redirecting straight into a broken widget.
-        const domainOk = res?.data?.data?.domain_ok !== false
-        if (!domainOk) {
-          const err: any = new Error('Telegram widget domain is not valid for this origin')
-          err.domain = true
-          throw err
-        }
+        // Always proceed to the widget page; /telegram-widget validates the
+        // origin itself and shows the localized hint if it cannot host the
+        // widget (localhost/custom ports), instead of blocking the button here.
         const locale = ((useNuxtApp().$i18n as any)?.locale?.value ?? 'en') as string
         const lang = locale === 'km' || locale === 'zh' ? locale : 'en'
         localStorage.setItem(

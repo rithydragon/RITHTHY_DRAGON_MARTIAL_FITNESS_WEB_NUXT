@@ -43,10 +43,7 @@ const error = ref('')
 onMounted(async () => {
   try {
     const res: any = await $fetch<{ data: any }>(
-      getUrl(
-        '/api/v1/auth/oauth/telegram/config?origin=' +
-          encodeURIComponent(window.location.origin),
-      ),
+      getUrl('/api/v1/auth/oauth/telegram/config'),
     )
     const data = res?.data ?? {}
     const bot = data?.bot?.bot_username

@@ -341,7 +341,7 @@ export const useAuthStore = defineStore('auth', {
 
     async loginWithProvider(provider: 'google' | 'telegram' | 'facebook' | 'tiktok') {
       if (provider === 'telegram') {
-        return this.startTelegramLogin()
+        return this.telegramPreflight()
       }
       this.loading = true
       this.error = null
@@ -376,49 +376,46 @@ export const useAuthStore = defineStore('auth', {
     },
 
     /* --------------------------------------------------------------
-       TELEGRAM LOGIN (verified from the API)
-       Telegram's widget rejects origins that are not registered for the
-       bot (BotFather /setdomain → "Bot domain invalid"). We cannot query
-       that list, so before redirecting we verify the bot itself via
-       Telegram's getMe and only proceed when the token/username are valid.
+       TELEGRAM LOGIN — embedded widget (official flow, in the modal)
+       The official Telegram Login Widget is rendered right in the UI.
+       Clicking it authorizes on oauth.telegram.org; the signed payload
+       (id, first_name, ..., auth_date, hash) is handed to
+       window.onTelegramAuth, then validated & exchanged server-side via
+       the API — no page navigation, no hidden iframe.
     -------------------------------------------------------------- */
-    async startTelegramLogin(): Promise<void> {
-      if (!import.meta.client) return
-      this.loading = true
-      this.error = null
-      try {
-        const res: any = await axios.get(getUrl('/api/v1/auth/oauth/telegram/config'))
-        const configured = res?.data?.data?.configured !== false
-        if (!configured) {
-          throw new Error(
-            res?.data?.data?.bot?.bot_username
-              ? 'Telegram bot is not verified by the Telegram API'
-              : 'Telegram login is not configured',
-          )
-        }
-        // Always proceed to the widget page; /telegram-widget validates the
-        // origin itself and shows the localized hint if it cannot host the
-        // widget (localhost/custom ports), instead of blocking the button here.
-        const locale = ((useNuxtApp().$i18n as any)?.locale?.value ?? 'en') as string
-        const lang = locale === 'km' || locale === 'zh' ? locale : 'en'
-        localStorage.setItem(
-          'oauth-pending',
-          JSON.stringify({ provider: 'telegram', redirect: '/', ts: Date.now() }),
-        )
-        // The widget must run on the SITE origin (the domain registered in
-        // BotFather), so navigate to the frontend route — never to the backend
-        // host. The widget there posts back to the backend callback.
-        window.location.href = `/telegram-widget?lang=${encodeURIComponent(lang)}`
-      } catch (err: any) {
-        this.error =
-          err?.response?.data?.detail ||
-          err?.response?.data?.message ||
-          err?.message ||
-          'Telegram login is unavailable'
-        throw err
-      } finally {
-        this.loading = false
+    async telegramPreflight(): Promise<any> {
+      if (!import.meta.client) return null
+      const res: any = await axios.get(getUrl('/api/v1/auth/oauth/telegram/config'))
+      const data = res?.data?.data
+      if (!data?.configured || !data?.bot?.bot_username) {
+        throw new Error('Telegram login is not configured')
       }
+      if (data?.domain_ok === false) {
+        const err: any = new Error('Telegram widget domain is not valid for this origin')
+        err.domain = true
+        throw err
+      }
+      return data
+    },
+
+    async completeTelegramLogin(user: Record<string, string>): Promise<boolean> {
+      const res: any = await axios.post(
+        getUrl('/api/v1/auth/oauth/telegram/callback'),
+        new URLSearchParams(user as any),
+        {
+          headers: { Accept: 'application/json' },
+          withCredentials: true,
+        },
+      )
+      const body: any = res?.data
+      if (!body?.success || !body?.data?.access_token) {
+        throw new Error(body?.error || 'Telegram login failed')
+      }
+      const applied = this.applySession({ data: body.data })
+      if (!applied) throw new Error('Telegram login failed')
+      if (this.remember) await this.prolongSession()
+      await this.fetchProfile()
+      return true
     },
 
     async joinPlan(

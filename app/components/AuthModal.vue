@@ -34,6 +34,27 @@
             </p>
           </div>
 
+          <!-- Embedded Telegram Login Widget (official) -->
+          <div v-if="telegramOpen" class="auth-modal__telegram">
+            <div class="auth-modal__telegram-head">
+              <span class="auth-modal__telegram-title">
+                <i class="ri-telegram-fill"></i> {{ t('auth.telegramWidgetTitle') }}
+              </span>
+              <button class="auth-modal__telegram-x" @click="closeTelegram" :aria-label="t('common.close')">
+                <i class="ri-close-line"></i>
+              </button>
+            </div>
+            <div class="auth-modal__telegram-body">
+              <p v-if="twSigning" class="auth-modal__signing">
+                <i class="ri-loader-4-line animate-spin"></i> {{ t('auth.telegramWidgetSigningIn') }}
+              </p>
+              <div v-else ref="twWidgetEl" class="auth-modal__telegram-widget"></div>
+              <p v-if="twError" class="auth-modal__oauth-error auth-modal__telegram-err">
+                <i class="ri-error-warning-line"></i> {{ twError }}
+              </p>
+            </div>
+          </div>
+
           <div class="auth-modal__divider">
             <span>{{ t('common.or') || 'OR WITH EMAIL' }}</span>
           </div>
@@ -104,7 +125,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, watch } from 'vue'
+import { ref, reactive, computed, watch, nextTick } from 'vue'
 import { useEventListener } from '@vueuse/core'
 
 type AuthMode = 'login' | 'register' | 'join'
@@ -247,7 +268,69 @@ async function handleSubmit() {
 const oauthLoading = ref<string | null>(null)
 const oauthError = ref('')
 
+const telegramOpen = ref(false)
+const twSigning = ref(false)
+const twError = ref('')
+const twBot = ref('')
+const twWidgetEl = ref<HTMLElement>()
+
+function closeTelegram() {
+  telegramOpen.value = false
+  twSigning.value = false
+  twError.value = ''
+  const el = twWidgetEl.value
+  if (el) el.innerHTML = ''
+  delete (window as any).onTelegramAuth
+}
+
+function injectTelegramWidget() {
+  const el = twWidgetEl.value
+  if (!el || !twBot.value) return
+  ;(window as any).onTelegramAuth = async (user: Record<string, string>) => {
+    twSigning.value = true
+    try {
+      await auth.completeTelegramLogin(user)
+      close()
+    } catch (err: any) {
+      twSigning.value = false
+      twError.value = err?.message || (t('auth.telegramUnavailable') || 'Telegram login is not available right now.')
+    }
+  }
+  const script = document.createElement('script')
+  script.async = true
+  script.src = 'https://telegram.org/js/telegram-widget.js?22'
+  script.setAttribute('data-telegram-login', twBot.value)
+  script.setAttribute('data-size', 'large')
+  script.setAttribute('data-radius', '12')
+  script.setAttribute('data-javascript-callback', 'onTelegramAuth')
+  el.appendChild(script)
+}
+
+async function handleTelegram() {
+  if (oauthLoading.value !== null) return
+  oauthError.value = ''
+  closeTelegram()
+  oauthLoading.value = 'telegram'
+  try {
+    const cfg = await auth.telegramPreflight()
+    twBot.value = cfg?.bot?.bot_username || ''
+    telegramOpen.value = true
+    await nextTick()
+    injectTelegramWidget()
+  } catch (err: any) {
+    oauthError.value = err?.domain
+      ? (t('auth.telegramDomainHint') || 'Telegram widget requires a public HTTPS domain.')
+      : (t('auth.telegramUnavailable') || 'Telegram login is not available right now.')
+  } finally {
+    oauthLoading.value = null
+  }
+}
+
 async function handleOAuth(providerId: 'google' | 'telegram' | 'facebook' | 'tiktok') {
+  if (providerId === 'telegram') {
+    await handleTelegram()
+    return
+  }
   if (oauthLoading.value !== null) return
   oauthError.value = ''
   oauthLoading.value = providerId
@@ -420,6 +503,85 @@ async function handleOAuth(providerId: 'google' | 'telegram' | 'facebook' | 'tik
     margin-top: 2px;
     flex-shrink: 0;
   }
+}
+
+.auth-modal__telegram {
+  margin-bottom: 1.25rem;
+  border: 1px solid rgba(36, 161, 222, 0.35);
+  border-radius: var(--radius-md, 10px);
+  background: rgba(36, 161, 222, 0.06);
+  overflow: hidden;
+
+  &-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 0.85rem;
+    border-bottom: 1px solid var(--c-border);
+  }
+
+  &-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.825rem;
+    font-weight: 700;
+    color: #24a1de;
+
+    i {
+      font-size: 1rem;
+    }
+  }
+
+  &-x {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    color: var(--c-muted, #9ca3af);
+    font-size: 0.95rem;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--c-text);
+      background: var(--c-border);
+    }
+  }
+
+  &-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.9rem 0.85rem;
+    gap: 0.6rem;
+  }
+
+  &-widget {
+    min-height: 48px;
+    display: flex;
+    justify-content: center;
+  }
+
+  &-err {
+    width: 100%;
+  }
+}
+
+.auth-modal__signing {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid rgba(231, 201, 95, 0.3);
+  background: rgba(231, 201, 95, 0.08);
+  color: #e7c95f;
+  border-radius: var(--radius-md, 10px);
+  font-size: 0.8rem;
 }
 
 .auth-modal__divider {

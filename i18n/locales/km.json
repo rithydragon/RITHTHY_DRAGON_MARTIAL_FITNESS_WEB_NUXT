@@ -184,7 +184,10 @@
     "oauthFailed": "មិនអាចចាប់ផ្តើមការចូលបានទេ។ សូមព្យាយាមម្តងទៀត។",
     "socialLogin": "ចូលដោយប្រើបណ្តាញសង្គម",
     "socialSignUp": "ចុះឈ្មោះរហ័សជាមួយ",
-    "telegramDomainHint": "ការចូលតាម Telegram ដំណើរការតែពីអាសយដ្ឋាន HTTPS សាធារណៈដែលបានចុះបញ្ជីជាមួយ @BotFather ប៉ុណ្ណោះ (មិនមែន localhost ឬ port ពិសេសទេ)។ សូមបើកគេហទំព័រនេះតាមរយៈដែនដែលបានចុះបញ្ជី ឬ tunnel ដើម្បីបន្ត។"
+    "telegramDomainHint": "ការចូលតាម Telegram ដំណើរការតែពីអាសយដ្ឋាន HTTPS សាធារណៈដែលបានចុះបញ្ជីជាមួយ BotFather ប៉ុណ្ណោះ (មិនមែន localhost ឬ port ពិសេសទេ)។ សូមបើកគេហទំព័រនេះតាមរយៈដែនដែលបានចុះបញ្ជី ឬ tunnel ដើម្បីបន្ត។",
+    "telegramWidgetTitle": "ចូលដោយប្រើ Telegram",
+    "telegramWidgetSubtitle": "ភ្ជាប់ដោយសុវត្ថិភាពជាមួយគណនី Telegram របស់អ្នក ដើម្បីចូលប្រើការហ្វឹកហាត់របស់អ្នក។",
+    "telegramWidgetBack": "ត្រឡប់ទៅ RITHTHY Fitness"
   },
   "notifications": {
     "title": "ការជូនដំណឹង",

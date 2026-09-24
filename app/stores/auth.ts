@@ -387,7 +387,12 @@ export const useAuthStore = defineStore('auth', {
       this.loading = true
       this.error = null
       try {
-        const res: any = await axios.get(getUrl('/api/v1/auth/oauth/telegram/config'))
+        const res: any = await axios.get(
+          getUrl(
+            '/api/v1/auth/oauth/telegram/config?origin=' +
+              encodeURIComponent(window.location.origin),
+          ),
+        )
         const configured = res?.data?.data?.configured !== false
         if (!configured) {
           throw new Error(
@@ -411,9 +416,10 @@ export const useAuthStore = defineStore('auth', {
           'oauth-pending',
           JSON.stringify({ provider: 'telegram', redirect: '/', ts: Date.now() }),
         )
-        const widgetUrl = new URL(getUrl('/api/v1/auth/oauth/telegram/widget'), window.location.origin)
-        widgetUrl.searchParams.set('lang', lang)
-        window.location.href = widgetUrl.toString()
+        // The widget must run on the SITE origin (the domain registered in
+        // BotFather), so navigate to the frontend route — never to the backend
+        // host. The widget there posts back to the backend callback.
+        window.location.href = `/telegram-widget?lang=${encodeURIComponent(lang)}`
       } catch (err: any) {
         this.error =
           err?.response?.data?.detail ||

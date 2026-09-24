@@ -6,7 +6,7 @@ import { useScreenStore } from '../stores/screen'
 import { useAuthStore } from '../stores/auth'
 import { useNotificationStore } from '../stores/notifications'
 import { useWebSocketNotifications } from '../composables/useWebSocketNotifications'
-import { useHttp } from '../composables/useHttp'
+import { useWeb } from '../composables/useWeb'
 import { useI18n } from '#imports'
 import { useSession } from '../composables/useSession'
 import { useAnimate } from '../composables/useAnimate'
@@ -44,7 +44,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   }
 
   // Provide $http globally
-  const http = useHttp()
+  const http = useWeb()
   nuxtApp.provide('http', http)
 
   // Init animations after mount

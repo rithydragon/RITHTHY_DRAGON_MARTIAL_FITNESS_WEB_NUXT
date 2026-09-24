@@ -60,6 +60,12 @@ async function doRefresh(refreshToken: string): Promise<string | null> {
       if (session.refreshToken) authStore.refreshToken = session.refreshToken
       if (session.user) authStore.user = session.user
       authStore.persistUser()
+      useUserData({
+        ...(authStore.user || {}),
+        access_token: session.token,
+        refresh_token: session.refreshToken,
+        expires_in: session.expiresIn,
+      })
 
       return session.token
     })
@@ -89,17 +95,15 @@ export const useRefreshToken = async (force = false): Promise<string | null> => 
   // Join an in-flight refresh instead of starting a second one.
   if (inFlight) return inFlight
 
-  const currentAccess = useCookie<string | null>(ACCESS_COOKIE).value
-  const refreshToken = useCookie<string | null>(REFRESH_COOKIE).value
+  const session = useUserData().value || {}
+  const currentAccess =
+    useCookie<string | null>(ACCESS_COOKIE).value || session.access_token || null
+  const refreshToken =
+    useCookie<string | null>(REFRESH_COOKIE).value || session.refresh_token || null
 
-  if (!refreshToken) {
-    useAuthStore().logout()
-    if (import.meta.client) {
-      const path = typeof localePath === 'function' ? localePath('/?auth=login') : '/?auth=login'
-      await navigateTo(path, { replace: true })
-    }
-    return null
-  }
+  // No refresh token available: never wipe the session on a plain reload —
+  // return quietly and let the caller decide.
+  if (!refreshToken) return null
 
   // Access token still good and no force: nothing to do.
   if (!force && currentAccess && !isJwtExpired(currentAccess)) {

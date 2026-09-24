@@ -472,6 +472,7 @@ export const useAuthStore = defineStore('auth', {
       this.refreshToken = null
       this.error = null
       this.clearAuthCookies()
+      useUserData(null)
       if (token && import.meta.client) {
         try {
           await axios.post(
@@ -487,7 +488,7 @@ export const useAuthStore = defineStore('auth', {
     },
 
     clearAuthCookies() {
-      const names = [ACCESS_COOKIE, REFRESH_COOKIE, USER_COOKIE, ...LEGACY_COOKIES]
+      const names = [ACCESS_COOKIE, REFRESH_COOKIE, USER_COOKIE, 'rty_user_data', ...LEGACY_COOKIES]
       for (const name of names) {
         useCookie(name, expireCookieOptions()).value = null
       }

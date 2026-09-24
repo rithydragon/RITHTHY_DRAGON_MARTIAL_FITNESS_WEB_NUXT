@@ -38,11 +38,13 @@ function isJwtExpired(token: string): boolean {
 async function doRefresh(refreshToken: string): Promise<string | null> {
   const nuxtApp = useNuxtApp()
   try {
+    const authStore = useAuthStore()
     // Send every casing the backend might expect; extra keys are ignored.
     const response = await axios.post(getUrl('/api/v1/auth/refresh'), {
       refresh_token: refreshToken,
       refreshToken,
       RefreshToken: refreshToken,
+      Remember: authStore.remember,
     })
 
     const session = normalizeSession(response)
@@ -52,9 +54,8 @@ async function doRefresh(refreshToken: string): Promise<string | null> {
     }
 
     return nuxtApp.runWithContext(() => {
-      writeTokenCookies(session.token, session.refreshToken, session.expiresIn)
+      writeTokenCookies(session.token, session.refreshToken, session.expiresIn, authStore.remember)
 
-      const authStore = useAuthStore()
       authStore.token = session.token
       if (session.refreshToken) authStore.refreshToken = session.refreshToken
       if (session.user) authStore.user = session.user

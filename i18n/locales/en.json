@@ -178,7 +178,8 @@
     "planPro": "Professional",
     "planElite": "Elite",
     "planMonthly": "/month",
-    "selectPlan": "Select Plan"
+    "selectPlan": "Select Plan",
+    "rememberMe": "Remember me on this device"
   },
   "notifications": {
     "title": "Notifications",

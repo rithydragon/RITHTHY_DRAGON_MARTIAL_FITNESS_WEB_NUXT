@@ -14,6 +14,7 @@ interface AuthState {
   user: AuthUser | null
   token: string | null
   refreshToken: string | null
+  remember: boolean
   loading: boolean
   error: string | null
   isUserLogged: boolean | null
@@ -29,7 +30,50 @@ export const USER_COOKIE = 'auth_user'
 const LEGACY_COOKIES = ['expire_in', 'rmf-auth', 'rama_access_token', 'user_data']
 
 export const ACCESS_MAX_AGE = 60 * 60 * 24       // 1 day
-export const REFRESH_MAX_AGE = 60 * 60 * 24 * 30 // 30 days
+export const REFRESH_MAX_AGE = 60 * 60 * 24 * 30       // 30 days (default)
+export const REMEMBER_MAX_AGE = 60 * 60 * 24 * 365     // 1 year (remembered device)
+
+export const DEVICE_ID_KEY = 'rmf-device-id'
+export const REMEMBER_KEY = 'rmf-remember'
+
+/* ------------------------------------------------------------------
+   Device detection — a stable per-browser identifier that survives
+   logout. A "remembered" device stays alive across future sessions.
+------------------------------------------------------------------ */
+export function getDeviceId(): string {
+  if (!import.meta.client) return ''
+  try {
+    let id = localStorage.getItem(DEVICE_ID_KEY)
+    if (!id) {
+      id =
+        typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+          ? crypto.randomUUID()
+          : `dev-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`
+      localStorage.setItem(DEVICE_ID_KEY, id)
+    }
+    return id
+  } catch {
+    return ''
+  }
+}
+
+export function getRemembered(): boolean {
+  if (!import.meta.client) return false
+  try {
+    return localStorage.getItem(REMEMBER_KEY) === '1'
+  } catch {
+    return false
+  }
+}
+
+export function setRemembered(value: boolean) {
+  if (!import.meta.client) return
+  try {
+    localStorage.setItem(REMEMBER_KEY, value ? '1' : '0')
+  } catch {
+    /* ignore */
+  }
+}
 
 /* ------------------------------------------------------------------
    secure flag must reflect the ACTUAL protocol, not the build mode.
@@ -127,13 +171,15 @@ export function writeTokenCookies(
   token: string | null,
   refreshToken: string | null,
   expiresIn: number | null = null,
+  remember = false,
 ) {
   if (token) {
     const age = expiresIn && expiresIn > 60 ? expiresIn : ACCESS_MAX_AGE
     useCookie(ACCESS_COOKIE, cookieOptions(age)).value = token
   }
   if (refreshToken) {
-    useCookie(REFRESH_COOKIE, cookieOptions(REFRESH_MAX_AGE)).value = refreshToken
+    const age = remember ? REMEMBER_MAX_AGE : REFRESH_MAX_AGE
+    useCookie(REFRESH_COOKIE, cookieOptions(age)).value = refreshToken
   }
 }
 
@@ -142,6 +188,7 @@ export const useAuthStore = defineStore('auth', {
     user: null,
     token: useCookie<string | null>(ACCESS_COOKIE).value,
     refreshToken: useCookie<string | null>(REFRESH_COOKIE).value,
+    remember: getRemembered(),
     loading: false,
     error: null,
     isUserLogged: null,
@@ -171,17 +218,19 @@ export const useAuthStore = defineStore('auth', {
        used after the await runs inside runWithContext, otherwise on SSR
        you get "nuxt instance unavailable" and no cookie is ever written.
     -------------------------------------------------------------- */
-    async login(email: string, password: string) {
+    async login(email: string, password: string, remember?: boolean) {
       const nuxtApp = useNuxtApp()
+      const rememberFlag = remember ?? this.remember
       this.loading = true
       this.error = null
       try {
         const res: any = await axios.post(getUrl('/api/v1/auth/login'), {
           Email: email,
           Password: password,
+          Remember: rememberFlag,
         })
 
-        const applied = nuxtApp.runWithContext(() => this.applySession(res))
+        const applied = nuxtApp.runWithContext(() => this.applySession(res, rememberFlag))
         if (!applied) {
           throw new Error('Login succeeded but no access token was returned')
         }
@@ -225,7 +274,7 @@ export const useAuthStore = defineStore('auth', {
        THE ONLY PLACE THAT WRITES AUTH COOKIES
        Synchronous on purpose: no awaits, so the Nuxt context is alive.
     -------------------------------------------------------------- */
-    applySession(payload: any): boolean {
+    applySession(payload: any, remember?: boolean): boolean {
       const { token, refreshToken, expiresIn, user } = normalizeSession(payload)
 
       if (!token) {
@@ -234,19 +283,50 @@ export const useAuthStore = defineStore('auth', {
         return false
       }
 
+      const rem = remember ?? this.remember
       this.token = token
       if (refreshToken) this.refreshToken = refreshToken
       if (user) this.user = user
 
-      writeTokenCookies(token, refreshToken ?? this.refreshToken, expiresIn)
+      writeTokenCookies(token, refreshToken ?? this.refreshToken, expiresIn, rem)
       this.persistUser()
       useUserData({
         ...(this.user || {}),
+        device_id: getDeviceId(),
         access_token: token,
         refresh_token: refreshToken ?? this.refreshToken,
         expires_in: expiresIn,
       })
       return true
+    },
+
+    /* --------------------------------------------------------------
+       REMEMBER
+       Marks this device as "alive" — future logins skip re-auth by
+       storing a long-lived (1 year) refresh token for this browser.
+    -------------------------------------------------------------- */
+    setRemember(value: boolean) {
+      this.remember = value
+      setRemembered(value)
+    },
+
+    /* --------------------------------------------------------------
+       PROLONG
+       Rotate to a remember-aware refresh token (called after OAuth /
+       join flows where the backend can only issue the default expiry).
+    -------------------------------------------------------------- */
+    async prolongSession(): Promise<boolean> {
+      if (!this.refreshToken) return false
+      const nuxtApp = useNuxtApp()
+      try {
+        const res: any = await axios.post(getUrl('/api/v1/auth/refresh'), {
+          refresh_token: this.refreshToken,
+          Remember: this.remember,
+        })
+        return nuxtApp.runWithContext(() => this.applySession(res, this.remember))
+      } catch {
+        return false
+      }
     },
 
     /* --------------------------------------------------------------
@@ -298,7 +378,7 @@ export const useAuthStore = defineStore('auth', {
         // headers belong in the CONFIG argument, not in the body
         const res: any = await axios.post(
           getUrl('/api/v1/memberships/join'),
-          { plan, ...(userData || {}) },
+          { plan, ...(userData || {}), Remember: this.remember },
           { headers: this.token ? { Authorization: `Bearer ${this.token}` } : {} },
         )
         if (normalizeSession(res).token) {
@@ -360,6 +440,7 @@ export const useAuthStore = defineStore('auth', {
         return
       }
       this.user = raw
+      console.log("this.user  ===============> ", this.user )
 
       // this.user = {
       //   id: raw.id ?? raw.Id ?? 'member',
@@ -385,11 +466,23 @@ export const useAuthStore = defineStore('auth', {
      * synchronous block, so navigating immediately can outrun the deletion.
      */
     async logout() {
+      const token = this.token
       this.user = null
       this.token = null
       this.refreshToken = null
       this.error = null
       this.clearAuthCookies()
+      if (token && import.meta.client) {
+        try {
+          await axios.post(
+            getUrl('/api/v1/auth/logout'),
+            null,
+            { headers: { Authorization: `Bearer ${token}` } },
+          )
+        } catch {
+          // best-effort server-side revoke; local cookies are already gone
+        }
+      }
       await nextTick()
     },
 
@@ -423,6 +516,7 @@ export const useAuthStore = defineStore('auth', {
     restore() {
       this.token = useCookie<string | null>(ACCESS_COOKIE).value || null
       this.refreshToken = useCookie<string | null>(REFRESH_COOKIE).value || null
+      this.remember = getRemembered()
 
       const rawUser = useCookie<any>(USER_COOKIE).value
       if (rawUser) {

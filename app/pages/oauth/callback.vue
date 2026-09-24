@@ -150,6 +150,12 @@ async function complete(accessToken: string, refreshToken: string | null, expire
     return
   }
 
+  // Remembered device: rotate to a long-lived refresh token (the OAuth
+  // redirect can only carry the default backend expiry).
+  if (auth.remember) {
+    await auth.prolongSession()
+  }
+
   // Hydrate (and normalize) the profile — the token itself was minted by the
   // backend, so a slow /me must never block the sign-in.
   const raw = await fetchProfile(accessToken)

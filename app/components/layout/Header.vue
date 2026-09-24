@@ -187,7 +187,9 @@ const isAuth = computed(() => !!accessToken.value || !!userData.value?.access_to
 
 const account = computed(() => {
   const u = userData.value
+  console.log("userData ==================> ", u)
   const fallback = auth.user
+  console.log("fallback =>>>> ", fallback)
   return {
     name: u?.Username || u?.Name || u?.name || fallback?.Username || fallback?.Name || fallback?.name || fallback?.userName || '',
     email: u?.Email || u?.email || fallback?.Email || fallback?.email || '',

@@ -178,7 +178,8 @@
     "planPro": "专业",
     "planElite": "精英",
     "planMonthly": "/月",
-    "selectPlan": "选择计划"
+    "selectPlan": "选择计划",
+    "rememberMe": "记住此设备"
   },
   "notifications": {
     "title": "通知",

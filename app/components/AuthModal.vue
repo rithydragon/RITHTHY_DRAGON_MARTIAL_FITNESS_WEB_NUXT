@@ -55,6 +55,13 @@
               <input v-model="form.Password" type="password" required :placeholder="t('auth.password')" :disabled="auth.loading"/>
             </div>
 
+            <div v-if="mode === 'login'" class="auth-modal__remember">
+              <label class="auth-modal__remember-label">
+                <input v-model="remember" type="checkbox" @change="onRememberChange" />
+                <span><i class="ri-device-line"></i> {{ t('auth.rememberMe') }}</span>
+              </label>
+            </div>
+
             <div v-if="mode === 'register'" class="auth-modal__field">
               <label>{{ t('auth.confirmPassword') }}</label>
               <input v-model="form.ConfirmPassword" type="password" required :placeholder="t('auth.confirmPassword')" :disabled="auth.loading"/>
@@ -123,6 +130,12 @@ const form = reactive({
   Password: '',
   ConfirmPassword: '',
 })
+
+const remember = ref(auth.remember)
+
+function onRememberChange() {
+  auth.setRemember(remember.value)
+}
 
 const plans = [
   { id: 'free', code: 'FREE', label: 'Free', price: 0 },
@@ -193,7 +206,7 @@ function switchMode() {
 async function handleSubmit() {
   try {
     if (props.mode === 'login') {
-      await auth.login(form.Email, form.Password)
+      await auth.login(form.Email, form.Password, remember.value)
       close()
     } else if (props.mode === 'register') {
       await auth.register({
@@ -229,6 +242,7 @@ async function handleSubmit() {
 
 async function handleOAuth(providerId: 'google' | 'telegram' | 'facebook' | 'tiktok') {
   try {
+    auth.setRemember(remember.value)
     await auth.loginWithProvider(providerId)
     close()
   } catch {
@@ -417,6 +431,38 @@ async function handleOAuth(providerId: 'google' | 'telegram' | 'facebook' | 'tik
     &:focus {
       outline: none;
       border-color: var(--c-primary, #eab308);
+    }
+  }
+}
+
+.auth-modal__remember {
+  margin: -0.25rem 0 1rem;
+  display: flex;
+  justify-content: flex-start;
+
+  &-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--c-muted, #9ca3af);
+    user-select: none;
+    transition: color 0.2s ease;
+
+    &:hover { color: var(--c-text); }
+
+    input[type='checkbox'] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--c-primary, #eab308);
+      cursor: pointer;
+    }
+
+    i {
+      font-size: 0.95rem;
+      color: var(--c-primary, #eab308);
     }
   }
 }

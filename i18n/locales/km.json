@@ -179,7 +179,9 @@
     "planElite": "ឧត្តម",
     "planMonthly": "/ខែ",
     "selectPlan": "ជ្រើសរើសផែនកម្ម",
-    "rememberMe": "ចងចាំខ្ញុំនៅលើឧបករណ៍នេះ"
+    "rememberMe": "ចងចាំខ្ញុំនៅលើឧបករណ៍នេះ",
+    "telegramUnavailable": "ការចូលតាម Telegram មិនអាចប្រើបាននៅពេលនេះទេ។",
+    "oauthFailed": "មិនអាចចាប់ផ្តើមការចូលបានទេ។ សូមព្យាយាមម្តងទៀត។"
   },
   "notifications": {
     "title": "ការជូនដំណឹង",

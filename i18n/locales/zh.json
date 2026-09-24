@@ -179,7 +179,9 @@
     "planElite": "精英",
     "planMonthly": "/月",
     "selectPlan": "选择计划",
-    "rememberMe": "记住此设备"
+    "rememberMe": "记住此设备",
+    "telegramUnavailable": "Telegram 登录当前不可用。",
+    "oauthFailed": "无法启动社交登录，请重试。"
   },
   "notifications": {
     "title": "通知",

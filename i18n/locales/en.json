@@ -179,7 +179,9 @@
     "planElite": "Elite",
     "planMonthly": "/month",
     "selectPlan": "Select Plan",
-    "rememberMe": "Remember me on this device"
+    "rememberMe": "Remember me on this device",
+    "telegramUnavailable": "Telegram login is not available right now.",
+    "oauthFailed": "The social login could not be started. Please try again."
   },
   "notifications": {
     "title": "Notifications",

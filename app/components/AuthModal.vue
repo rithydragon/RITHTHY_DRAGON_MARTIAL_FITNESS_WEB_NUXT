@@ -21,13 +21,17 @@
                 :key="provider.id"
                 :class="['auth-modal__oauth-btn', `auth-modal__oauth-btn--${provider.id}`]"
                 @click="handleOAuth(provider.id)"
-                :disabled="auth.loading"
+                :disabled="auth.loading || oauthLoading !== null"
                 :aria-label="provider.Name"
               >
-                <i :class="provider.icon"></i>
+                <i v-if="oauthLoading === provider.id" class="ri-loader-4-line animate-spin"></i>
+                <i v-else :class="provider.icon"></i>
                 <span>{{ provider.name }}</span>
               </button>
             </div>
+            <p v-if="oauthError" class="auth-modal__oauth-error">
+              <i class="ri-error-warning-line"></i> {{ oauthError }}
+            </p>
           </div>
 
           <div class="auth-modal__divider">
@@ -240,13 +244,30 @@ async function handleSubmit() {
 }
 
 
+const oauthLoading = ref<string | null>(null)
+const oauthError = ref('')
+
 async function handleOAuth(providerId: 'google' | 'telegram' | 'facebook' | 'tiktok') {
+  if (oauthLoading.value !== null) return
+  oauthError.value = ''
+  oauthLoading.value = providerId
   try {
     auth.setRemember(remember.value)
     await auth.loginWithProvider(providerId)
     close()
-  } catch {
-    // error stored in auth.error
+  } catch (err: any) {
+    // oauth/initiate verifies on the backend that the provider is configured.
+    // Surface a friendly message instead of swallowing the failure.
+    const status = err?.response?.status
+    oauthError.value =
+      providerId === 'telegram' && (status === 400 || status === 401 || status === 403 || status === 422)
+        ? (t('auth.telegramUnavailable') || 'Telegram login is not available right now.')
+        : (err?.response?.data?.message ||
+            err?.message ||
+            t('auth.oauthFailed') ||
+            'The social login could not be started. Please try again.')
+  } finally {
+    oauthLoading.value = null
   }
 }
 </script>
@@ -378,6 +399,25 @@ async function handleOAuth(providerId: 'google' | 'telegram' | 'facebook' | 'tik
   background: rgba(24, 119, 242, 0.15);
   border-color: #1877F2;
   color: #1877F2;
+}
+
+.auth-modal__oauth-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-top: 0.925rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid rgba(244, 63, 94, 0.35);
+  background: rgba(244, 63, 94, 0.1);
+  color: #fb7185;
+  border-radius: var(--radius-md, 10px);
+  font-size: 0.8rem;
+  line-height: 1.45;
+
+  i {
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
 }
 
 .auth-modal__divider {

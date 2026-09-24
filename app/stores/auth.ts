@@ -340,6 +340,9 @@ export const useAuthStore = defineStore('auth', {
     },
 
     async loginWithProvider(provider: 'google' | 'telegram' | 'facebook' | 'tiktok') {
+      if (provider === 'telegram') {
+        return this.startTelegramLogin()
+      }
       this.loading = true
       this.error = null
       try {
@@ -354,13 +357,69 @@ export const useAuthStore = defineStore('auth', {
             'oauth-pending',
             JSON.stringify({ provider, redirect: '/', ts: Date.now() }),
           )
-          window.location.href = redirectUrl
+          // Pass the active locale so the widget page renders in the user's language.
+          const locale = ((useNuxtApp().$i18n as any)?.locale?.value ?? 'en') as string
+          const lang = locale === 'km' || locale === 'zh' ? locale : 'en'
+          const widgetUrl = new URL(redirectUrl, window.location.origin)
+          widgetUrl.searchParams.set('lang', lang)
+          window.location.href = widgetUrl.toString()
         }
         return res
       } catch (err: any) {
         // Previously this fabricated a fake session on failure, which put a
         // bogus token in the store and cookies. Fail loudly instead.
         this.error = err?.response?.data?.message || err?.message || 'OAuth initiation failed'
+        throw err
+      } finally {
+        this.loading = false
+      }
+    },
+
+    /* --------------------------------------------------------------
+       TELEGRAM LOGIN (verified from the API)
+       Telegram's widget rejects origins that are not registered for the
+       bot (BotFather /setdomain → "Bot domain invalid"). We cannot query
+       that list, so before redirecting we verify the bot itself via
+       Telegram's getMe and only proceed when the token/username are valid.
+    -------------------------------------------------------------- */
+    async startTelegramLogin(): Promise<void> {
+      if (!import.meta.client) return
+      this.loading = true
+      this.error = null
+      try {
+        const res: any = await axios.get(getUrl('/api/v1/auth/oauth/telegram/config'))
+        const configured = res?.data?.data?.configured !== false
+        if (!configured) {
+          throw new Error(
+            res?.data?.data?.bot?.bot_username
+              ? 'Telegram bot is not verified by the Telegram API'
+              : 'Telegram login is not configured',
+          )
+        }
+        // Telegram's widget rejects any origin that is not an HTTPS public
+        // domain registered in BotFather ("Bot domain invalid"). Warn early
+        // instead of redirecting straight into a broken widget.
+        const domainOk = res?.data?.data?.domain_ok !== false
+        if (!domainOk) {
+          const err: any = new Error('Telegram widget domain is not valid for this origin')
+          err.domain = true
+          throw err
+        }
+        const locale = ((useNuxtApp().$i18n as any)?.locale?.value ?? 'en') as string
+        const lang = locale === 'km' || locale === 'zh' ? locale : 'en'
+        localStorage.setItem(
+          'oauth-pending',
+          JSON.stringify({ provider: 'telegram', redirect: '/', ts: Date.now() }),
+        )
+        const widgetUrl = new URL(getUrl('/api/v1/auth/oauth/telegram/widget'), window.location.origin)
+        widgetUrl.searchParams.set('lang', lang)
+        window.location.href = widgetUrl.toString()
+      } catch (err: any) {
+        this.error =
+          err?.response?.data?.detail ||
+          err?.response?.data?.message ||
+          err?.message ||
+          'Telegram login is unavailable'
         throw err
       } finally {
         this.loading = false

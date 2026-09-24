@@ -181,7 +181,10 @@
     "selectPlan": "Select Plan",
     "rememberMe": "Remember me on this device",
     "telegramUnavailable": "Telegram login is not available right now.",
-    "oauthFailed": "The social login could not be started. Please try again."
+    "oauthFailed": "The social login could not be started. Please try again.",
+    "socialLogin": "Sign in with Social",
+    "socialSignUp": "Quick Sign Up with",
+    "telegramDomainHint": "Telegram login only works from a public HTTPS address registered with @BotFather (not localhost or a custom port). Open this site through its registered domain or a tunnel to continue."
   },
   "notifications": {
     "title": "Notifications",

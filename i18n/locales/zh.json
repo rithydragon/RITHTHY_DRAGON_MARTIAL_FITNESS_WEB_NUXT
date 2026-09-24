@@ -181,7 +181,10 @@
     "selectPlan": "选择计划",
     "rememberMe": "记住此设备",
     "telegramUnavailable": "Telegram 登录当前不可用。",
-    "oauthFailed": "无法启动社交登录，请重试。"
+    "oauthFailed": "无法启动社交登录，请重试。",
+    "socialLogin": "使用社交账号登录",
+    "socialSignUp": "使用社交账号快速注册",
+    "telegramDomainHint": "Telegram 登录仅适用于已在 @BotFather 注册的公开 HTTPS 地址（不适用于 localhost 或自定义端口）。请通过已注册的域名或隧道打开本站以继续。"
   },
   "notifications": {
     "title": "通知",

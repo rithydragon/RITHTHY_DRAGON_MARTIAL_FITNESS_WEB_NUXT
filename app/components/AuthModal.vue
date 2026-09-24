@@ -14,7 +14,7 @@
 
           <!-- OAuth Social Login Tiers -->
           <div class="auth-modal__oauth-section">
-            <p class="auth-modal__oauth-heading">{{ mode === 'login' ? 'Sign in with Social' : 'Quick Sign Up with' }}</p>
+            <p class="auth-modal__oauth-heading">{{ mode === 'login' ? t('auth.socialLogin') : t('auth.socialSignUp') }}</p>
             <div class="auth-modal__oauth">
               <button
                 v-for="provider in providers"
@@ -256,16 +256,18 @@ async function handleOAuth(providerId: 'google' | 'telegram' | 'facebook' | 'tik
     await auth.loginWithProvider(providerId)
     close()
   } catch (err: any) {
-    // oauth/initiate verifies on the backend that the provider is configured.
-    // Surface a friendly message instead of swallowing the failure.
-    const status = err?.response?.status
+    // oauth/initiate + telegram/config verify on the backend that the provider
+    // is configured and that the origin can host the Telegram widget. Surface
+    // a friendly message instead of swallowing the failure.
     oauthError.value =
-      providerId === 'telegram' && (status === 400 || status === 401 || status === 403 || status === 422)
-        ? (t('auth.telegramUnavailable') || 'Telegram login is not available right now.')
-        : (err?.response?.data?.message ||
-            err?.message ||
-            t('auth.oauthFailed') ||
-            'The social login could not be started. Please try again.')
+      providerId === 'telegram' && err?.domain
+        ? (t('auth.telegramDomainHint') || 'Telegram widget requires a public HTTPS domain.')
+        : providerId === 'telegram'
+          ? (t('auth.telegramUnavailable') || 'Telegram login is not available right now.')
+          : (err?.response?.data?.message ||
+              err?.message ||
+              t('auth.oauthFailed') ||
+              'The social login could not be started. Please try again.')
   } finally {
     oauthLoading.value = null
   }

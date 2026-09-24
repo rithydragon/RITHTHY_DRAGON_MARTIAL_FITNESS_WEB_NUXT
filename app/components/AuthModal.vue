@@ -34,27 +34,6 @@
             </p>
           </div>
 
-          <!-- Embedded Telegram Login Widget (official) -->
-          <div v-if="telegramOpen" class="auth-modal__telegram">
-            <div class="auth-modal__telegram-head">
-              <span class="auth-modal__telegram-title">
-                <i class="ri-telegram-fill"></i> {{ t('auth.telegramWidgetTitle') }}
-              </span>
-              <button class="auth-modal__telegram-x" @click="closeTelegram" :aria-label="t('common.close')">
-                <i class="ri-close-line"></i>
-              </button>
-            </div>
-            <div class="auth-modal__telegram-body">
-              <p v-if="twSigning" class="auth-modal__signing">
-                <i class="ri-loader-4-line animate-spin"></i> {{ t('auth.telegramWidgetSigningIn') }}
-              </p>
-              <div v-else ref="twWidgetEl" class="auth-modal__telegram-widget"></div>
-              <p v-if="twError" class="auth-modal__oauth-error auth-modal__telegram-err">
-                <i class="ri-error-warning-line"></i> {{ twError }}
-              </p>
-            </div>
-          </div>
-
           <div class="auth-modal__divider">
             <span>{{ t('common.or') || 'OR WITH EMAIL' }}</span>
           </div>
@@ -118,6 +97,34 @@
             <span v-else>{{ t('auth.haveAccount') }} </span>
             <button @click="switchMode">{{ switchText }}</button>
           </p>
+        </div>
+      </div>
+    </Transition>
+  </Teleport>
+
+  <!-- Telegram Login Widget popup panel -->
+  <Teleport to="body">
+    <Transition name="tp">
+      <div v-if="telegramOpen" class="tp-card__overlay" @click.self="closeTelegram">
+        <div class="tp-card" role="dialog" aria-modal="true" :aria-label="t('auth.telegramWidgetTitle')">
+          <button class="tp-card__x" @click="closeTelegram" :aria-label="t('common.close')">
+            <i class="ri-close-line"></i>
+          </button>
+          <div class="tp-card__brand">
+            <i class="ri-telegram-fill"></i>
+          </div>
+          <h3 class="tp-card__title">{{ t('auth.telegramWidgetTitle') }}</h3>
+          <p class="tp-card__sub">{{ t('auth.telegramWidgetSubtitle') }}</p>
+
+          <div class="tp-card__body">
+            <p v-if="twSigning" class="tp-card__signing">
+              <i class="ri-loader-4-line animate-spin"></i> {{ t('auth.telegramWidgetSigningIn') }}
+            </p>
+            <div v-else ref="twWidgetEl" class="tp-card__widget"></div>
+            <p v-if="twError" class="tp-card__error">
+              <i class="ri-error-warning-line"></i> {{ twError }}
+            </p>
+          </div>
         </div>
       </div>
     </Transition>
@@ -217,7 +224,10 @@ function close() {
 }
 
 useEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && props.isOpen) close()
+  if (e.key === 'Escape') {
+    if (props.isOpen) close()
+    if (telegramOpen.value) closeTelegram()
+  }
 })
 
 watch(() => auth.isLoggedIn, (loggedIn) => {
@@ -290,6 +300,7 @@ function injectTelegramWidget() {
     twSigning.value = true
     try {
       await auth.completeTelegramLogin(user)
+      closeTelegram()
       close()
     } catch (err: any) {
       twSigning.value = false
@@ -505,83 +516,149 @@ async function handleOAuth(providerId: 'google' | 'telegram' | 'facebook' | 'tik
   }
 }
 
-.auth-modal__telegram {
-  margin-bottom: 1.25rem;
-  border: 1px solid rgba(36, 161, 222, 0.35);
-  border-radius: var(--radius-md, 10px);
-  background: rgba(36, 161, 222, 0.06);
-  overflow: hidden;
+.tp-card__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100000;
+  padding: 1rem;
+}
 
-  &-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.6rem 0.85rem;
-    border-bottom: 1px solid var(--c-border);
-  }
+.tp-card {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  padding: 2rem 1.75rem 1.75rem;
+  background: var(--c-surface, #161616);
+  border: 1px solid var(--c-border, #2a2a2a);
+  border-radius: 20px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  text-align: center;
 
-  &-title {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    font-size: 0.825rem;
-    font-weight: 700;
-    color: #24a1de;
-
-    i {
-      font-size: 1rem;
-    }
-  }
-
-  &-x {
-    width: 26px;
-    height: 26px;
+  &__x {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     background: transparent;
-    border: none;
+    border: 1px solid var(--c-border);
     color: var(--c-muted, #9ca3af);
-    font-size: 0.95rem;
+    font-size: 1rem;
     cursor: pointer;
+    transition: all 0.2s ease;
 
     &:hover {
       color: var(--c-text);
-      background: var(--c-border);
+      border-color: var(--c-primary);
+      background: var(--c-primary-soft);
     }
   }
 
-  &-body {
+  &__brand {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(36, 161, 222, 0.15);
+    color: #24a1de;
+    font-size: 1.6rem;
+  }
+
+  &__title {
+    margin: 0 0 0.4rem;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--c-text, #f5f5f4);
+  }
+
+  &__sub {
+    margin: 0 0 1.5rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--c-muted, #9ca3af);
+  }
+
+  &__body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0.9rem 0.85rem;
-    gap: 0.6rem;
+    gap: 0.7rem;
   }
 
-  &-widget {
+  &__widget {
     min-height: 48px;
     display: flex;
     justify-content: center;
   }
 
-  &-err {
+  &__signing {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid rgba(231, 201, 95, 0.3);
+    background: rgba(231, 201, 95, 0.08);
+    color: #e7c95f;
+    border-radius: 12px;
+    font-size: 0.8rem;
+  }
+
+  &__error {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
     width: 100%;
+    margin: 0;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid rgba(244, 63, 94, 0.35);
+    background: rgba(244, 63, 94, 0.1);
+    color: #fb7185;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    text-align: left;
+
+    i {
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
   }
 }
 
-.auth-modal__signing {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin: 0;
-  padding: 0.6rem 0.9rem;
-  border: 1px solid rgba(231, 201, 95, 0.3);
-  background: rgba(231, 201, 95, 0.08);
-  color: #e7c95f;
-  border-radius: var(--radius-md, 10px);
-  font-size: 0.8rem;
+.tp-enter-active,
+.tp-leave-active {
+  transition: opacity 0.22s ease;
+}
+
+.tp-enter-active .tp-card,
+.tp-leave-active .tp-card {
+  transition: transform 0.22s ease;
+}
+
+.tp-enter-from,
+.tp-leave-to {
+  opacity: 0;
+}
+
+.tp-enter-from .tp-card {
+  transform: translateY(14px) scale(0.96);
+}
+
+.tp-leave-to .tp-card {
+  transform: translateY(14px) scale(0.96);
 }
 
 .auth-modal__divider {

@@ -219,7 +219,8 @@ export function useWebSocketNotifications() {
       if (hasMessage) {
         notificationsStore.addFromServer({
           ...payload,
-          id: payload.id ?? payload.Id ?? msg.id ?? `ws-${Date.now()}-${Math.random()}`,
+          // WSNotificationPayload uses notification_id; REST feed uses Id.
+          id: payload.id ?? payload.Id ?? payload.notification_id ?? msg.id ?? `ws-${Date.now()}-${Math.random()}`,
         })
       }
     }

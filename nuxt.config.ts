@@ -158,6 +158,7 @@ export default defineNuxtConfig({
     public: {
       telegramClientId: process.env.TELEGRAM_CLIENT_ID,
       wsBase: process.env.NUXT_PUBLIC_WS_BASE || 'ws://localhost:58721/ws',
+      chatRoomId: process.env.NUXT_PUBLIC_CHAT_ROOM_ID || '1',
     },
   },
 

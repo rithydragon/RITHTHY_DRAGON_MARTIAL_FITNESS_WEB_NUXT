@@ -260,7 +260,9 @@ export const useAuthStore = defineStore('auth', {
         const res: any = await axios.post(getUrl('/api/v1/auth/oauth/initiate'), {
           Provider: provider,
         })
-        const redirectUrl = res?.data?.redirectUrl ?? res?.data?.RedirectUrl
+        console.log("Response ==================> ", res)
+        const redirectUrl = res?.data?.data?.redirectUrl ?? res?.data?.RedirectUrl
+        console.log("Redirect URL ==================> ", redirectUrl)
         if (redirectUrl && import.meta.client) {
           localStorage.setItem(
             'oauth-pending',

@@ -42,32 +42,124 @@ function toBool(value: any): boolean {
   return String(value).toLowerCase() === 'true' || Number(value) === 1
 }
 
+function firstValue(...values: any[]): any {
+  for (const v of values) {
+    if (v !== undefined && v !== null && v !== '') return v
+  }
+  return undefined
+}
+
+function humanizeLabel(value: any): string {
+  const s = toStr(value)
+    .replace(/[_-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+  return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''
+}
+
 /**
  * Normalize a notification payload coming from the backend REST API or
- * the WebSocket stream. Accepts both camelCase (frontend convention) and
- * PascalCase (Django/FastAPI convention) shapes.
+ * the WebSocket stream.
+ *
+ * RAMAGALLERY_FASTAPI shapes:
+ *   - REST GET /api/v1/notifications -> NotificationRead (PascalCase):
+ *       Id, UserId, TypeId, SubjectType, SubjectId, Message, Data,
+ *       IsRead (0/1), ReadAt, CreatedAt
+ *   - WS   /ws/notifications/{user_id} -> WSNotificationPayload (snake_case):
+ *       type: "notification", notification_id, title, message,
+ *       reference_type, reference_id
  */
 function normalizeServerItem(raw: any): Notification | null {
   if (!raw || typeof raw !== 'object') return null
 
-  const createdAt =
-    raw.createdAt ?? raw.created_at ?? raw.CreatedAt ?? new Date().toISOString()
-  const title = toStr(raw.title ?? raw.Title)
-  const message = toStr(raw.message ?? raw.Message ?? raw.content ?? raw.Content ?? raw.body ?? raw.Body)
-  const link = toStr(raw.link ?? raw.Link ?? raw.Href ?? raw.url ?? raw.Url)
+  const dataBucket = firstValue(raw.Data, raw.data)
+  const dataObj = dataBucket && typeof dataBucket === 'object' ? dataBucket : null
 
-  if (!title && !message) return null
+  const createdAt = toStr(
+    firstValue(
+      raw.createdAt,
+      raw.created_at,
+      raw.CreatedAt,
+      dataObj?.createdAt,
+      dataObj?.created_at,
+      dataObj?.CreatedAt
+    ) ?? new Date().toISOString()
+  )
 
-  const id = toStr(raw.id ?? raw.Id ?? raw.notification_id ?? raw.uuid)
-  const type = toStr(raw.type ?? raw.Type).toLowerCase() || 'system'
+  const message = toStr(
+    firstValue(
+      raw.message,
+      raw.Message,
+      raw.content,
+      raw.Content,
+      raw.body,
+      raw.Body,
+      dataObj?.message,
+      dataObj?.Message,
+      dataObj?.body,
+      dataObj?.Body
+    )
+  )
+
+  // WS payloads always send type:"notification"; prefer the concrete
+  // classification carried in reference_type / SubjectType.
+  const type = toStr(
+    firstValue(
+      raw.reference_type,
+      raw.referenceType,
+      raw.subjectType,
+      raw.SubjectType,
+      raw.typeCode,
+      raw.TypeCode,
+      raw.type_code,
+      raw.type,
+      raw.Type
+    )
+  )
+    .toLowerCase()
+    .replace(/^notification$/, '')
+    .trim()
+
+  const title = toStr(
+    firstValue(
+      raw.title,
+      raw.Title,
+      raw.title_english,
+      raw.titleEnglish,
+      raw.TITLE_ENGLISH,
+      raw.TITLE,
+      dataObj?.title,
+      dataObj?.Title
+    )
+  )
+
+  const link = toStr(
+    firstValue(
+      raw.link,
+      raw.Link,
+      raw.Href,
+      raw.url,
+      raw.Url,
+      dataObj?.link,
+      dataObj?.Link,
+      dataObj?.url,
+      dataObj?.Url
+    )
+  )
+
+  const hasId = firstValue(raw.id, raw.Id, raw.notification_id, raw.notificationId, raw.uuid)
+  if (!title && !message && !link && hasId === undefined) return null
+
+  const id = toStr(hasId)
+  const subject = toStr(firstValue(raw.SubjectType, raw.subjectType, raw.reference_type, raw.referenceType))
 
   return {
     id: id || generateUUID(),
-    type,
-    title: title || 'Notification',
+    type: type || 'system',
+    title: title || (subject ? humanizeLabel(subject) : type ? humanizeLabel(type) : 'Notification'),
     message,
-    read: toBool(raw.read ?? raw.IsRead ?? raw.is_read),
-    createdAt,
+    read: toBool(firstValue(raw.read, raw.IsRead, raw.is_read, raw.IS_READ)),
+    createdAt: createdAt || new Date().toISOString(),
     link: link || undefined,
   }
 }
@@ -137,10 +229,10 @@ export const useNotificationStore = defineStore('notifications', {
      * Replace the list with notifications returned by the REST API.
      */
     bulkFromServer(list: any[]): boolean {
-      const mapped = (Array.isArray(list) ? list : [])
+      if (!Array.isArray(list)) return false
+      const mapped = list
         .map(normalizeServerItem)
         .filter((n): n is Notification => Boolean(n))
-      if (mapped.length === 0) return false
       this.items = mapped
       this.unreadCount = mapped.filter((n) => !n.read).length
       return true
@@ -154,16 +246,18 @@ export const useNotificationStore = defineStore('notifications', {
       const authStore = useAuthStore()
       if (!authStore.token) return false
       try {
+        // useWeb returns { data: Ref<T>, status, error } — unwrap the value.
         const res: any = await useWeb(getUrl('/api/v1/notifications'))
-        console.log('NOTIFICATION STORE RES===================> ', res)
-        const list = Array.isArray(res)
-          ? res
-          : Array.isArray(res?.data)
-            ? res.data
-            : Array.isArray(res?.results)
-              ? res.results
+        const value = res?.data?.value ?? res?.data ?? res
+        const list = Array.isArray(value)
+          ? value
+          : Array.isArray(value?.results)
+            ? value.results
+            : Array.isArray(value?.data)
+              ? value.data
               : null
-        if (!list) return false
+        if (list === null) return false
+        console.log('NOTIFICATION STORE RES===================> ', list)
         return this.bulkFromServer(list)
       } catch {
         return false
@@ -189,10 +283,10 @@ export const useNotificationStore = defineStore('notifications', {
 
     remove(id: string) {
       const idx = this.items.findIndex((n) => n.id === id)
-      if (idx !== -1) {
-        if (!this.items[idx].read) this.unreadCount = Math.max(0, this.unreadCount - 1)
-        this.items.splice(idx, 1)
-      }
+      if (idx === -1) return
+      const item = this.items[idx]!
+      if (!item.read) this.unreadCount = Math.max(0, this.unreadCount - 1)
+      this.items.splice(idx, 1)
     },
 
     openNotification(item: Notification) {

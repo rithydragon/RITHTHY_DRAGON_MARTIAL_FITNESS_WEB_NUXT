@@ -188,12 +188,31 @@ const TYPE_STYLES: Record<string, { bg: string; color: string }> = {
   save: { bg: 'rgba(168,85,247,.12)', color: '#a855f7' },
   system: { bg: 'rgba(245,158,11,.12)', color: '#f59e0b' },
   article: { bg: 'rgba(234,179,8,.12)', color: '#eab308' },
+  news: { bg: 'rgba(234,179,8,.12)', color: '#eab308' },
+  blog: { bg: 'rgba(234,179,8,.12)', color: '#eab308' },
   account: { bg: 'rgba(99,102,241,.12)', color: '#818cf8' },
   booking: { bg: 'rgba(16,185,129,.12)', color: '#10b981' },
   schedule: { bg: 'rgba(16,185,129,.12)', color: '#10b981' },
+  class: { bg: 'rgba(16,185,129,.12)', color: '#10b981' },
   membership: { bg: 'rgba(255,159,28,.14)', color: '#ffb23e' },
   payment: { bg: 'rgba(255,159,28,.14)', color: '#ffb23e' },
   billing: { bg: 'rgba(255,159,28,.14)', color: '#ffb23e' },
+  order: { bg: 'rgba(244,63,94,.12)', color: '#f43f5e' },
+  purchase: { bg: 'rgba(244,63,94,.12)', color: '#f43f5e' },
+  video: { bg: 'rgba(139,92,246,.12)', color: '#8b5cf6' },
+  media: { bg: 'rgba(139,92,246,.12)', color: '#8b5cf6' },
+  chat: { bg: 'rgba(14,165,233,.12)', color: '#0ea5e9' },
+  message: { bg: 'rgba(14,165,233,.12)', color: '#0ea5e9' },
+  reminder: { bg: 'rgba(245,158,11,.12)', color: '#f59e0b' },
+  promo: { bg: 'rgba(255,159,28,.14)', color: '#ffb23e' },
+  offer: { bg: 'rgba(255,159,28,.14)', color: '#ffb23e' },
+  update: { bg: 'rgba(59,130,246,.12)', color: '#3b82f6' },
+  release: { bg: 'rgba(59,130,246,.12)', color: '#3b82f6' },
+  alert: { bg: 'rgba(239,68,68,.12)', color: '#ef4444' },
+  warning: { bg: 'rgba(239,68,68,.12)', color: '#ef4444' },
+  review: { bg: 'rgba(217,70,239,.12)', color: '#d946ef' },
+  rating: { bg: 'rgba(217,70,239,.12)', color: '#d946ef' },
+  inquiry: { bg: 'rgba(100,116,139,.12)', color: '#64748b' },
 }
 
 const DEFAULT_STYLE = { bg: 'rgba(100,116,139,.12)', color: '#64748b' }
@@ -219,7 +238,16 @@ function iconFor(type: string): string {
   if (t === 'article' || t === 'blog' || t === 'news') return 'ri-article-line'
   if (t === 'account' || t === 'auth') return 'ri-user-3-line'
   if (t === 'membership' || t === 'payment' || t === 'billing') return 'ri-bank-card-line'
+  if (t === 'order' || t === 'purchase' || t === 'cart') return 'ri-shopping-cart-line'
   if (t === 'booking' || t === 'class' || t === 'schedule') return 'ri-calendar-check-line'
+  if (t === 'video' || t === 'media') return 'ri-video-line'
+  if (t === 'chat' || t === 'message' || t === 'dm') return 'ri-chat-4-line'
+  if (t === 'reminder') return 'ri-alarm-line'
+  if (t === 'promo' || t === 'offer' || t === 'discount') return 'ri-price-tag-3-line'
+  if (t === 'update' || t === 'release') return 'ri-refresh-line'
+  if (t === 'alert' || t === 'warning') return 'ri-alert-line'
+  if (t === 'review' || t === 'rating') return 'ri-star-fill'
+  if (t === 'inquiry' || t === 'contact') return 'ri-question-line'
   return 'ri-notification-3-fill'
 }
 
@@ -246,8 +274,8 @@ const closePanel = () => {
   max-width:100vw;
   // height:calc(100vh - var(--header-height, 80px));
   height: 100vh;
-  background:var(--color-bg-card,#fff);
-  border-left:1px solid var(--color-border,#ececec);
+  background:var(--c-bg,#fff);
+  border-left:1px solid var(--c-border,#ececec);
   box-shadow:-12px 0 42px rgba(0,0,0,.14);
   transform:translateX(100%);
   transition:transform .35s cubic-bezier(.4,0,.2,1);
@@ -270,8 +298,8 @@ const closePanel = () => {
   justify-content:space-between;
   gap:1rem;
   padding:1.1rem 1rem;
-  border-bottom:1px solid var(--color-border,#ececec);
-  background:var(--color-bg-card,#fff);
+  border-bottom:1px solid var(--c-border,#ececec);
+  background:var(--c-bg,#fff);
 }
 
 .notif-title{
@@ -295,7 +323,7 @@ const closePanel = () => {
   padding:.45rem .7rem;
   border-radius:10px;
   font-size:.75rem;
-  border:1px solid var(--color-border,#ececec);
+  border:1px solid var(--c-border,#ececec);
 }
 
 .icon-close{
@@ -341,7 +369,7 @@ const closePanel = () => {
   display:flex;
   gap:.55rem;
   padding:.8rem 1rem;
-  border-bottom:1px solid var(--color-border,#ececec);
+  border-bottom:1px solid var(--c-border,#ececec);
   overflow-x:auto;
 }
 
@@ -429,13 +457,32 @@ const closePanel = () => {
 .type-comment{ background:rgba(59,130,246,.12); color:#3b82f6; }
 .type-save{ background:rgba(168,85,247,.12); color:#a855f7; }
 .type-system{ background:rgba(245,158,11,.12); color:#f59e0b; }
-.type-article{ background:rgba(234,179,8,.12); color:#eab308; }
+.type-article,
+.type-news,
+.type-blog { background:rgba(234,179,8,.12); color:#eab308; }
 .type-account{ background:rgba(99,102,241,.12); color:#818cf8; }
 .type-booking,
-.type-schedule { background:rgba(16,185,129,.12); color:#10b981; }
+.type-schedule,
+.type-class { background:rgba(16,185,129,.12); color:#10b981; }
 .type-membership,
 .type-payment,
 .type-billing { background:rgba(255,159,28,.14); color:#ffb23e; }
+.type-order,
+.type-purchase { background:rgba(244,63,94,.12); color:#f43f5e; }
+.type-video,
+.type-media { background:rgba(139,92,246,.12); color:#8b5cf6; }
+.type-chat,
+.type-message { background:rgba(14,165,233,.12); color:#0ea5e9; }
+.type-reminder{ background:rgba(245,158,11,.12); color:#f59e0b; }
+.type-promo,
+.type-offer { background:rgba(255,159,28,.14); color:#ffb23e; }
+.type-update,
+.type-release { background:rgba(59,130,246,.12); color:#3b82f6; }
+.type-alert,
+.type-warning { background:rgba(239,68,68,.12); color:#ef4444; }
+.type-review,
+.type-rating { background:rgba(217,70,239,.12); color:#d946ef; }
+.type-inquiry{ background:rgba(100,116,139,.12); color:#64748b; }
 
 .notif-body{
   flex:1;

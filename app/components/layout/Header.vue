@@ -58,15 +58,15 @@
         <NotificationBell />
         <template v-if="isAuth">
           <div class="navbar__user" ref="userMenuRef">
-            <button class="navbar__user-avatar-btn" @click="userMenuOpen = !userMenuOpen" :aria-label="auth.Username">
-              <img v-if="auth.user?.Avatarurl" :src="auth.user?.Avatarurl" :alt="auth.Username" referrerpolicy="no-referrer" class="navbar__user-avatar" />
-              <span v-else class="navbar__user-avatar">{{ auth.userInitials }}</span>
+            <button class="navbar__user-avatar-btn" @click="userMenuOpen = !userMenuOpen" :aria-label="account.name">
+              <img v-if="account.avatar" :src="account.avatar" :alt="account.name" referrerpolicy="no-referrer" class="navbar__user-avatar" />
+              <span v-else class="navbar__user-avatar">{{ accountInitials }}</span>
             </button>
             <Transition name="dropdown">
               <div v-if="userMenuOpen" class="navbar__user-menu">
                 <div class="navbar__user-info">
-                  <span class="navbar__user-name">{{ auth.user?.Username}}</span>
-                  <span class="navbar__user-email">{{ auth.user?.Email}}</span>
+                  <span class="navbar__user-name">{{ account.name }}</span>
+                  <span class="navbar__user-email">{{ account.email }}</span>
                 </div>
                 <div class="navbar__user-divider"></div>
                 <button class="navbar__user-menu-item" @click="ui.toggleNotifPanel(); userMenuOpen = false">
@@ -82,7 +82,7 @@
                   <i class="ri-user-star-line"></i> {{ t('nav.trainers') }}
                 </NuxtLink>
                 <div class="navbar__user-divider"></div>
-                <button class="navbar__user-menu-item navbar__user-menu-item--logout" @click="auth.logout(); userMenuOpen = false; navigateTo(localePath('/'))">
+                <button class="navbar__user-menu-item navbar__user-menu-item--logout" @click="auth.logout(); useUserData(null); userMenuOpen = false; navigateTo(localePath('/'))">
                   <i class="ri-logout-box-r-line"></i> {{ t('common.logout') }}
                 </button>
               </div>
@@ -181,10 +181,23 @@ onClickOutside(userMenuRef, () => {
 })
 
 const accessToken = useCookie(ACCESS_COOKIE)
+const userData = useUserData()
 
-console.log("accessToken ==================> ", accessToken.value)
+const isAuth = computed(() => !!accessToken.value || !!userData.value?.access_token || !!userData.value?.token)
 
-const isAuth = computed(() => !!accessToken.value)
+const account = computed(() => {
+  const u = userData.value
+  const fallback = auth.user
+  return {
+    name: u?.Username || u?.Name || u?.name || fallback?.Username || fallback?.Name || fallback?.name || fallback?.userName || '',
+    email: u?.Email || u?.email || fallback?.Email || fallback?.email || '',
+    avatar: u?.Avatarurl || u?.Avatar || u?.avatar || u?.image || u?.Image || fallback?.Avatarurl || fallback?.avatar || fallback?.Avatar || '',
+  }
+})
+
+const accountInitials = computed(() =>
+  account.value.name.split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase()
+)
 onMounted(() => {
   menuList.value = Array.isArray(menu.navbar) ? menu.navbar : []
 })

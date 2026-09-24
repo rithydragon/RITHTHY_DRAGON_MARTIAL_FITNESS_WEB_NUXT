@@ -196,6 +196,21 @@
     "sign_in_prompt": "请登录以查看你的通知。",
     "live": "实时"
   },
+  "oauth": {
+    "verifying_title": "正在登录…",
+    "verifying_sub": "正在验证你的 {provider} 账户",
+    "success_title": "登录成功！",
+    "success_sub": "欢迎回来 — 正在跳转…",
+    "error_title": "登录失败",
+    "error_no_data": "未收到任何登录信息。",
+    "error_access_denied": "你已取消登录。",
+    "error_invalid_state": "此登录链接已失效，请重试。",
+    "error_expired": "此登录会话已过期，请重试。",
+    "error_generic": "无法完成登录，请重试。",
+    "error_timeout": "耗时过长，请重试。",
+    "try_again": "重试",
+    "back_home": "返回首页"
+  },
   "terms": {
     "title": "服务条款与健身房守则",
     "subtitle": "在使用我们的服务或在 RITHTHY Fitness 训练之前，请仔细阅读这些条款与细则。",

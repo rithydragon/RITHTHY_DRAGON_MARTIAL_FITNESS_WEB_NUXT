@@ -240,6 +240,12 @@ export const useAuthStore = defineStore('auth', {
 
       writeTokenCookies(token, refreshToken ?? this.refreshToken, expiresIn)
       this.persistUser()
+      useUserData({
+        ...(this.user || {}),
+        access_token: token,
+        refresh_token: refreshToken ?? this.refreshToken,
+        expires_in: expiresIn,
+      })
       return true
     },
 
@@ -363,7 +369,14 @@ export const useAuthStore = defineStore('auth', {
       //   role: raw.role ?? raw.Role ?? 'member',
       //   plan: raw.plan ?? raw.Plan ?? undefined,
       // }
-      nuxtApp.runWithContext(() => this.persistUser())
+      nuxtApp.runWithContext(() => {
+        this.persistUser()
+        useUserData({
+          ...(this.user || {}),
+          access_token: this.token,
+          refresh_token: this.refreshToken,
+        })
+      })
     },
 
     /**

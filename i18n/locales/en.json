@@ -196,6 +196,21 @@
     "sign_in_prompt": "Sign in to see your notifications.",
     "live": "Live"
   },
+  "oauth": {
+    "verifying_title": "Signing you in…",
+    "verifying_sub": "Verifying your {provider} account",
+    "success_title": "You're all set!",
+    "success_sub": "Welcome back — redirecting you…",
+    "error_title": "Sign-in failed",
+    "error_no_data": "No sign-in details were received.",
+    "error_access_denied": "You cancelled the sign-in.",
+    "error_invalid_state": "This sign-in link is no longer valid. Please try again.",
+    "error_expired": "This sign-in session has expired. Please try again.",
+    "error_generic": "We couldn't complete the sign-in. Please try again.",
+    "error_timeout": "Taking longer than expected. Please try again.",
+    "try_again": "Try Again",
+    "back_home": "Back to Home"
+  },
   "terms": {
     "title": "Terms of Service & Rules",
     "subtitle": "Please read these terms and conditions carefully before using our services or training at RITHTHY Fitness.",

@@ -192,6 +192,8 @@
     "unread_notifications": "unread notifications",
     "read": "Read",
     "no_notifications": "No notifications yet.",
+    "loading": "Loading notifications…",
+    "sign_in_prompt": "Sign in to see your notifications.",
     "live": "Live"
   },
   "terms": {

@@ -74,9 +74,15 @@
     <!-- Live telemetry / WS stream -->
 
     <!-- List -->
-    <div
-      class="notif-list"
-    >
+    <div class="notif-list">
+      <div
+        v-if="notification.loading"
+        class="notif-loading"
+      >
+        <span class="spinner"></span>
+        <p>{{ t('notifications.loading') }}</p>
+      </div>
+
       <button
         v-for="n in notification.filteredNotifications"
         :key="n.id"
@@ -117,11 +123,12 @@
 
       <!-- Empty -->
       <div
-        v-if="notification.filteredNotifications.length === 0"
+        v-if="!notification.loading && notification.filteredNotifications.length === 0"
         class="notif-empty"
       >
         <i class="ri-notification-off-line"></i>
-        <p>{{ t('notifications.no_notifications') }}</p>
+        <p v-if="!isAuthenticated">{{ t('notifications.sign_in_prompt') }}</p>
+        <p v-else>{{ t('notifications.no_notifications') }}</p>
       </div>
     </div>
   </aside>
@@ -131,10 +138,13 @@
 const { t } = useI18n()
 const ui = useUIStore()
 const notification = useNotificationStore()
+const authStore = useAuthStore()
 
 const { status: wsStatus } = useWebSocketNotifications()
 
 const { lock, unlock } = useScrollLock()
+
+const isAuthenticated = computed(() => Boolean(authStore.token))
 
 const activeTab = ref<'all' | 'unread' | 'read' | 'live'>('all')
 
@@ -159,11 +169,20 @@ const wsLabel = computed(() => {
 watch(
   () => ui.notifPanelOpen,
   (isOpen) => {
-    if (isOpen) lock()
-    else unlock()
+    if (isOpen) {
+      lock()
+      notification.fetchFromApi()
+    } else {
+      unlock()
+    }
   },
   { immediate: true }
 )
+
+// Re-fetch when the user logs in while the panel is open.
+watch(isAuthenticated, (logged) => {
+  if (logged && ui.notifPanelOpen) notification.fetchFromApi()
+})
 
 onBeforeUnmount(() => {
   unlock()
@@ -531,6 +550,31 @@ const closePanel = () => {
   background:#eab308;
   margin-top:.5rem;
   flex-shrink:0;
+}
+
+.notif-loading{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:.75rem;
+  padding:4rem 1rem;
+  color:var(--color-text-muted);
+  font-size:.8rem;
+  opacity:.7;
+
+  .spinner{
+    width:28px;
+    height:28px;
+    border:3px solid rgba(234,179,8,.2);
+    border-top-color:#eab308;
+    border-radius:50%;
+    animation:notif-spin .8s linear infinite;
+  }
+}
+
+@keyframes notif-spin{
+  to{ transform:rotate(360deg); }
 }
 
 .notif-empty{

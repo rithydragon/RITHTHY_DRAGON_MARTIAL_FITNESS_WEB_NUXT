@@ -38,11 +38,10 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   // Restore session
   // session.init()
 
-  // Seed demo notifications
-  notifications.fetchInitialNotifications()
-
-  // Try to replace seeded mocks with real notifications from the backend
-  notifications.fetchFromApi()
+  // Try to load real notifications from the backend
+  if (import.meta.client) {
+    notifications.fetchFromApi()
+  }
 
   // Provide $http globally
   const http = useHttp()

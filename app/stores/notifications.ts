@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 
 export interface Notification {
   id: string
+  serverId?: number
   type: string
   title: string
   message: string
@@ -18,6 +19,8 @@ interface NotificationState {
   wsConnected: boolean
   filter: NotificationFilter
   wsEventCount: number
+  loading: boolean
+  lastFetchedAt: number | null
 }
 
 function generateUUID(): string {
@@ -153,8 +156,15 @@ function normalizeServerItem(raw: any): Notification | null {
   const id = toStr(hasId)
   const subject = toStr(firstValue(raw.SubjectType, raw.subjectType, raw.reference_type, raw.referenceType))
 
+  // Backend numeric PK (NotificationRead.Id / WSNotificationPayload.notification_id)
+  // — required by POST /api/v1/notifications/read ({ NotifId }).
+  const rawServerId = firstValue(raw.Id, raw.id, raw.notification_id, raw.notificationId)
+  const parsedServerId = Number(rawServerId)
+  const serverId = Number.isInteger(parsedServerId) && parsedServerId > 0 ? parsedServerId : undefined
+
   return {
     id: id || generateUUID(),
+    serverId,
     type: type || 'system',
     title: title || (subject ? humanizeLabel(subject) : type ? humanizeLabel(type) : 'Notification'),
     message,
@@ -171,6 +181,8 @@ export const useNotificationStore = defineStore('notifications', {
     wsConnected: false,
     filter: 'all',
     wsEventCount: 0,
+    loading: false,
+    lastFetchedAt: null,
   }),
 
   getters: {
@@ -244,7 +256,11 @@ export const useNotificationStore = defineStore('notifications', {
     async fetchFromApi(): Promise<boolean> {
       if (typeof window === 'undefined') return false
       const authStore = useAuthStore()
-      if (!authStore.token) return false
+      if (!authStore.token) {
+        this.loading = false
+        return false
+      }
+      this.loading = true
       try {
         // useWeb returns { data: Ref<T>, status, error } — unwrap the value.
         const res: any = await useWeb(getUrl('/api/v1/notifications'))
@@ -258,23 +274,48 @@ export const useNotificationStore = defineStore('notifications', {
               : null
         if (list === null) return false
         console.log('NOTIFICATION STORE RES===================> ', list)
-        return this.bulkFromServer(list)
+        const ok = this.bulkFromServer(list)
+        this.loading = false
+        this.lastFetchedAt = Date.now()
+        return ok
       } catch {
+        this.loading = false
         return false
       }
     },
 
-    markAsRead(id: string) {
+    /**
+     * Best-effort call to the backend read endpoint. Uses the real numeric
+     * PK (POST /api/v1/notifications/read with body { NotifId }).
+     */
+    async syncAsRead(item: Notification): Promise<void> {
+      if (typeof window === 'undefined') return
+      if (!item.serverId) return
+      try {
+        await useWeb(getUrl('/api/v1/notifications/read'), {
+          method: 'POST',
+          data: { NotifId: item.serverId },
+        })
+      } catch {
+        // Non-fatal: keep the optimistic local state.
+      }
+    },
+
+    async markAsRead(id: string) {
       const item = this.items.find((n) => n.id === id)
       if (item && !item.read) {
         item.read = true
         this.unreadCount = Math.max(0, this.unreadCount - 1)
+        void this.syncAsRead(item)
       }
     },
 
-    markAllRead() {
-      this.items.forEach((n) => (n.read = true))
+    async markAllRead() {
+      const unread = this.items.filter((n) => !n.read)
+      if (unread.length === 0) return
+      unread.forEach((n) => (n.read = true))
       this.unreadCount = 0
+      await Promise.all(unread.map((n) => this.syncAsRead(n)))
     },
 
     setFilter(filter: NotificationFilter) {
@@ -310,31 +351,6 @@ export const useNotificationStore = defineStore('notifications', {
         ' ' +
         time
       )
-    },
-
-    fetchInitialNotifications() {
-      // Mock initial notifications — replaced as soon as REST/WS deliver real data.
-      this.items = [
-        {
-          id: generateUUID(),
-          type: 'system',
-          title: 'Welcome to Rithy Martial & Fitness',
-          message: 'Explore traditional Bokator, Kun Khmer, BJJ, and athletic conditioning.',
-          read: false,
-          createdAt: new Date().toISOString(),
-          link: '/services',
-        },
-        {
-          id: generateUUID(),
-          type: 'article',
-          title: 'New Article Published',
-          message: 'Check out: The Ancient History of Bokator by Kru Ny Rithy.',
-          read: false,
-          createdAt: new Date(Date.now() - 86400000).toISOString(),
-          link: '/blog/history-of-bokator',
-        },
-      ]
-      this.unreadCount = 2
     },
   },
 })

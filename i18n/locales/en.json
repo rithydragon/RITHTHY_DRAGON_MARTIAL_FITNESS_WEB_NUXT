@@ -187,7 +187,8 @@
     "telegramDomainHint": "Telegram login only works from a public HTTPS address registered with BotFather (not localhost or a custom port). Open this site through its registered domain or a tunnel to continue.",
     "telegramWidgetTitle": "Sign in with Telegram",
     "telegramWidgetSubtitle": "Connect securely with your Telegram account to access your training.",
-    "telegramWidgetBack": "Back to RITHTHY Fitness"
+    "telegramWidgetBack": "Back to RITHTHY Fitness",
+    "telegramWidgetSigningIn": "Signing you in\u2026"
   },
   "notifications": {
     "title": "Notifications",

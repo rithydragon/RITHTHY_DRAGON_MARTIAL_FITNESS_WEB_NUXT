@@ -187,7 +187,8 @@
     "telegramDomainHint": "Telegram 登录仅适用于已在 BotFather 注册的公开 HTTPS 地址（不适用于 localhost 或自定义端口）。请通过已注册的域名或隧道打开本站以继续。",
     "telegramWidgetTitle": "使用 Telegram 登录",
     "telegramWidgetSubtitle": "使用您的 Telegram 账号安全连接，访问您的训练课程。",
-    "telegramWidgetBack": "返回 RITHTHY Fitness"
+    "telegramWidgetBack": "返回 RITHTHY Fitness",
+    "telegramWidgetSigningIn": "正在登录\u2026"
   },
   "notifications": {
     "title": "通知",

@@ -10,7 +10,10 @@
       <p class="tw__sub">{{ t('auth.telegramWidgetSubtitle') }}</p>
 
       <div ref="widgetEl" class="tw__widget">
-        <p v-if="error" class="tw__error">
+        <p v-if="signingIn" class="tw__signing">
+          <i class="ri-loader-4-line tw__spin"></i> {{ t('auth.telegramWidgetSigningIn') }}
+        </p>
+        <p v-else-if="error" class="tw__error">
           <i class="ri-error-warning-line"></i> {{ error }}
         </p>
       </div>
@@ -32,13 +35,17 @@ const { t } = useI18n()
 
 const widgetEl = ref<HTMLElement>()
 const error = ref('')
+const signingIn = ref(false)
 
 /* ----------------------------------------------------------------
-   The Telegram Login Widget must run on THIS site's origin (the
-   domain registered for the bot in @BotFather). Verify against the
-   backend config API first, then inject the official widget, pointing
-   data-auth-url at the backend callback so the hash is validated
-   server-side.
+   Official Telegram Login Widget integration.
+   - The widget button is Telegram's own; clicking it authorizes on
+     oauth.telegram.org (only for origins registered in @BotFather).
+   - On success the widget calls window.onTelegramAuth with the signed
+     payload (id, first_name, ..., auth_date, hash). We perform a normal
+     top-level navigation to the backend callback with those as query
+     params — no hidden iframe. The backend validates the HMAC-SHA256
+     hash and 302-redirects to /oauth/callback with the tokens.
 ----------------------------------------------------------------- */
 onMounted(async () => {
   try {
@@ -57,14 +64,19 @@ onMounted(async () => {
       return
     }
 
+    ;(window as any).onTelegramAuth = (user: Record<string, string>) => {
+      signingIn.value = true
+      const qs = new URLSearchParams(user).toString()
+      window.location.href = getUrl('/api/v1/auth/oauth/telegram/callback?' + qs)
+    }
+
     const script = document.createElement('script')
     script.async = true
     script.src = 'https://telegram.org/js/telegram-widget.js?22'
     script.setAttribute('data-telegram-login', bot)
     script.setAttribute('data-size', 'large')
     script.setAttribute('data-radius', '12')
-    script.setAttribute('data-auth-url', getUrl('/api/v1/auth/oauth/telegram/callback'))
-    script.setAttribute('data-request-access', 'write')
+    script.setAttribute('data-javascript-callback', 'onTelegramAuth')
     widgetEl.value?.appendChild(script)
   } catch {
     error.value = t('auth.telegramUnavailable')
@@ -141,22 +153,42 @@ onMounted(async () => {
     min-height: 48px;
   }
 
-  &__error {
+  &__error,
+  &__signing {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 0.9rem;
-    border: 1px solid rgba(244, 63, 94, 0.35);
-    background: rgba(244, 63, 94, 0.1);
-    color: #fb7185;
     border-radius: 12px;
     font-size: 13px;
     line-height: 1.5;
     text-align: left;
 
     i {
-      margin-top: 2px;
       flex-shrink: 0;
+    }
+  }
+
+  &__error {
+    align-items: flex-start;
+    border: 1px solid rgba(244, 63, 94, 0.35);
+    background: rgba(244, 63, 94, 0.1);
+    color: #fb7185;
+  }
+
+  &__signing {
+    border: 1px solid rgba(231, 201, 95, 0.3);
+    background: rgba(231, 201, 95, 0.08);
+    color: #e7c95f;
+  }
+
+  &__spin {
+    animation: tw-spin 1s linear infinite;
+  }
+
+  @keyframes tw-spin {
+    to {
+      transform: rotate(360deg);
     }
   }
 

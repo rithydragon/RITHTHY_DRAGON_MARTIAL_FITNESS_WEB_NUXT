@@ -13,6 +13,7 @@
       class="user-panel"
       :class="{ 'is-open': ui.userPanelOpen }"
       :aria-hidden="!ui.userPanelOpen"
+      :inert="!ui.userPanelOpen"
       role="dialog"
       aria-modal="true"
       aria-labelledby="user-panel-title"
@@ -140,7 +141,7 @@
               <p class="user-panel__eyebrow">{{ t('profile.membership') }}</p>
               <h3 id="user-panel-plan-title">{{ t('profile.currentPlan') }}</h3>
             </div>
-            <span class="user-panel__plan-status" :class="`is-${plan.status || 'active'}`">{{ plan.status || t('profile.active') }}</span>
+            <span class="user-panel__plan-status" :class="`is-${plan.status || 'active'}`">{{ plan.status === 'active' ? t('profile.active') : (plan.status || t('profile.active')) }}</span>
           </div>
           <div class="user-panel__plan-main">
             <div class="user-panel__plan-icon"><i class="ri-vip-crown-line" aria-hidden="true"></i></div>
@@ -228,7 +229,9 @@ const ui = useUIStore()
 const { t } = useI18n()
 const localePath = useLocalePath()
 const route = useRoute()
+const nuxtApp = useNuxtApp()
 const sessionData = useUserData()
+const accessToken = useCookie<string | null>('access_token')
 const { lock, unlock } = useScrollLock()
 const fileInput = ref<HTMLInputElement | null>(null)
 
@@ -322,7 +325,7 @@ function setPlan(raw: any) {
 }
 
 async function loadData() {
-  if (!import.meta.client || !auth.token) return
+  if (!import.meta.client || !(auth.token || accessToken.value)) return
   loading.value = true
   message.value = ''
   try {
@@ -361,7 +364,7 @@ async function saveProfile() {
     })
     if (result.error.value) throw new Error(result.error.value)
     try {
-      await auth.fetchProfile()
+      await nuxtApp.runWithContext(() => auth.fetchProfile())
     } catch {}
     message.value = t('profile.saved')
     messageType.value = 'success'
@@ -394,11 +397,14 @@ async function uploadAvatar(file: File) {
     const nextAvatar = String(response?.data?.avatar_url || response?.data?.AvatarUrl || response?.data?.url || '')
     if (!nextAvatar) throw new Error(t('profile.avatarError'))
     const current = { ...(auth.user || sessionUser.value), avatar: nextAvatar, AvatarUrl: nextAvatar }
-    auth.user = current as any
-    useUserData({
-      ...current,
-      access_token: auth.token,
-      refresh_token: auth.refreshToken,
+    nuxtApp.runWithContext(() => {
+      auth.user = current as any
+      auth.persistUser()
+      useUserData({
+        ...current,
+        access_token: auth.token,
+        refresh_token: auth.refreshToken,
+      })
     })
     avatarPreview.value = ''
     message.value = t('profile.avatarSaved')

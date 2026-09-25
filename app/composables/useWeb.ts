@@ -10,8 +10,6 @@
 
 import { ref, readonly } from 'vue'
 import axios from 'axios'
-import { ACCESS_COOKIE } from '~/stores/auth'
-
 interface UseWebOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
   data?: Record<string, any>
@@ -26,14 +24,11 @@ export async function useWeb<T = any>(url: string, options: UseWebOptions = {}) 
 
   const { method = 'GET', data: _data, body, headers = {} } = options
   const auth = options.auth  ?? (accessToken ? true : false)
-  console.log("Auth ======================= ", auth)
   const payload = body ?? _data ?? {}
 
   const data = ref<T | null>(null)
   const error = ref<string | null>(null)
   const status = ref<number | null>(null)
-
-  console.log("ACCESS_COOKIE====================",useCookie(`'${ACCESS_COOKIE}'`).value)
 
   // read once, synchronously, while the Nuxt context is guaranteed alive
   // let accessToken = useCookie('access_token').value
@@ -47,7 +42,6 @@ export async function useWeb<T = any>(url: string, options: UseWebOptions = {}) 
         'Content-Type': 'application/json',
         ...headers,
       }
-      console.log("AccessToken in useWeb f======================== ", accessToken)
       if (accessToken) {
         requestHeaders.Authorization = `Bearer ${accessToken}`
       }

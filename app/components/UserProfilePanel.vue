@@ -379,7 +379,8 @@ async function saveProfile() {
 async function uploadAvatar(file: File) {
   const formData = new FormData()
   formData.append('file', file)
-  const send = (token: string | null) => axios.post(getUrl('/api/v1/auth/me/avatar'), formData, {
+  const endpoint = nuxtApp.runWithContext(() => getUrl('/api/v1/auth/me/avatar'))
+  const send = (token: string | null) => axios.post(endpoint, formData, {
     withCredentials: true,
     headers: token ? { Authorization: `Bearer ${token}` } : undefined,
   })
@@ -387,10 +388,10 @@ async function uploadAvatar(file: File) {
   try {
     let response
     try {
-      response = await send(auth.token)
+      response = await send(auth.token || accessToken.value)
     } catch (error: any) {
       if (error?.response?.status !== 401) throw error
-      const refreshed = await useRefreshToken(true)
+      const refreshed = await nuxtApp.runWithContext(() => useRefreshToken(true))
       if (!refreshed) throw error
       response = await send(refreshed)
     }
@@ -460,9 +461,8 @@ function closePanel() {
 
 async function logout() {
   closePanel()
-  await auth.logout()
-  useUserData(null)
-  await navigateTo(localePath('/'))
+  await nuxtApp.runWithContext(() => auth.logout())
+  await nuxtApp.runWithContext(() => navigateTo(localePath('/')))
 }
 
 function handleKeydown(event: KeyboardEvent) {

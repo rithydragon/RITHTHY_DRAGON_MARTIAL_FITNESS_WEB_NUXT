@@ -38,7 +38,7 @@
       <div class="footer__bottom">
         <p>&copy; {{ year }} RITHTHY Fitness. {{ t('footer.rights') }}</p>
         <div class="footer__bottom-links">
-          <NuxtLink :to="localePath('/terms')" class="footer__bottom-link">{{ t('footer.terms') }}</NuxtLink>
+          <NuxtLink :to="localePath('/terms-service')" class="footer__bottom-link">{{ t('footer.terms') }}</NuxtLink>
           <span class="footer__divider">•</span>
           <NuxtLink :to="localePath('/privacy-policy')" class="footer__bottom-link">{{ t('footer.privacy') }}</NuxtLink>
         </div>

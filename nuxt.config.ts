@@ -229,6 +229,15 @@ export default defineNuxtConfig({
         },
       },
     },
+    server: {
+      proxy: {
+        '/api': {
+          target: 'http://localhost:58721',
+          changeOrigin: true,
+          secure: false,
+        },
+      },
+    },
   },
 
   typescript: {

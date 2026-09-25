@@ -429,23 +429,6 @@ async function handleTelegram() {
   oauthLoading.value = 'telegram'
   try {
     auth.setRemember(remember.value)
-    
-    // Development bypass: simulate Telegram login on localhost
-    const isDev = import.meta.client && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-    if (isDev) {
-      // Mock a successful Telegram login for local development
-      telegramOpen.value = true
-      await nextTick()
-      // Simulate user clicking the widget
-      setTimeout(() => {
-        handleTelegramOauth({
-          id_token: 'dev-mock-id-token',
-          error: undefined,
-          error_description: undefined,
-        })
-      }, 500)
-      return
-    }
 
     const cfg = await auth.telegramPreflight()
     const clientId = Number(cfg?.client_id)
@@ -480,40 +463,9 @@ async function handleOAuth(providerId: 'google' | 'telegram' | 'facebook' | 'tik
   oauthLoading.value = providerId
   try {
     auth.setRemember(remember.value)
-    
-    // Development bypass: simulate OAuth login on localhost
-    const isDev = import.meta.client && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-    if (isDev) {
-      // Mock a successful OAuth login for local development
-      const mockUser = {
-        id: `dev-${providerId}-user-1`,
-        name: `Dev ${providerId.charAt(0).toUpperCase() + providerId.slice(1)} User`,
-        email: `dev-${providerId}@localhost`,
-        avatar: undefined,
-        role: 'member' as const,
-      }
-      const nuxtApp = useNuxtApp()
-      nuxtApp.runWithContext(() => {
-        auth.applySession({
-          data: {
-            access_token: `dev-mock-${providerId}-access-token`,
-            refresh_token: `dev-mock-${providerId}-refresh-token`,
-            expires_in: 86400,
-            user: mockUser,
-          }
-        }, true)
-      })
-      await auth.fetchProfile()
-      close()
-      return
-    }
-
     await auth.loginWithProvider(providerId)
     close()
   } catch (err: any) {
-    // oauth/initiate + telegram/config verify on the backend that the provider
-    // is configured and that the origin can host the Telegram widget. Surface
-    // a friendly message instead of swallowing the failure.
     oauthError.value =
       providerId === 'telegram' && err?.domain
         ? (t('auth.telegramDomainHint') || 'Telegram widget requires a public HTTPS domain.')

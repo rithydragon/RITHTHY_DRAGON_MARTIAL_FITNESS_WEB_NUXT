@@ -57,36 +57,19 @@
         <ThemeToggle />
         <NotificationBell />
         <template v-if="isAuth">
-          <div class="navbar__user" ref="userMenuRef">
-            <button class="navbar__user-avatar-btn" @click="userMenuOpen = !userMenuOpen" :aria-label="account.name">
+          <div class="navbar__user">
+            <button
+              class="navbar__user-avatar-btn"
+              type="button"
+              @click="toggleUserPanel"
+              :aria-label="account.name || t('profile.openPanel')"
+              :aria-expanded="ui.userPanelOpen"
+              aria-controls="user-profile-panel"
+              aria-haspopup="dialog"
+            >
               <img v-if="account.avatar" :src="account.avatar" :alt="account.name" referrerpolicy="no-referrer" class="navbar__user-avatar" />
               <span v-else class="navbar__user-avatar">{{ accountInitials }}</span>
             </button>
-            <Transition name="dropdown">
-              <div v-if="userMenuOpen" class="navbar__user-menu">
-                <div class="navbar__user-info">
-                  <span class="navbar__user-name">{{ account.name }}</span>
-                  <span class="navbar__user-email">{{ account.email }}</span>
-                </div>
-                <div class="navbar__user-divider"></div>
-                <button class="navbar__user-menu-item" @click="ui.toggleNotifPanel(); userMenuOpen = false">
-                  <i class="ri-notification-3-line"></i> {{ t('notifications.title') }}
-                </button>
-                <NuxtLink :to="localePath('/pricing')" class="navbar__user-menu-item" @click="userMenuOpen = false">
-                  <i class="ri-vip-crown-line"></i> {{ t('nav.pricing') }}
-                </NuxtLink>
-                <NuxtLink :to="localePath('/schedule')" class="navbar__user-menu-item" @click="userMenuOpen = false">
-                  <i class="ri-calendar-line"></i> {{ t('nav.schedule') }}
-                </NuxtLink>
-                <NuxtLink :to="localePath('/trainers')" class="navbar__user-menu-item" @click="userMenuOpen = false">
-                  <i class="ri-user-star-line"></i> {{ t('nav.trainers') }}
-                </NuxtLink>
-                <div class="navbar__user-divider"></div>
-                <button class="navbar__user-menu-item navbar__user-menu-item--logout" @click="auth.logout(); useUserData(null); userMenuOpen = false; navigateTo(localePath('/'))">
-                  <i class="ri-logout-box-r-line"></i> {{ t('common.logout') }}
-                </button>
-              </div>
-            </Transition>
           </div>
         </template>
         <template v-else>
@@ -162,7 +145,6 @@
 
 <script setup>
 import { ref, onMounted, watch } from 'vue'
-import { onClickOutside } from '@vueuse/core'
 
 const screen = useScreenStore()
 const auth = useAuthStore()
@@ -173,12 +155,6 @@ const route = useRoute()
 const menuList = ref([])
 const isMenuOpen = ref(false)
 const expandedMobileSubs = ref([])
-const userMenuRef = ref(null)
-const userMenuOpen = ref(false)
-
-onClickOutside(userMenuRef, () => {
-  userMenuOpen.value = false
-})
 
 const accessToken = useCookie(ACCESS_COOKIE)
 const userData = useUserData()
@@ -187,9 +163,7 @@ const isAuth = computed(() => !!accessToken.value || !!userData.value?.access_to
 
 const account = computed(() => {
   const u = userData.value
-  console.log("userData ==================> ", u)
   const fallback = auth.user
-  console.log("fallback =>>>> ", fallback)
   return {
     name: u?.Username || u?.Name || u?.name || fallback?.Username || fallback?.Name || fallback?.name || fallback?.userName || '',
     email: u?.Email || u?.email || fallback?.Email || fallback?.email || '',
@@ -218,6 +192,10 @@ function isRouteActive(targetPath) {
   if (targetPath === '/' && route.path === '/') return true
   if (targetPath !== '/' && route.path.startsWith(targetPath)) return true
   return false
+}
+
+function toggleUserPanel() {
+  ui.toggleUserPanel()
 }
 
 function toggleMenu() {
@@ -249,7 +227,7 @@ function openJoin() {
 
 watch(() => route.path, () => {
   closeMenu()
-  userMenuOpen.value = false
+  ui.closeAll()
 })
 </script>
 

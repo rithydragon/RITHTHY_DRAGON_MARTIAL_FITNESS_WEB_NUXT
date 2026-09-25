@@ -7,6 +7,7 @@
     </NuxtLayout>
     <!-- <AutoResponsePanel /> -->
     <NotifPanel />
+    <UserProfilePanel />
     <AIAssistantFloat />
   </div>
 </template>

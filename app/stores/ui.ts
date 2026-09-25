@@ -42,6 +42,7 @@ export interface NotificationItem {
 interface UIState {
   isDark: boolean
   notifPanelOpen: boolean
+  userPanelOpen: boolean
   aiAssistantOpen: boolean
   searchOpen: boolean
   mobileMenuOpen: boolean
@@ -59,6 +60,7 @@ export const useUIStore = defineStore('ui', {
   state: (): UIState => ({
     isDark: false,
     notifPanelOpen: false,
+    userPanelOpen: false,
     aiAssistantOpen: false,
     searchOpen: false,
     mobileMenuOpen: false,
@@ -130,6 +132,14 @@ export const useUIStore = defineStore('ui', {
 
     toggleNotifPanel() {
       this.notifPanelOpen = !this.notifPanelOpen
+      this.userPanelOpen = false
+      this.aiAssistantOpen = false
+      this.searchOpen = false
+    },
+
+    toggleUserPanel() {
+      this.userPanelOpen = !this.userPanelOpen
+      this.notifPanelOpen = false
       this.aiAssistantOpen = false
       this.searchOpen = false
     },
@@ -137,6 +147,7 @@ export const useUIStore = defineStore('ui', {
     toggleAIAssistant() {
       this.aiAssistantOpen = !this.aiAssistantOpen
       this.notifPanelOpen = false
+      this.userPanelOpen = false
     },
 
     toggleSearch() {
@@ -144,12 +155,12 @@ export const useUIStore = defineStore('ui', {
     },
 
     toggleMobileMenu() {
-      console.log("Toggle mobile menu")
       this.mobileMenuOpen = !this.mobileMenuOpen
     },
 
     closeAll() {
       this.notifPanelOpen = false
+      this.userPanelOpen = false
       this.aiAssistantOpen = false
       this.searchOpen = false
       this.mobileMenuOpen = false

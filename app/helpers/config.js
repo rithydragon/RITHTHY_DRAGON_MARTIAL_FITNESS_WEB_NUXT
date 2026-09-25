@@ -6,7 +6,7 @@ console.log("Basic URL =====================> ", BASE_URL)
 
 export default {
   BASE_URL: BASE_URL || 'http://localhost:58721/', // Base URL for the API 45686
-  webUrl: BASE_URL || 'http://localhost:3001/', // Base URL for the web app
+  webUrl: process.env.WEB_URL_DEV || 'http://localhost:3001/', // Base URL for the web app
   apiUrl: BASE_URL || 'http://localhost:58721/', // Base URL for the API
   wsBase: 'ws://localhost:58721/', // WebSocket URL
   basicKey: process.env.BASIC_KEY || 'xxfbghvhbkjlktyiopopýVCXsdwa$334345324#weFZcZVFXB', // Basic key for authentication 

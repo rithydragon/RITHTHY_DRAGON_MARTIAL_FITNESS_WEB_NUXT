@@ -120,7 +120,9 @@
             <p v-if="twSigning" class="tp-card__signing">
               <i class="ri-loader-4-line animate-spin"></i> {{ t('auth.telegramWidgetSigningIn') }}
             </p>
-            <div v-else ref="twWidgetEl" class="tp-card__widget"></div>
+            <div v-else class="tp-card__widget">
+              <button class="tg-auth-button" type="button">Sign In with Telegram</button>
+            </div>
             <p v-if="twError" class="tp-card__error">
               <i class="ri-error-warning-line"></i> {{ twError }}
             </p>
@@ -152,7 +154,7 @@ const emit = defineEmits<{
   switchMode: [mode: AuthMode]
 }>()
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const auth = useAuthStore()
 
 const form = reactive({
@@ -281,40 +283,110 @@ const oauthError = ref('')
 const telegramOpen = ref(false)
 const twSigning = ref(false)
 const twError = ref('')
-const twBot = ref('')
-const twWidgetEl = ref<HTMLElement>()
+const telegramClientId = ref(0)
+const telegramNonce = ref('')
+let telegramSdkPromise: Promise<boolean> | null = null
+
+type TelegramOAuthResult = {
+  id_token?: string
+  error?: string
+  error_description?: string
+}
+
+const TELEGRAM_LOGIN_SCRIPT = 'https://oauth.telegram.org/js/telegram-login.js?6'
 
 function closeTelegram() {
+  const sdk = (window as any).Telegram?.Login
+  sdk?.close?.()
   telegramOpen.value = false
   twSigning.value = false
   twError.value = ''
-  const el = twWidgetEl.value
-  if (el) el.innerHTML = ''
-  delete (window as any).onTelegramAuth
+  telegramClientId.value = 0
+  telegramNonce.value = ''
+  if ((window as any).onTelegramOauth === handleTelegramOauth) {
+    delete (window as any).onTelegramOauth
+  }
 }
 
-function injectTelegramWidget() {
-  const el = twWidgetEl.value
-  if (!el || !twBot.value) return
-  ;(window as any).onTelegramAuth = async (user: Record<string, string>) => {
-    twSigning.value = true
-    try {
-      await auth.completeTelegramLogin(user)
-      closeTelegram()
-      close()
-    } catch (err: any) {
-      twSigning.value = false
-      twError.value = err?.message || (t('auth.telegramUnavailable') || 'Telegram login is not available right now.')
-    }
+async function handleTelegramOauth(data: TelegramOAuthResult) {
+  if (twSigning.value) return
+  if (data?.error) {
+    twError.value = data.error_description || data.error
+    return
   }
-  const script = document.createElement('script')
-  script.async = true
-  script.src = 'https://telegram.org/js/telegram-widget.js?23'
-  script.setAttribute('data-telegram-login', twBot.value)
-  script.setAttribute('data-size', 'large')
-  script.setAttribute('data-radius', '12')
-  script.setAttribute('data-onauth', 'onTelegramAuth(user)')
-  el.appendChild(script)
+  if (!data?.id_token) {
+    twError.value = t('auth.telegramUnavailable') || 'Telegram login is not available right now.'
+    return
+  }
+
+  twSigning.value = true
+  twError.value = ''
+  try {
+    await auth.completeTelegramLogin(data.id_token, telegramNonce.value)
+    closeTelegram()
+    close()
+  } catch (err: any) {
+    closeTelegram()
+    oauthError.value = err?.response?.data?.error || err?.message || (t('auth.telegramUnavailable') || 'Telegram login is not available right now.')
+  } finally {
+    twSigning.value = false
+  }
+}
+
+function initializeTelegramSdk(): boolean {
+  if (!import.meta.client || !telegramClientId.value || !telegramNonce.value) return false
+  const sdk = (window as any).Telegram?.Login
+  if (!sdk || typeof sdk.init !== 'function') return false
+  try {
+    sdk.init(
+      {
+        client_id: telegramClientId.value,
+        scope: ['openid', 'profile', 'write'],
+        lang: locale.value === 'km' || locale.value === 'zh' ? locale.value : 'en',
+        nonce: telegramNonce.value,
+      },
+      handleTelegramOauth,
+    )
+    return true
+  } catch {
+    return false
+  }
+}
+
+async function waitForTelegramSdk(): Promise<boolean> {
+  if (initializeTelegramSdk()) return true
+  if (telegramSdkPromise) return telegramSdkPromise
+
+  telegramSdkPromise = new Promise<boolean>((resolve) => {
+    let script = document.querySelector<HTMLScriptElement>(`script[data-telegram-login][src="${TELEGRAM_LOGIN_SCRIPT}"]`)
+    if (!script) {
+      script = document.createElement('script')
+      script.async = true
+      script.src = TELEGRAM_LOGIN_SCRIPT
+      script.setAttribute('data-client-id', String(telegramClientId.value))
+      script.setAttribute('data-request-access', 'write')
+      script.setAttribute('data-onauth', 'window.onTelegramOauth(data)')
+      script.dataset.telegramLogin = 'true'
+      document.head.appendChild(script)
+    }
+
+    const finish = () => {
+      const ready = initializeTelegramSdk()
+      if (ready) resolve(true)
+    }
+    const fail = () => resolve(false)
+    script.addEventListener('load', finish, { once: true })
+    script.addEventListener('error', fail, { once: true })
+    window.setTimeout(() => {
+      if (!initializeTelegramSdk()) resolve(false)
+    }, 10000)
+  })
+
+  try {
+    return await telegramSdkPromise
+  } finally {
+    telegramSdkPromise = null
+  }
 }
 
 async function handleTelegram() {
@@ -323,15 +395,25 @@ async function handleTelegram() {
   closeTelegram()
   oauthLoading.value = 'telegram'
   try {
+    auth.setRemember(remember.value)
     const cfg = await auth.telegramPreflight()
-    twBot.value = cfg?.bot?.bot_username || ''
+    const clientId = Number(cfg?.client_id)
+    telegramClientId.value = clientId
+    telegramNonce.value = String(cfg?.nonce || '')
+    if (!Number.isSafeInteger(clientId) || clientId <= 0 || !telegramNonce.value) {
+      throw new Error('Telegram login is not configured')
+    }
+    ;(window as any).onTelegramOauth = handleTelegramOauth
     telegramOpen.value = true
     await nextTick()
-    injectTelegramWidget()
+    if (!(await waitForTelegramSdk())) {
+      throw new Error('Telegram Login SDK could not be loaded')
+    }
   } catch (err: any) {
     oauthError.value = err?.domain
       ? (t('auth.telegramDomainHint') || 'Telegram widget requires a public HTTPS domain.')
-      : (t('auth.telegramUnavailable') || 'Telegram login is not available right now.')
+      : (err?.response?.data?.error || err?.message || t('auth.telegramUnavailable') || 'Telegram login is not available right now.')
+    closeTelegram()
   } finally {
     oauthLoading.value = null
   }

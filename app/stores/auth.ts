@@ -10,6 +10,16 @@ export interface AuthUser {
   plan?: 'basic' | 'pro' | 'elite'
 }
 
+export interface TelegramOIDCConfig {
+  configured: boolean
+  client_id: number | string
+  nonce: string
+  scope?: string
+  request_access?: string
+  origin?: string
+  domain_ok?: boolean
+}
+
 interface AuthState {
   user: AuthUser | null
   token: string | null
@@ -141,6 +151,27 @@ function pickKey(src: any, ...names: string[]): string | null {
     if (typeof v === 'number') return String(v)
   }
   return null
+}
+
+export function normalizeUser(raw: any): AuthUser | null {
+  if (!raw || typeof raw !== 'object') return null
+  const id = pickKey(raw, 'id', 'userId', 'ID', 'Id')
+  if (!id) return null
+  const email = pickKey(raw, 'email', 'EMAIL', 'Email') || ''
+  const firstName = pickKey(raw, 'firstName', 'FirstName', 'first_name', 'given_name') || ''
+  const lastName = pickKey(raw, 'lastName', 'LastName', 'last_name', 'family_name') || ''
+  const username = pickKey(raw, 'username', 'Username', 'USERNAME', 'preferred_username') || ''
+  const name = pickKey(raw, 'name', 'Name') || [firstName, lastName].filter(Boolean).join(' ') || username || 'Member'
+  const avatar = pickKey(raw, 'avatar', 'Avatar', 'avatarUrl', 'AvatarUrl', 'picture', 'image') || undefined
+  const isSuperuser = raw.IsSuperuser === true || raw.isSuperuser === true
+  const roleValue = pickKey(raw, 'role', 'Role')?.toLowerCase()
+  return {
+    id,
+    name,
+    email,
+    avatar,
+    role: roleValue === 'admin' || isSuperuser ? 'admin' : 'member',
+  }
 }
 
 export interface NormalizedSession {
@@ -349,15 +380,12 @@ export const useAuthStore = defineStore('auth', {
         const res: any = await axios.post(getUrl('/api/v1/auth/oauth/initiate'), {
           Provider: provider,
         })
-        console.log("Response ==================> ", res)
         const redirectUrl = res?.data?.data?.redirectUrl ?? res?.data?.RedirectUrl
-        console.log("Redirect URL ==================> ", redirectUrl)
         if (redirectUrl && import.meta.client) {
           localStorage.setItem(
             'oauth-pending',
             JSON.stringify({ provider, redirect: '/', ts: Date.now() }),
           )
-          // Pass the active locale so the widget page renders in the user's language.
           const locale = ((useNuxtApp().$i18n as any)?.locale?.value ?? 'en') as string
           const lang = locale === 'km' || locale === 'zh' ? locale : 'en'
           const widgetUrl = new URL(redirectUrl, window.location.origin)
@@ -366,56 +394,57 @@ export const useAuthStore = defineStore('auth', {
         }
         return res
       } catch (err: any) {
-        // Previously this fabricated a fake session on failure, which put a
-        // bogus token in the store and cookies. Fail loudly instead.
-        this.error = err?.response?.data?.message || err?.message || 'OAuth initiation failed'
+        this.error = err?.response?.data?.message || err?.response?.data?.error || err?.message || 'OAuth initiation failed'
         throw err
       } finally {
         this.loading = false
       }
     },
 
-    /* --------------------------------------------------------------
-       TELEGRAM LOGIN — embedded widget (official flow, in the modal)
-       The official Telegram Login Widget is rendered right in the UI.
-       Clicking it authorizes on oauth.telegram.org; the signed payload
-       (id, first_name, ..., auth_date, hash) is handed to
-       window.onTelegramAuth, then validated & exchanged server-side via
-       the API — no page navigation, no hidden iframe.
-    -------------------------------------------------------------- */
-    async telegramPreflight(): Promise<any> {
+    async telegramPreflight(): Promise<TelegramOIDCConfig | null> {
       if (!import.meta.client) return null
       const res: any = await axios.get(getUrl('/api/v1/auth/oauth/telegram/config'))
-      const data = res?.data?.data
-      if (!data?.configured || !data?.bot?.bot_username) {
+      const data = res?.data?.data as TelegramOIDCConfig | undefined
+      if (!data?.configured || !data.client_id || !data.nonce) {
         throw new Error('Telegram login is not configured')
       }
-      if (data?.domain_ok === false) {
-        const err: any = new Error('Telegram widget domain is not valid for this origin')
+      if (data.domain_ok === false) {
+        const err: any = new Error('Telegram login domain is not valid for this origin')
         err.domain = true
         throw err
       }
       return data
     },
 
-    async completeTelegramLogin(user: Record<string, string>): Promise<boolean> {
-      const res: any = await axios.post(
-        getUrl('/api/v1/auth/oauth/telegram/callback'),
-        new URLSearchParams(user as any),
-        {
-          headers: { Accept: 'application/json' },
-          withCredentials: true,
-        },
-      )
-      const body: any = res?.data
-      if (!body?.success || !body?.data?.access_token) {
-        throw new Error(body?.error || 'Telegram login failed')
+    async completeTelegramLogin(idToken: string, nonce: string): Promise<boolean> {
+      if (!idToken || !nonce) {
+        throw new Error('Telegram did not return a valid ID token')
       }
-      const applied = this.applySession({ data: body.data })
-      if (!applied) throw new Error('Telegram login failed')
-      if (this.remember) await this.prolongSession()
-      await this.fetchProfile()
-      return true
+      const nuxtApp = useNuxtApp()
+      this.loading = true
+      this.error = null
+      try {
+        const res: any = await axios.post(
+          getUrl('/api/v1/auth/oauth/telegram/oidc'),
+          { id_token: idToken, nonce, remember: this.remember },
+          { headers: { Accept: 'application/json' }, withCredentials: true },
+        )
+        const body: any = res?.data
+        if (!body?.success || !body?.data?.access_token) {
+          throw new Error(body?.error || 'Telegram login failed')
+        }
+        const applied = nuxtApp.runWithContext(() =>
+          this.applySession({ data: body.data }, this.remember),
+        )
+        if (!applied) throw new Error('Telegram login failed')
+        await this.fetchProfile()
+        return true
+      } catch (err: any) {
+        this.error = err?.response?.data?.error || err?.response?.data?.message || err?.message || 'Telegram login failed'
+        throw err
+      } finally {
+        this.loading = false
+      }
     },
 
     async joinPlan(
@@ -472,17 +501,13 @@ export const useAuthStore = defineStore('auth', {
       const nuxtApp = useNuxtApp()
       const { data } = await axios.get(getUrl('/api/v1/auth/me'), {
         withCredentials: true,
+        headers: { Authorization: `Bearer ${this.token}` },
       })
-
-      // if (error.value) {
-      //   console.warn('[auth] fetchProfile failed:', error.value)
-      //   return
-      // }
 
       const body: any = data
       const raw = body?.data ?? body
-      if (!raw) {
-        console.warn('[auth] fetchProfile failed:', data)
+      const user = normalizeUser(raw)
+      if (!user) {
         this.user = null
         this.token = null
         this.refreshToken = null
@@ -490,17 +515,7 @@ export const useAuthStore = defineStore('auth', {
         this.clearAuthCookies()
         return
       }
-      this.user = raw
-      console.log("this.user  ===============> ", this.user )
-
-      // this.user = {
-      //   id: raw.id ?? raw.Id ?? 'member',
-      //   name: raw.name ?? raw.Name ?? raw.email ?? raw.Email ?? 'Member',
-      //   email: raw.email ?? raw.Email ?? '',
-      //   avatar: raw.avatar ?? raw.Avatar ?? raw.image ?? raw.Image ?? undefined,
-      //   role: raw.role ?? raw.Role ?? 'member',
-      //   plan: raw.plan ?? raw.Plan ?? undefined,
-      // }
+      this.user = user
       nuxtApp.runWithContext(() => {
         this.persistUser()
         useUserData({

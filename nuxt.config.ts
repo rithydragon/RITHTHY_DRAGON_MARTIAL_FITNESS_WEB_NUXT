@@ -142,27 +142,31 @@ export default defineNuxtConfig({
     apiInternalBase: process.env.API_INTERNAL_BASE || 'http://127.0.0.1:8000',
     apiInternalSecret: process.env.API_INTERNAL_SECRET || '',
     // apiBase: `http://${getLocalIp()}:58721`,
-    apiBase: process.env.NUXT_PUBLIC_API_BASE || 'https://api.rithymartialfitness.com',
-    siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://rithymartialfitness.com',
     oauth: {
       googleClientId: process.env.NUXT_PUBLIC_GOOGLE_CLIENT_ID || '',
       facebookAppId: process.env.NUXT_PUBLIC_FACEBOOK_APP_ID || '',
       tiktokClientKey: process.env.NUXT_PUBLIC_TIKTOK_CLIENT_KEY || '',
       telegramBotName: process.env.NUXT_PUBLIC_TELEGRAM_BOT_NAME || 'RithyMartialBot',
     },
-    telegramClientId: process.env.TELEGRAM_CLIENT_ID,
-    telegramClientSecret: process.env.TELEGRAM_CLIENT_SECRET,
-
     sessionSecret: process.env.NUXT_SESSION_SECRET,
 
     public: {
-      telegramClientId: process.env.TELEGRAM_CLIENT_ID,
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'https://api.rithymartialfitness.com',
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://rithymartialfitness.com',
+      telegramClientId: process.env.NUXT_PUBLIC_TELEGRAM_CLIENT_ID || process.env.TELEGRAM_CLIENT_ID || '',
       wsBase: process.env.NUXT_PUBLIC_WS_BASE || 'ws://localhost:58721/ws',
       chatRoomId: process.env.NUXT_PUBLIC_CHAT_ROOM_ID || '1',
     },
   },
 
   nitro: {
+    routeRules: {
+      '/**': {
+        headers: {
+          'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
+        },
+      },
+    },
     // preset: 'vercel'
     // prerender: {
     //   crawlLinks: true,

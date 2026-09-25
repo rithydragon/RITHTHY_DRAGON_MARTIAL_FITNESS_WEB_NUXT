@@ -253,7 +253,7 @@ watch(() => route.path, () => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .navbar {
   position: fixed;
   top: 0;
@@ -436,9 +436,9 @@ watch(() => route.path, () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
-  padding: 0;
+  width: 35px;
+  height: 35px;
+  padding: 2px;
   border-radius: 50%;
   background: rgba(234, 179, 8, 0.15);
   border: 1px solid rgba(234, 179, 8, 0.3);
@@ -446,9 +446,16 @@ watch(() => route.path, () => {
   overflow: hidden;
   transition: all 0.2s ease;
 
+  & img {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   &:hover {
     border-color: var(--c-primary, #eab308);
-    box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.15);
+    // box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.15);
   }
 }
 

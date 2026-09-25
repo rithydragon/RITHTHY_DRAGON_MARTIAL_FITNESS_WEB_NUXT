@@ -2,6 +2,7 @@ export default (path, isWeb) => {
   if (!path) return "";
 
   const { config } = helper();
+  const runtimeConfig = useRuntimeConfig();
 
   const tmpServer = useCookie("tmp_server").value;
   const tmpWebServer = useCookie("tmp_web_server").value;
@@ -10,9 +11,13 @@ export default (path, isWeb) => {
 
   if (!path.startsWith("/")) path = `/${path}`;
 
+  const runtimeServer = isWeb
+    ? runtimeConfig.public.siteUrl || config.webUrl
+    : runtimeConfig.public.apiBase || config.apiUrl;
+
   let server = isWeb
-    ? isNotEmpty(tmpWebServer) ? tmpWebServer : config.webUrl
-    : isNotEmpty(tmpServer)   ? tmpServer    : config.apiUrl;
+    ? isNotEmpty(tmpWebServer) ? tmpWebServer : runtimeServer
+    : isNotEmpty(tmpServer)   ? tmpServer    : runtimeServer;
 
   server = server?.endsWith("/") ? server.replace(/\/$/, "") : server;
 

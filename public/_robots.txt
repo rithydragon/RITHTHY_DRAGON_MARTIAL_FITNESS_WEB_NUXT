@@ -1,34 +1,19 @@
 # Robots.txt for Rithy Martial & Fitness
-# Optimized for Google Search, Bing, and AI Search Crawlers
 
 User-agent: *
+
+# Public website
 Allow: /
+
+# Private/application routes
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /api/
-Disallow: /_nuxt/
-Disallow: /?auth=register/
-Disallow: /?auth=login/
-Disallow: /?auth=login/
-Disallow: /?auth=join/
+Disallow: /login/
+Disallow: /register/
 
-# Allow major Search Engine & AI LLM Crawlers
-User-agent: Googlebot
+# Nuxt assets must remain crawlable for rendering
+Allow: /_nuxt/
 
-User-agent: Google-Extended
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: GPTBot
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-# Sitemap Location
+# Sitemap
 Sitemap: https://rtyfitness.riththydragon.site/sitemap.xml

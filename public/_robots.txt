@@ -12,10 +12,8 @@ Disallow: /?auth=login/
 Disallow: /?auth=login/
 Disallow: /?auth=join/
 
-Sitemap: https://rtyfitness.riththydragon.site/sitemap.xml
 # Allow major Search Engine & AI LLM Crawlers
 User-agent: Googlebot
-Allow: /
 
 User-agent: Google-Extended
 Allow: /

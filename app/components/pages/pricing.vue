@@ -89,7 +89,7 @@ const plans = [
     },
     features: [
       { en: 'All Unlimited Fighter perks', km: 'អត្ថប្រយោជន៍ទាំងអស់នៃកញ្ចប់មិនកំណត់', zh: '包含无限次卡的所有权益' },
-      { en: 'Free RMF Fighter T-Shirt', km: 'អាវយឺត RMF Fighter ឥតគិតថ្លៃ ១', zh: '赠送 RMF 专属战士 T 恤一件' },
+      { en: 'Free RTY FITNESS Fighter T-Shirt', km: 'អាវយឺត RTY FITNESS Fighter ឥតគិតថ្លៃ ១', zh: '赠送 RTY FITNESS 专属战士 T 恤一件' },
       { en: 'Quarterly athletic progress review', km: 'ការវាយតម្លៃកាយសម្បទាប្រចាំត្រីមាស', zh: '季度运动表现评估' },
       { en: 'Priority class booking', km: 'អាទិភាពក្នុងការកក់ម៉ោងសិក្សា', zh: '优先预订热门课程' }
     ]

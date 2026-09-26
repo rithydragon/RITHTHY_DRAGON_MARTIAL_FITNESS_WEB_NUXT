@@ -123,7 +123,7 @@
                       alt="KHQR Code"
                       class="qr-code"
                     />
-                    <div class="qr-brand-overlay">RMF</div>
+                    <div class="qr-brand-overlay">RTY FITNESS</div>
                   </div>
                   <p class="qr-instruction">
                     Scan with ABA Mobile, Sathapana, ACELEDA or any Bakong app

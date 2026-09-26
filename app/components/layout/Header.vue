@@ -3,7 +3,7 @@
     <div class="navbar__inner container">
       <!-- Logo using NuxtLink -->
       <NuxtLink :to="localePath('/')" class="navbar__logo" @click="closeMenu">
-        <span class="navbar__logo-mark">RMF</span>
+        <span class="navbar__logo-mark">RTY FITNESS</span>
       </NuxtLink>
 
       <!-- Desktop Primary Navigation -->

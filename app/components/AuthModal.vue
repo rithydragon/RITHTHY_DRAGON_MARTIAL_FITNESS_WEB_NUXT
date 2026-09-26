@@ -79,7 +79,7 @@
                 :class="{ 'is-selected': selectedPlan === plan.id }"
               >
                 <input type="radio" v-model="selectedPlan" :value="plan.id" name="plan" />
-                <span class="auth-modal__plan-name">{{ t(`auth.plan${plan.label}`) }}</span>
+                <span class="auth-modal__plan-name">{{plan.label }}</span>
                 <span class="auth-modal__plan-price">${{ plan.price }}{{ t('auth.planMonthly') }}</span>
               </label>
             </div>
@@ -200,7 +200,15 @@ async function getPlans() {
       return
     }
 
-    plans.value = data.value?.data ?? data.value ?? []
+    plans.value = (data.value?.data ?? data.value ?? []).map((a) => ({
+      id: a.Id,
+      code: a.Code,
+      label: tBy({
+        km: a.Name,
+        en: a.NameEn,
+      }),
+      price: a.Price,
+    }))
 
     // Select first plan if current selection doesn't exist
     if (
@@ -214,6 +222,7 @@ async function getPlans() {
     plans.value = []
   }
 }
+
 
 const router = useRouter()
 

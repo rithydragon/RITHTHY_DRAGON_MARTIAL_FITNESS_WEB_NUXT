@@ -120,10 +120,19 @@ import articlesData from '../assets/json/articles.json'
 
 const { t } = useI18n()
 
-useSeo({
-  title: 'RTY Fitness Training',
-  description: 'Professional  fitness training in Cambodia led by Mr. Ny Rithy. Strength & conditioning.',
-  url: '/',
+// useSeo({
+//   title: 'RTY Fitness Training',
+//   description: 'Professional  fitness training in Cambodia led by Mr. Ny Rithy. Strength & conditioning.',
+//   url: '/',
+// })
+
+useSeoMeta({
+  title: 'Rithy Martial & Fitness | RTY FITNESS',
+  description:
+    'Rithy Martial & Fitness — RTY FITNESS provides martial arts, fitness training, workout programs, and training resources.',
+  ogTitle: 'Rithy Martial & Fitness | RTY FITNESS',
+  ogDescription:
+    'Martial arts and fitness training with Rithy Martial & Fitness.',
 })
 
 const featuredTestimonials = computed(() => {

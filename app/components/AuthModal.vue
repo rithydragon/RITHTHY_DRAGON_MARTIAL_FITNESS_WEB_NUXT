@@ -286,26 +286,31 @@ function switchMode() {
   emit('switchMode', props.mode === 'login' ? 'register' : 'login')
 }
 
+function encryptField(value: string) {
+  if (!value) return ''
+  return encryptAES(value)
+}
+
+function encryptedForm() {
+  return {
+    Name: encryptField(form.Name),
+    Email: encryptField(form.Email),
+    Phone: encryptField(form.Phone),
+    Password: encryptField(form.Password),
+  }
+}
+
 async function handleSubmit() {
   try {
     if (props.mode === 'login') {
-      await auth.login(form.Email, form.Password, remember.value)
+      const payload = encryptedForm()
+      await auth.login(payload.Email, payload.Password, remember.value)
       close()
     } else if (props.mode === 'register') {
-      await auth.register({
-        Name: form.Name,
-        Email: form.Email,
-        Password: form.Password,
-        Phone: form.Phone,
-      })
+      await auth.register(encryptedForm())
       close()
     } else if (props.mode === 'join') {
-      const res: any = await auth.joinPlan(selectedPlan.value, {
-        Name: form.Name,
-        Email: form.Email,
-        Password: form.Password,
-        Phone: form.Phone,
-      })
+      const res: any = await auth.joinPlan(selectedPlan.value, encryptedForm())
 
       if (res?.RequiresPayment) {
         // PAID PLAN: Close modal & take user directly to payment/checkout page

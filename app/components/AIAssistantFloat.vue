@@ -5,7 +5,7 @@
       <div v-if="ui.aiAssistantOpen" class="ai-panel">
         <div class="ai-panel-header">
           <div class="ai-header-left">
-            <div class="ai-avatar"><RAImage src="/RTY_FITNESS_LOGO.jpg" /></div>
+            <div class="ai-avatar"><RImage src="/RTY_FITNESS_LOGO.jpg" /></div>
             <div>
               <p class="ai-name">{{ mode === 'ai' ? aiName : roomName }}</p>
               <p class="ai-status">
@@ -41,7 +41,7 @@
               :class="['ai-msg', msg.role]"
             >
               <div class="msg-avatar" :class="msg.role">
-                <RAImage
+                <RImage
                   v-if="msg.role === 'user' || msg.role === 'assistant' || msg.role === 'system'"
                   :src="msg.role === 'user' ? profile.avatar : assistantAvatar"
                 />
@@ -57,7 +57,7 @@
             </div>
 
             <div v-if="loading" class="ai-msg assistant">
-              <div class="msg-avatar assistant"><RAImage :src="assistantAvatar" /></div>
+              <div class="msg-avatar assistant"><RImage :src="assistantAvatar" /></div>
               <div class="ai-msg-body">
                 <div class="msg-bubble typing">
                   <span /><span /><span />
@@ -72,7 +72,7 @@
             </button>
           </div>
 
-          <div v-if="auth.user && aiMessages.length <= 1" class="ai-quick member">
+          <div v-if="isAuth && aiMessages.length <= 1" class="ai-quick member">
             <span class="quick-label"><i class="ri-vip-crown-line"></i> {{ memberLabel }}</span>
             <button v-for="q in memberQuickPrompts" :key="q" class="quick-btn" @click="sendMessage(q)">
               {{ q }}
@@ -108,7 +108,7 @@
               :class="['ai-msg', msg.role]"
             >
               <div class="msg-avatar" :class="msg.role">
-                <RAImage
+                <RImage
                   v-if="msg.role === 'user' || msg.role === 'assistant' || msg.role === 'system'"
                   :src="msg.role === 'user' ? profile.avatar : assistantAvatar"
                 />
@@ -124,7 +124,7 @@
               </div>
             </div>
 
-            <div v-if="auth.user && typingSender && typingSender !== myName" class="ai-msg member">
+            <div v-if="isAuth && typingSender && typingSender !== myName" class="ai-msg member">
               <div class="msg-avatar member"><span>…</span></div>
               <div class="ai-msg-body">
                 <div class="msg-meta">
@@ -144,7 +144,7 @@
             </button>
           </div>
 
-          <div v-if="!auth.user" class="ai-signin">
+          <div v-if="!isAuth" class="ai-signin">
             <span><i class="ri-lock-line"></i> {{ signInToJoin }}</span>
             <button class="ai-signin-btn" @click="openLogin">{{ loginLabel }}</button>
           </div>
@@ -154,13 +154,14 @@
               v-model="pubInput"
               type="text"
               class="ai-input"
-              :placeholder="auth.user ? publicPlaceholder : signInPlaceholder"
-              :disabled="!auth.user"
+              :placeholder="isAuth ? publicPlaceholder : signInPlaceholder"
+              :disabled="!isAuth"
               @keydown.enter="sendPublic()"
             />
+            <!-- :disabled="!auth.user || !pubInput.trim() || !pubConnected" -->
             <button
               class="ai-send"
-              :disabled="!auth.user || !pubInput.trim() || !pubConnected"
+              :disabled="!isAuth || !pubInput.trim()"
               @click="sendPublic()"
             >
               <i class="ri-send-ins-line"></i>
@@ -188,12 +189,23 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, nextTick, shallowRef, onBeforeUnmount } from 'vue'
+const screen = useScreenStore()
+const auth = useAuthStore()
+const ui = useUIStore()
+const menu = await useMenuData()
+const route = useRoute()
+const menuList = ref([])
+const isMenuOpen = ref(false)
+const expandedMobileSubs = ref([])
+
+const accessToken = useCookie(ACCESS_COOKIE)
+const userData = useUserData()
+console.log("User data in chat ====================> ", userData.value)
 
 const { t, locale } = useI18n()
-const ui = useUIStore()
-const auth = useAuthStore()
 const router = useRouter()
 const config = useRuntimeConfig()
+const isAuth = computed(() => !!accessToken.value || !!userData.value?.access_token || !!userData.value?.token)
 
 type ChatRole = 'user' | 'assistant' | 'system' | 'admin' | 'member'
 type TabMode = 'ai' | 'public'
@@ -276,10 +288,10 @@ const displayName = computed(() => profile.value.name)
 const myName = computed(() => profile.value.name)
 
 const profile = computed(() => {
-  if (auth.user) {
+  if (isAuth.value) {
     return {
-      name: auth.user.name || 'Member',
-      avatar: auth.user.avatar || assistantAvatar,
+      name: userData.value?.name || 'Member',
+      avatar: userData.value?.avatar || assistantAvatar,
     }
   }
   return {
@@ -348,7 +360,7 @@ const pubStatusLabel = computed(() => {
 })
 
 const publicQuickPrompts = computed(() =>
-  auth.user ? [...quickPrompts.value, ...memberQuickPrompts.value] : quickPrompts.value
+  isAuth.value ? [...quickPrompts.value, ...memberQuickPrompts.value] : quickPrompts.value
 )
 
 /* ── Helpers ─────────────────────────────────────────────────────────────── */
@@ -498,8 +510,8 @@ const sendMessage = async (text?: string) => {
       data: {
         message: content,
         history: aiMessages.value.slice(0, -1),
-        user: auth.user
-          ? { id: auth.user.id, name: auth.user.name, email: auth.user.email }
+        user: isAuth
+          ? { id: userData.value?.id, name: userData.value?.name, email: userData.value?.email }
           : null,
       },
     })
@@ -642,7 +654,7 @@ function normalizePubMessage(m: any): ChatMessage {
   }
 }
 
-const myUserId = computed(() => (auth.user?.id ? Number(auth.user.id) : null))
+const myUserId = computed(() => (userData.value?.id ? Number(userData.value?.id) : null))
 
 function mergePubMessages(msgs: any[]) {
   const seen = new Set(pubMessages.value.map((m) => m.id))
@@ -696,7 +708,7 @@ function schedulePublicAiReply(content: string) {
 const sendPublic = (text?: string) => {
   const content = (text ?? pubInput.value).trim()
   if (!content) return
-  if (!auth.user) {
+  if (!isAuth.value) {
     openLogin()
     return
   }
@@ -713,7 +725,7 @@ const sendPublic = (text?: string) => {
 }
 
 const sendPublicQuick = (q: string) => {
-  if (auth.user) {
+  if (isNotEmpty(isAuth.value)) {
     sendPublic(q)
     return
   }
@@ -729,7 +741,7 @@ const sendPublicQuick = (q: string) => {
 }
 
 watch(pubInput, () => {
-  if (!auth.user || !pubConnected) return
+  if (!isAuth || !pubConnected) return
   if (typingSendTimer) clearTimeout(typingSendTimer)
   typingSendTimer = setTimeout(() => {
     wsSend({ type: 'typing' })
@@ -812,11 +824,12 @@ onBeforeUnmount(() => {
   gap: 0;
   padding: 5px;
   background: transparent;
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--c-bg);
   border-radius: 99px;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-size: 20px;
 
   @media (max-width: 768px) {
     animation: none !important;
@@ -829,25 +842,26 @@ onBeforeUnmount(() => {
   border-radius: 50%;
   background: linear-gradient(135deg, var(--color-gold), var(--color-gold));
   border: none;
-  color: #fff;
+  color: var(--c-text);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 20px rgba(200, 149, 28, 0.4);
+  box-shadow: 0 1px 5px rgba(200, 149, 28, 0.4);
   transition: all var(--transition);
   animation: none;
 
   .fab-icon {
-    font-size: 1.25rem;
+    font-size: 20px;
     line-height: 1;
   }
 
-  &:hover {
-    transform: translateY(-2px) scale(1.08);
-    box-shadow: 0 8px 32px rgba(200, 149, 28, 0.5);
-    animation-play-state: paused;
-  }
+  // &:hover {
+  //   // transform: translateY(-2px) scale(1.08);
+  //   // box-shadow: 0 20px 30px rgba(200, 149, 28, 0.5);
+  //   border: 1px solid var(--c-border);
+  //   animation-play-state: paused;
+  // }
 
   &.open {
     animation: none;
@@ -887,10 +901,11 @@ onBeforeUnmount(() => {
 }
 
 .ai-panel {
+  z-index: 9999;
   width: 340px;
   height: 500px;
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
   border-radius: 16px;
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
   display: flex;

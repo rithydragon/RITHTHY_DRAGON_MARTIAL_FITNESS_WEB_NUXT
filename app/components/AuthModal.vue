@@ -134,7 +134,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, watch, nextTick } from 'vue'
+import { ref, reactive, computed, watch, nextTick ,onMounted } from 'vue'
 import { useEventListener } from '@vueuse/core'
 
 type AuthMode = 'login' | 'register' | 'join'
@@ -156,7 +156,7 @@ const emit = defineEmits<{
 
 const { t, locale } = useI18n()
 const auth = useAuthStore()
-
+const plans = ref([])
 const form = reactive({
   Name: '',
   Email: '',
@@ -171,12 +171,12 @@ function onRememberChange() {
   auth.setRemember(remember.value)
 }
 
-const plans = [
-  { id: 'free', code: 'FREE', label: 'Free', price: 0 },
-  { id: 'basic', code: 'BASIC', label: 'Basic', price: 49 },
-  { id: 'pro', code: 'PRO', label: 'Pro', price: 99 },
-  { id: 'elite', code: 'ELITE', label: 'Elite', price: 199 },
-] as const
+// const plans = [
+//   { id: 'free', code: 'FREE', label: 'Free', price: 0 },
+//   { id: 'basic', code: 'BASIC', label: 'Basic', price: 49 },
+//   { id: 'pro', code: 'PRO', label: 'Pro', price: 99 },
+//   { id: 'elite', code: 'ELITE', label: 'Elite', price: 199 },
+// ] as const
 
 // const selectedPlan = ref<'free' | 'basic' | 'pro' | 'elite'>('pro')
 const selectedPlan = ref<PlanCode>('FREE')
@@ -187,6 +187,33 @@ const providers = [
   { id: 'tiktok', name: 'TikTok', icon: 'ri-tiktok-fill' },
   { id: 'facebook', name: 'Facebook', icon: 'ri-facebook-circle-fill' },
 ] as const
+
+async function getPlans() {
+  try {
+    const { data, error } = await useWeb('api/v1/plans/list', {
+      method: 'POST',
+    })
+
+    if (error.value) {
+      console.error('Failed to load plans:', error.value)
+      plans.value = []
+      return
+    }
+
+    plans.value = data.value?.data ?? data.value ?? []
+
+    // Select first plan if current selection doesn't exist
+    if (
+      plans.value.length > 0 &&
+      !plans.value.some(plan => plan.code === selectedPlan.value)
+    ) {
+      selectedPlan.value = plans.value[0].code as PlanCode
+    }
+  } catch (err) {
+    console.error('Failed to load plans:', err)
+    plans.value = []
+  }
+}
 
 const router = useRouter()
 
@@ -232,9 +259,19 @@ useEventListener('keydown', (e) => {
   }
 })
 
-watch(() => auth.isLoggedIn, (loggedIn) => {
+watch( () => auth.isLoggedIn, (loggedIn) => {
   if (loggedIn && props.isOpen) close()
 })
+
+watch(
+  () => props.isOpen,
+  (isOpen) => {
+    if (isOpen && props.mode === 'join') {
+      getPlans()
+    }
+  },
+  { immediate: true }
+)
 
 function switchMode() {
   emit('switchMode', props.mode === 'login' ? 'register' : 'login')

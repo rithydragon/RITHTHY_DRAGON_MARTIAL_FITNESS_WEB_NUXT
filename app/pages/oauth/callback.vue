@@ -259,7 +259,7 @@ onBeforeUnmount(() => {
         <span class="oauth-brand__mark" aria-hidden="true">
           <i class="ri-dumbbell-line"></i>
         </span>
-        <span class="oauth-brand__name">RITHTHY Fitness</span>
+        <span class="oauth-brand__name">RTY Fitness</span>
       </div>
 
       <template v-if="status === 'loading'">

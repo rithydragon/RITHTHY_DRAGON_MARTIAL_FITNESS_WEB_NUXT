@@ -58,7 +58,7 @@ export default defineNuxtConfig({
   components: getComponentPaths(),
 
   app: {
-    // titleTemplate: '%s | RITHTHY Fitness',
+    // titleTemplate: '%s | RTY Fitness',
     rootId: 'riththy',
     rootTag: 'riththy-main',
     baseUrl: '/',
@@ -69,7 +69,7 @@ export default defineNuxtConfig({
 
     head: {
       htmlAttrs: { lang: 'en', dir: 'ltr' },
-      title: 'RITHTHY Fitness — Premier Fitness Training',
+      title: 'RTY Fitness — Premier Fitness Training',
       bodyAttrs: {
         class: 'riththy-dragon-fitness',
       },
@@ -78,11 +78,11 @@ export default defineNuxtConfig({
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'theme-color', content: '#0a0a0a' },
         { name: 'description', content: 'Premium fitness training in Cambodia led by Mr. Ny Rithy. Strength & conditioning, private and group classes.' },
-        { name: 'keywords', content: 'Fitness training Cambodia, Ny Rithy,RITHTHY Fitness' },
+        { name: 'keywords', content: 'Fitness training Cambodia, Ny Rithy,RTY Fitness' },
         
         // Open Graph
         { property: 'og:type', content: 'website' },
-        { property: 'og:title', content: 'RITHTHY Fitness — Premier Fitness Training' },
+        { property: 'og:title', content: 'RTY Fitness — Premier Fitness Training' },
         { property: 'og:description', content: 'Train with high-performance athletic conditioning with Master Ny Rithy.' },
         { property: 'og:locale', content: 'en_US' },
         { property: 'og:image', content: '/og-image.jpg' },
@@ -90,7 +90,7 @@ export default defineNuxtConfig({
         
         // Twitter Card
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: 'RITHTHY Fitness' },
+        { name: 'twitter:title', content: 'RTY Fitness' },
         { name: 'twitter:description', content: 'Strength Conditioning in Phnom Penh.' },
         { name: 'twitter:image', content: '/og-image.jpg' },
       ],

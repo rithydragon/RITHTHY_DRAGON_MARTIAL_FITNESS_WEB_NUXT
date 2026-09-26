@@ -121,7 +121,7 @@ import articlesData from '../assets/json/articles.json'
 const { t } = useI18n()
 
 useSeo({
-  title: 'RITHTHY Fitness Training',
+  title: 'RTY Fitness Training',
   description: 'Professional  fitness training in Cambodia led by Mr. Ny Rithy. Strength & conditioning.',
   url: '/',
 })

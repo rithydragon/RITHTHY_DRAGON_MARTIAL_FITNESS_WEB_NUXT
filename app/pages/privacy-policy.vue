@@ -10,7 +10,7 @@
           {{ tBy({ en: 'Privacy Policy & Data Protection', km: 'គោលការណ៍ឯកជនភាព និងការការពារទិន្នន័យ', zh: '隐私政策与数据保护' }) }}
         </h1>
         <p class="legal-hero__subtitle" data-animate="fade" data-delay="200">
-          {{ tBy({ en: 'How RITHTHY Fitness collects, uses, and safeguards your personal data during account creation, OAuth login, and class bookings.', km: 'របៀបដែល RITHTHY Fitness ប្រមូល ប្រើប្រាស់ និងការពារទិន្នន័យផ្ទាល់ខ្លួនរបស់អ្នកក្នុងពេលបង្កើតគណនី ការចូលតាម OAuth និងការកក់ថ្នាក់។', zh: 'RITHTHY Fitness 如何在账户创建、OAuth 登录和课程预约期间收集、使用和保护您的个人数据。' }) }}
+          {{ tBy({ en: 'How RTY Fitness collects, uses, and safeguards your personal data during account creation, OAuth login, and class bookings.', km: 'របៀបដែល RTY Fitness ប្រមូល ប្រើប្រាស់ និងការពារទិន្នន័យផ្ទាល់ខ្លួនរបស់អ្នកក្នុងពេលបង្កើតគណនី ការចូលតាម OAuth និងការកក់ថ្នាក់។', zh: 'RTY Fitness 如何在账户创建、OAuth 登录和课程预约期间收集、使用和保护您的个人数据。' }) }}
         </p>
         <div class="legal-hero__meta" data-animate="fade" data-delay="300">
           <span class="meta-tag"><i class="ri-shield-check-line"></i> {{ tBy({ en: 'GDPR & OAuth2 Compliant', km: 'អនុវត្តតាម GDPR & OAuth2', zh: '符合 GDPR 与 OAuth2 标准' }) }}</span>
@@ -81,9 +81,9 @@
               <div class="section-body">
                 <p>
                   {{ tBy({
-                    en: 'This Privacy Policy describes how RITHTHY Fitness (Riththy Dragon Martial & Fitness Club) ("we", "us", or "our"), operated under the leadership of Master Ny Rithy in Phnom Penh, Kingdom of Cambodia, collects, uses, stores, and protects personal information when you visit our web application (rithymartialfitness.com) or use our martial arts & fitness booking services.',
-                    km: 'គោលការណ៍ឯកជនភាពនេះរៀបរាប់អំពីរបៀបដែល RITHTHY Fitness (ក្លឹបកីឡាចម្រុះ និងសុខភាព រិទ្ធី ដ្រាហ្គន) ដឹកនាំដោយលោក ញ៉ី រិទ្ធី នៅរាជធានីភ្នំពេញ ព្រះរាជាណាចក្រកម្ពុជា ប្រមូល ប្រើប្រាស់ រក្សាទុក និងការពារព័ត៌មានផ្ទាល់ខ្លួននៅពេលអ្នកចូលមើលកម្មវិធីវេបសាយ (rithymartialfitness.com) ឬប្រើប្រាស់សេវាកម្មកក់ថ្នាក់ក្បាច់គុន និងកាយសម្បទារបស់យើង។',
-                    zh: '本隐私政策说明了由 Ny Rithy 大师在柬埔寨王国金边领衔运营的 RITHTHY Fitness（Riththy Dragon 武术与健身俱乐部）在您访问我们的 Web 应用程序 (rithymartialfitness.com) 或使用我们的武术与健身预约服务时，如何收集、使用、存储和保护个人信息。'
+                    en: 'This Privacy Policy describes how RTY Fitness (Riththy Dragon Martial & Fitness Club) ("we", "us", or "our"), operated under the leadership of Master Ny Rithy in Phnom Penh, Kingdom of Cambodia, collects, uses, stores, and protects personal information when you visit our web application (rithymartialfitness.com) or use our martial arts & fitness booking services.',
+                    km: 'គោលការណ៍ឯកជនភាពនេះរៀបរាប់អំពីរបៀបដែល RTY Fitness (ក្លឹបកីឡាចម្រុះ និងសុខភាព រិទ្ធី ដ្រាហ្គន) ដឹកនាំដោយលោក ញ៉ី រិទ្ធី នៅរាជធានីភ្នំពេញ ព្រះរាជាណាចក្រកម្ពុជា ប្រមូល ប្រើប្រាស់ រក្សាទុក និងការពារព័ត៌មានផ្ទាល់ខ្លួននៅពេលអ្នកចូលមើលកម្មវិធីវេបសាយ (rithymartialfitness.com) ឬប្រើប្រាស់សេវាកម្មកក់ថ្នាក់ក្បាច់គុន និងកាយសម្បទារបស់យើង។',
+                    zh: '本隐私政策说明了由 Ny Rithy 大师在柬埔寨王国金边领衔运营的 RTY Fitness（Riththy Dragon 武术与健身俱乐部）在您访问我们的 Web 应用程序 (rithymartialfitness.com) 或使用我们的武术与健身预约服务时，如何收集、使用、存储和保护个人信息。'
                   }) }}
                 </p>
                 <div class="info-callout">
@@ -158,18 +158,18 @@
               <div class="section-body">
                 <p>
                   {{ tBy({
-                    en: 'RITHTHY Fitness supports single-click authentication via OAuth2 identity providers. When you register or log in using third-party services:',
-                    km: 'RITHTHY Fitness គាំទ្រការផ្ទៀងផ្ទាត់ការចូលដោយចុចតែម្តងតាមរយៈសេវាអត្តសញ្ញាណ OAuth2។ នៅពេលអ្នកចុះឈ្មោះ ឬចូលប្រើប្រាស់៖',
-                    zh: 'RITHTHY Fitness 支持通过 OAuth2 身份提供商进行一键登录验证。当您使用第三方服务注册或登录时：'
+                    en: 'RTY Fitness supports single-click authentication via OAuth2 identity providers. When you register or log in using third-party services:',
+                    km: 'RTY Fitness គាំទ្រការផ្ទៀងផ្ទាត់ការចូលដោយចុចតែម្តងតាមរយៈសេវាអត្តសញ្ញាណ OAuth2។ នៅពេលអ្នកចុះឈ្មោះ ឬចូលប្រើប្រាស់៖',
+                    zh: 'RTY Fitness 支持通过 OAuth2 身份提供商进行一键登录验证。当您使用第三方服务注册或登录时：'
                   }) }}
                 </p>
                 <ul>
                   <li>
                     <strong>Google Sign-In:</strong>
                     {{ tBy({
-                      en: 'We request access to openid, profile, and email. We use your Google profile name, avatar image, and email address solely to establish your RITHTHY Fitness member account.',
-                      km: 'យើងស្នើសុំការចូលប្រើប្រាស់ openid, profile, និង email។ យើងប្រើឈ្មោះ រូបថត និងអ៊ីមែល Google របស់អ្នកដើម្បីបង្កើតគណនីសមាជិក RITHTHY Fitness ប៉ុណ្ណោះ។',
-                      zh: '我们申请访问 openid、profile 和 email。我们使用您的 Google 个人资料姓名、头像和电子邮箱仅用于建立您的 RITHTHY Fitness 会员账户。'
+                      en: 'We request access to openid, profile, and email. We use your Google profile name, avatar image, and email address solely to establish your RTY Fitness member account.',
+                      km: 'យើងស្នើសុំការចូលប្រើប្រាស់ openid, profile, និង email។ យើងប្រើឈ្មោះ រូបថត និងអ៊ីមែល Google របស់អ្នកដើម្បីបង្កើតគណនីសមាជិក RTY Fitness ប៉ុណ្ណោះ។',
+                      zh: '我们申请访问 openid、profile 和 email。我们使用您的 Google 个人资料姓名、头像和电子邮箱仅用于建立您的 RTY Fitness 会员账户。'
                     }) }}
                   </li>
                   <li>
@@ -246,9 +246,9 @@
                   <div>
                     <strong>{{ tBy({ en: 'Strict No-Sale Policy:', km: 'គោលការណ៍ម៉ឺងម៉ាត់មិនលក់ទិន្នន័យ៖', zh: '严格的不出售政策：' }) }}</strong>
                     {{ tBy({
-                      en: 'RITHTHY Fitness will NEVER sell, lease, commercialize, or share your personal information with third-party advertisers, data brokers, or marketing syndicates.',
-                      km: 'RITHTHY Fitness នឹងមិនលក់ ជួល ឬចែករំលែកព័ត៌មានផ្ទាល់ខ្លួនរបស់អ្នកទៅកាន់អ្នកផ្សាយពាណិជ្ជកម្ម ឬក្រុមហ៊ុនទីផ្សារឡើយ។',
-                      zh: 'RITHTHY Fitness 绝不会向第三方广告商、数据经纪人或营销财团出售、出租、商业化或共享您的个人信息。'
+                      en: 'RTY Fitness will NEVER sell, lease, commercialize, or share your personal information with third-party advertisers, data brokers, or marketing syndicates.',
+                      km: 'RTY Fitness នឹងមិនលក់ ជួល ឬចែករំលែកព័ត៌មានផ្ទាល់ខ្លួនរបស់អ្នកទៅកាន់អ្នកផ្សាយពាណិជ្ជកម្ម ឬក្រុមហ៊ុនទីផ្សារឡើយ។',
+                      zh: 'RTY Fitness 绝不会向第三方广告商、数据经纪人或营销财团出售、出租、商业化或共享您的个人信息。'
                     }) }}
                   </div>
                 </div>
@@ -333,10 +333,10 @@ const { t } = useI18n()
 const localePath = useLocalePath()
 
 useHead({
-  title: 'Privacy Policy & Data Protection | RITHTHY Fitness',
+  title: 'Privacy Policy & Data Protection | RTY Fitness',
   meta: [
-    { name: 'description', content: 'Official Privacy Policy for RITHTHY Fitness. Learn how we collect, protect, and process user data, OAuth2 logins, and account deletion requests.' },
-    { property: 'og:title', content: 'Privacy Policy & Data Protection | RITHTHY Fitness' },
+    { name: 'description', content: 'Official Privacy Policy for RTY Fitness. Learn how we collect, protect, and process user data, OAuth2 logins, and account deletion requests.' },
+    { property: 'og:title', content: 'Privacy Policy & Data Protection | RTY Fitness' },
     { property: 'og:description', content: 'Official Privacy Policy and OAuth2 Data Protection Guidelines for Riththy Dragon Martial & Fitness Club.' }
   ]
 })

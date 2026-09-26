@@ -10,7 +10,7 @@
           {{ tBy({ en: 'Terms of Service & Gym Rules', km: 'លក្ខខណ្ឌសេវាកម្ម និងវិន័យក្លឹប', zh: '服务条款与健身房守则' }) }}
         </h1>
         <p class="legal-hero__subtitle" data-animate="fade" data-delay="200">
-          {{ tBy({ en: 'Please read these terms and conditions carefully before using our services or training at RITHTHY Fitness.', km: 'សូមអានលក្ខខណ្ឌនិងបទបញ្ជាទាំងនេះឱ្យបានច្បាស់លាស់មុនពេលប្រើប្រាស់សេវាកម្ម ឬបង្វឹកនៅ RITHTHY Fitness។', zh: '在使用我们的服务或在 RITHTHY Fitness 训练之前，请仔细阅读这些条款与细则。' }) }}
+          {{ tBy({ en: 'Please read these terms and conditions carefully before using our services or training at RTY Fitness.', km: 'សូមអានលក្ខខណ្ឌនិងបទបញ្ជាទាំងនេះឱ្យបានច្បាស់លាស់មុនពេលប្រើប្រាស់សេវាកម្ម ឬបង្វឹកនៅ RTY Fitness។', zh: '在使用我们的服务或在 RTY Fitness 训练之前，请仔细阅读这些条款与细则。' }) }}
         </p>
         <div class="legal-hero__meta" data-animate="fade" data-delay="300">
           <span class="meta-tag"><i class="ri-calendar-event-line"></i> {{ tBy({ en: 'Last Updated: September 17, 2026', km: 'ធ្វើបច្ចុប្បន្នភាពចុងក្រោយ៖ ១៧ កញ្ញា ២០២៦', zh: '最后更新时间：2026年9月17日' }) }}</span>
@@ -75,15 +75,15 @@
                 <span class="section-number">01</span>
                 <div>
                   <h2>{{ tBy({ en: 'Acceptance of Terms & Member Eligibility', km: 'ការយល់ព្រមលើលក្ខខណ្ឌ និងលក្ខណៈសម្បត្តិសមាជិក', zh: '条款接受与会员资格' }) }}</h2>
-                  <p class="section-sub">{{ tBy({ en: 'Agreement between athlete/member and RITHTHY Fitness.', km: 'កិច្ចព្រមព្រៀងរវាងកីឡាករ/សមាជិក និង RITHTHY Fitness។', zh: '学员/会员与 RITHTHY Fitness 之间的协议。' }) }}</p>
+                  <p class="section-sub">{{ tBy({ en: 'Agreement between athlete/member and RTY Fitness.', km: 'កិច្ចព្រមព្រៀងរវាងកីឡាករ/សមាជិក និង RTY Fitness។', zh: '学员/会员与 RTY Fitness 之间的协议。' }) }}</p>
                 </div>
               </div>
               <div class="section-body">
                 <p>
                   {{ tBy({
-                    en: 'Welcome to RITHTHY Fitness (Riththy Dragon Martial & Fitness Club), founded and directed by Master Ny Rithy in Phnom Penh, Kingdom of Cambodia. By accessing our web application (rithymartialfitness.com), registering an account, purchasing class passes, or participating in physical training at our center, you agree to comply with and be legally bound by these Terms of Service and Gym Conduct Rules.',
-                    km: 'សូមស្វាគមន៍មកកាន់ RITHTHY Fitness (ក្លឹបកីឡាចម្រុះ និងសុខភាព រិទ្ធី ដ្រាហ្គន) បង្កើត និងដឹកនាំដោយលោក ញ៉ី រិទ្ធី នៅរាជធានីភ្នំពេញ ព្រះរាជាណាចក្រកម្ពុជា។ ដោយការចូលប្រើប្រាស់កម្មវិធីវេបសាយ (rithymartialfitness.com) ចុះឈ្មោះគណនី ទិញកាតថ្នាក់ ឬចូលរួមការបង្វឹកកាយសម្បទានៅមជ្ឈមណ្ឌលរបស់យើង អ្នកយល់ព្រមអនុវត្តតាម និងភ្ជាប់កាតព្វកិច្ចផ្លូវច្បាប់ដោយលក្ខខណ្ឌសេវាកម្ម និងវិន័យក្លឹបទាំងនេះ។',
-                    zh: '欢迎来到由 Ny Rithy 大师在柬埔寨王国金边创立并指导的 RITHTHY Fitness（Riththy Dragon 武术与健身俱乐部）。通过访问我们的 Web 应用程序 (rithymartialfitness.com)、注册账户、购买课程通行证或在我们的中心参与体能训练，即表示您同意遵守这些服务条款和健身房守则并受其法律约束。'
+                    en: 'Welcome to RTY Fitness (Riththy Dragon Martial & Fitness Club), founded and directed by Master Ny Rithy in Phnom Penh, Kingdom of Cambodia. By accessing our web application (rithymartialfitness.com), registering an account, purchasing class passes, or participating in physical training at our center, you agree to comply with and be legally bound by these Terms of Service and Gym Conduct Rules.',
+                    km: 'សូមស្វាគមន៍មកកាន់ RTY Fitness (ក្លឹបកីឡាចម្រុះ និងសុខភាព រិទ្ធី ដ្រាហ្គន) បង្កើត និងដឹកនាំដោយលោក ញ៉ី រិទ្ធី នៅរាជធានីភ្នំពេញ ព្រះរាជាណាចក្រកម្ពុជា។ ដោយការចូលប្រើប្រាស់កម្មវិធីវេបសាយ (rithymartialfitness.com) ចុះឈ្មោះគណនី ទិញកាតថ្នាក់ ឬចូលរួមការបង្វឹកកាយសម្បទានៅមជ្ឈមណ្ឌលរបស់យើង អ្នកយល់ព្រមអនុវត្តតាម និងភ្ជាប់កាតព្វកិច្ចផ្លូវច្បាប់ដោយលក្ខខណ្ឌសេវាកម្ម និងវិន័យក្លឹបទាំងនេះ។',
+                    zh: '欢迎来到由 Ny Rithy 大师在柬埔寨王国金边创立并指导的 RTY Fitness（Riththy Dragon 武术与健身俱乐部）。通过访问我们的 Web 应用程序 (rithymartialfitness.com)、注册账户、购买课程通行证或在我们的中心参与体能训练，即表示您同意遵守这些服务条款和健身房守则并受其法律约束。'
                   }) }}
                 </p>
                 <div class="info-callout">
@@ -112,9 +112,9 @@
               <div class="section-body">
                 <p>
                   {{ tBy({
-                    en: 'RITHTHY Fitness honors traditional Khmer martial warrior culture. Discipline, mutual respect, and sportsmanship are non-negotiable pillars of our gym culture.',
-                    km: 'RITHTHY Fitness គោរពវប្បធម៌អ្នកច្បាំងក្បាច់គុនខ្មែរប្រពៃណី។ វិន័យ ការគោរពគ្នាទៅវិញទៅមក និងស្មារតីកីឡា គឺជាសសរទ្រទ្រង់ដែលមិនអាចកែប្រែបាននៃវប្បធម៌ក្លឹបរបស់យើង។',
-                    zh: 'RITHTHY Fitness 传承传统高棉武士文化。纪律、互相尊重和体育精神是构成我们俱乐部文化不可动摇的基石。'
+                    en: 'RTY Fitness honors traditional Khmer martial warrior culture. Discipline, mutual respect, and sportsmanship are non-negotiable pillars of our gym culture.',
+                    km: 'RTY Fitness គោរពវប្បធម៌អ្នកច្បាំងក្បាច់គុនខ្មែរប្រពៃណី។ វិន័យ ការគោរពគ្នាទៅវិញទៅមក និងស្មារតីកីឡា គឺជាសសរទ្រទ្រង់ដែលមិនអាចកែប្រែបាននៃវប្បធម៌ក្លឹបរបស់យើង។',
+                    zh: 'RTY Fitness 传承传统高棉武士文化。纪律、互相尊重和体育精神是构成我们俱乐部文化不可动摇的基石。'
                   }) }}
                 </p>
 
@@ -205,9 +205,9 @@
               <div class="section-body">
                 <p>
                   {{ tBy({
-                    en: 'Martial arts training (Kun Khmer, Bokator, Grappling) and high-load conditioning carry inherent physical risks, including bruises, sprains, or muscle strain. By training at RITHTHY Fitness:',
-                    km: 'ការបង្វឹកក្បាច់គុន (គុនខ្មែរ បុកាទ័រ ការចាប់) និងការហាត់កម្លាំងកម្រិតខ្ពស់ មានហានិភ័យរាងកាយរួមមាន ការជាំ គ្រេច ឬតានតឹងសាច់ដុំ។ ដោយការបង្វឹកនៅ RITHTHY Fitness៖',
-                    zh: '武术训练（高棉拳、斗狮拳、地面对抗）和高负荷体能训练具有内在的物理风险，包括淤伤、扭伤或肌肉拉伤。在 RITHTHY Fitness 训练即表示：'
+                    en: 'Martial arts training (Kun Khmer, Bokator, Grappling) and high-load conditioning carry inherent physical risks, including bruises, sprains, or muscle strain. By training at RTY Fitness:',
+                    km: 'ការបង្វឹកក្បាច់គុន (គុនខ្មែរ បុកាទ័រ ការចាប់) និងការហាត់កម្លាំងកម្រិតខ្ពស់ មានហានិភ័យរាងកាយរួមមាន ការជាំ គ្រេច ឬតានតឹងសាច់ដុំ។ ដោយការបង្វឹកនៅ RTY Fitness៖',
+                    zh: '武术训练（高棉拳、斗狮拳、地面对抗）和高负荷体能训练具有内在的物理风险，包括淤伤、扭伤或肌肉拉伤。在 RTY Fitness 训练即表示：'
                   }) }}
                 </p>
                 <div class="warning-callout">
@@ -254,9 +254,9 @@
               <div class="section-body">
                 <p>
                   {{ tBy({
-                    en: 'All content published on RITHTHY Fitness—including logos, Bokator training manuals, video demonstrations, articles by Master Ny Rithy, and custom UI design—is protected under Cambodian and international copyright laws. Unauthorized commercial distribution of RTY FITNESS assets is strictly prohibited.',
-                    km: 'មាតិកាទាំងអស់ដែលបានបោះពុម្ពផ្សាយនៅលើ RITHTHY Fitness—រួមទាំងឡូហ្គោ សៀវភៅណែនាំបុកាទ័រ វីដេអូបង្ហាញ អត្ថបទដោយលោក ញ៉ី រិទ្ធី និងការរចនា UI—ត្រូវ បានការពារក្រោមច្បាប់រក្សាសិទ្ធិកម្ពុជា និងអន្តរជាតិ។ ការចែកចាយពាណិជ្ជកម្មដោយគ្មានការអនុញ្ញាតត្រូវបានហាមឃាត់យ៉ាងតឹងរ៉ឹង។',
-                    zh: 'RITHTHY Fitness 上发布的所有内容——包括标识、斗狮拳训练手册、示范视频、Ny Rithy 大师的文章以及自定义 UI 设计——均受柬埔寨及国际著作权法保护。严禁未经授权商业分发 RTY FITNESS 资产。'
+                    en: 'All content published on RTY Fitness—including logos, Bokator training manuals, video demonstrations, articles by Master Ny Rithy, and custom UI design—is protected under Cambodian and international copyright laws. Unauthorized commercial distribution of RTY FITNESS assets is strictly prohibited.',
+                    km: 'មាតិកាទាំងអស់ដែលបានបោះពុម្ពផ្សាយនៅលើ RTY Fitness—រួមទាំងឡូហ្គោ សៀវភៅណែនាំបុកាទ័រ វីដេអូបង្ហាញ អត្ថបទដោយលោក ញ៉ី រិទ្ធី និងការរចនា UI—ត្រូវ បានការពារក្រោមច្បាប់រក្សាសិទ្ធិកម្ពុជា និងអន្តរជាតិ។ ការចែកចាយពាណិជ្ជកម្មដោយគ្មានការអនុញ្ញាតត្រូវបានហាមឃាត់យ៉ាងតឹងរ៉ឹង។',
+                    zh: 'RTY Fitness 上发布的所有内容——包括标识、斗狮拳训练手册、示范视频、Ny Rithy 大师的文章以及自定义 UI 设计——均受柬埔寨及国际著作权法保护。严禁未经授权商业分发 RTY FITNESS 资产。'
                   }) }}
                 </p>
               </div>
@@ -339,10 +339,10 @@ const { t } = useI18n()
 const localePath = useLocalePath()
 
 useHead({
-  title: 'Terms of Service & Rules | RITHTHY Fitness',
+  title: 'Terms of Service & Rules | RTY Fitness',
   meta: [
-    { name: 'description', content: 'Official Terms of Service, gym conduct rules, membership terms, and safety policies for RITHTHY Fitness Club in Phnom Penh, Cambodia.' },
-    { property: 'og:title', content: 'Terms of Service & Rules | RITHTHY Fitness' },
+    { name: 'description', content: 'Official Terms of Service, gym conduct rules, membership terms, and safety policies for RTY Fitness Club in Phnom Penh, Cambodia.' },
+    { property: 'og:title', content: 'Terms of Service & Rules | RTY Fitness' },
     { property: 'og:description', content: 'Official Gym Conduct Rules and Terms of Service for Riththy Dragon Martial & Fitness Club.' }
   ]
 })

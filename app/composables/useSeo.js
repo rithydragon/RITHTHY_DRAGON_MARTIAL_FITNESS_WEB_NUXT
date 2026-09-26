@@ -113,7 +113,7 @@ export function useSeo(input = {}, dynamicData = null) {
   }
   // Case B: input is Object
   else if (typeof input === 'object' && input !== null) {
-    title = input.title || 'RITHTHY Fitness — Premium Fitness Training'
+    title = input.title || 'RTY Fitness — Premium Fitness Training'
     description = input.description || 'Premium fitness training in Cambodia led by Mr. Ny Rithy. Strength & Conditioning.'
     image = input.image || '/og-image.jpg'
     url = input.url ? (input.url.startsWith('http') ? input.url : `${siteUrl}${input.url}`) : siteUrl

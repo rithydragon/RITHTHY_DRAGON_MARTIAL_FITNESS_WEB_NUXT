@@ -187,7 +187,7 @@
     "telegramDomainHint": "Telegram login only works from a public HTTPS address registered with BotFather (not localhost or a custom port). Open this site through its registered domain or a tunnel to continue.",
     "telegramWidgetTitle": "Sign in with Telegram",
     "telegramWidgetSubtitle": "Connect securely with your Telegram account to access your training.",
-    "telegramWidgetBack": "Back to RITHTHY Fitness",
+    "telegramWidgetBack": "Back to RTY Fitness",
     "telegramWidgetSigningIn": "Signing you in\u2026"
   },
   "profile": {
@@ -221,7 +221,7 @@
     "invalidImage": "Choose a valid image file.",
     "imageTooLarge": "The image must be smaller than 10 MB.",
     "member": "Member",
-    "memberSince": "RITHTHY Fitness member",
+    "memberSince": "RTY Fitness member",
     "membership": "Membership",
     "currentPlan": "Current plan",
     "active": "Active",
@@ -261,12 +261,12 @@
   },
   "terms": {
     "title": "Terms of Service & Rules",
-    "subtitle": "Please read these terms and conditions carefully before using our services or training at RITHTHY Fitness.",
+    "subtitle": "Please read these terms and conditions carefully before using our services or training at RTY Fitness.",
     "lastUpdated": "Last Updated: September 17, 2026"
   },
   "privacy": {
     "title": "Privacy Policy & Data Protection",
-    "subtitle": "How RITHTHY Fitness collects, uses, and safeguards your personal data during account creation, OAuth login, and class bookings.",
+    "subtitle": "How RTY Fitness collects, uses, and safeguards your personal data during account creation, OAuth login, and class bookings.",
     "lastUpdated": "Last Updated: September 17, 2026"
   }
 }

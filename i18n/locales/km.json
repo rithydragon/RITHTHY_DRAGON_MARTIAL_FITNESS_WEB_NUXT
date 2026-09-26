@@ -187,7 +187,7 @@
     "telegramDomainHint": "ការចូលតាម Telegram ដំណើរការតែពីអាសយដ្ឋាន HTTPS សាធារណៈដែលបានចុះបញ្ជីជាមួយ BotFather ប៉ុណ្ណោះ (មិនមែន localhost ឬ port ពិសេសទេ)។ សូមបើកគេហទំព័រនេះតាមរយៈដែនដែលបានចុះបញ្ជី ឬ tunnel ដើម្បីបន្ត។",
     "telegramWidgetTitle": "ចូលដោយប្រើ Telegram",
     "telegramWidgetSubtitle": "ភ្ជាប់ដោយសុវត្ថិភាពជាមួយគណនី Telegram របស់អ្នក ដើម្បីចូលប្រើការហ្វឹកហាត់របស់អ្នក។",
-    "telegramWidgetBack": "ត្រឡប់ទៅ RITHTHY Fitness",
+    "telegramWidgetBack": "ត្រឡប់ទៅ RTY Fitness",
     "telegramWidgetSigningIn": "កំពុងចូលប្រព័ន្ធ\u2026"
   },
   "profile": {
@@ -221,7 +221,7 @@
     "invalidImage": "សូមជ្រើសរើសឯកសាររូបភាពត្រឹមត្រូវ។",
     "imageTooLarge": "រូបភាពត្រូវតែតូចជាង 10 MB។",
     "member": "សមាជិក",
-    "memberSince": "សមាជិក RITHTHY Fitness",
+    "memberSince": "សមាជិក RTY Fitness",
     "membership": "សមាជិកភាព",
     "currentPlan": "ផែនការបច្ចុប្បន្ន",
     "active": "សកម្ម",
@@ -261,12 +261,12 @@
   },
   "terms": {
     "title": "លក្ខខណ្ឌសេវាកម្ម និងវិន័យក្លឹប",
-    "subtitle": "សូមអានលក្ខខណ្ឌនិងបទបញ្ជាទាំងនេះឱ្យបានច្បាស់លាស់មុនពេលប្រើប្រាស់សេវាកម្ម ឬបង្វឹកនៅ RITHTHY Fitness។",
+    "subtitle": "សូមអានលក្ខខណ្ឌនិងបទបញ្ជាទាំងនេះឱ្យបានច្បាស់លាស់មុនពេលប្រើប្រាស់សេវាកម្ម ឬបង្វឹកនៅ RTY Fitness។",
     "lastUpdated": "ធ្វើបច្ចុប្បន្នភាពចុងក្រោយ៖ ១៧ កញ្ញា ២០២៦"
   },
   "privacy": {
     "title": "គោលការណ៍ឯកជនភាព និងការការពារទិន្នន័យ",
-    "subtitle": "របៀបដែល RITHTHY Fitness ប្រមូល ប្រើប្រាស់ និងការពារទិន្នន័យផ្ទាល់ខ្លួនរបស់អ្នក។",
+    "subtitle": "របៀបដែល RTY Fitness ប្រមូល ប្រើប្រាស់ និងការពារទិន្នន័យផ្ទាល់ខ្លួនរបស់អ្នក។",
     "lastUpdated": "ធ្វើបច្ចុប្បន្នភាពចុងក្រោយ៖ ១៧ កញ្ញា ២០២៦"
   },
   "programs":"កម្មវិធី",

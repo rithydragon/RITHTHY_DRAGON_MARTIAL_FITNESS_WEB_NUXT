@@ -3,7 +3,7 @@
     <div class="footer__inner container">
       <div class="footer__grid">
         <div class="footer__brand" data-animate="fade">
-          <h3 class="footer__logo">RITHTHY Fitness</h3>
+          <h3 class="footer__logo">RTY Fitness</h3>
           <p class="footer__tagline">{{ t('footer.tagline') }}</p>
           <p class="footer__made">{{ t('footer.madeWith') }}</p>
         </div>
@@ -36,7 +36,7 @@
       </div>
 
       <div class="footer__bottom">
-        <p>&copy; {{ year }} RITHTHY Fitness. {{ t('footer.rights') }}</p>
+        <p>&copy; {{ year }} RTY Fitness. {{ t('footer.rights') }}</p>
         <div class="footer__bottom-links">
           <NuxtLink :to="localePath('/terms-service')" class="footer__bottom-link">{{ t('footer.terms') }}</NuxtLink>
           <span class="footer__divider">•</span>

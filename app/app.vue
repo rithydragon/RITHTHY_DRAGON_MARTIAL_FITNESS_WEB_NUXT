@@ -26,8 +26,8 @@ useHead(() => ({
   },
   titleTemplate: (titleChunk) =>
     titleChunk
-      ? `${titleChunk} | RITHTHY Fitness`
-      : 'RITHTHY Fitness — Premier Fitness Training'
+      ? `${titleChunk} | RTY Fitness`
+      : 'RTY Fitness — Premier Fitness Training'
 }))
 
 

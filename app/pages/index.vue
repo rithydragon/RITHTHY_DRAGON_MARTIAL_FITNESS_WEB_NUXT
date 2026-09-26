@@ -117,6 +117,7 @@ import { computed } from 'vue'
 import FaqPage from '~/components/pages/faq.vue'
 import testimonialsData from '../assets/json/testimonials.json'
 import articlesData from '../assets/json/articles.json'
+import { useSeo } from '#imports'
 
 const { t } = useI18n()
 
@@ -126,7 +127,7 @@ const { t } = useI18n()
 //   url: '/',
 // })
 
-useSeoMeta({
+useSeo({
   title: 'Rithy Martial & Fitness | RTY FITNESS',
   description:
     'Rithy Martial & Fitness — RTY FITNESS provides martial arts, fitness training, workout programs, and training resources.',

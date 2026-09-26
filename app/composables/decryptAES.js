@@ -5,7 +5,7 @@ export default (str, secretKey) => {
 };
 
 const decryptAES = (encryptedBase64, secretKey) => {
-  secretKey ??= "appconfig168";
+  secretKey ??= "017c5da476f6ff1fbb08de6f6bf812ed6dd6343b0f39ce556b8c0bfbaf68c777";
 
   if (isEmpty(encryptedBase64)) return "";
 

@@ -250,15 +250,16 @@ export const useAuthStore = defineStore('auth', {
        you get "nuxt instance unavailable" and no cookie is ever written.
     -------------------------------------------------------------- */
     async login(email: string, password: string, remember?: boolean) {
+      console.log( "Registert ---------------  > ", email,password, remember)
       const nuxtApp = useNuxtApp()
       const rememberFlag = remember ?? this.remember
       this.loading = true
       this.error = null
       try {
-        const res: any = await axios.post(getUrl('/api/v1/auth/login'), {
-          Email: email,
-          Password: password,
-          Remember: rememberFlag,
+        const res: any = await axios.post(getUrl('/api/v1/rty/dragon/site/auth/login'), {
+          email: email,
+          password: password,
+          remember: rememberFlag,
         })
 
         const applied = nuxtApp.runWithContext(() => this.applySession(res, rememberFlag))
@@ -280,16 +281,20 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    async register(data: { Name: string; Email: string; Password: string; Phone?: string }) {
+    async register(data: { name: string;username:string, email: string; password: string; phone?: string }, remember?: boolean) {
+      console.log( "Registert ---------------  > ", data, remember)
       const nuxtApp = useNuxtApp()
       this.loading = true
       this.error = null
+      const rememberFlag = remember ?? this.remember
       try {
-        const res: any = await axios.post(getUrl('/api/v1/auth/register'), {
-          Name: data.Name,
-          Email: data.Email,
-          Password: data.Password,
-          Phone: data.Phone,
+        const res: any = await axios.post(getUrl('/api/v1/rty/dragon/site/auth/register'), {
+          name: data.name,
+          username: data.username,
+          email: data.email,
+          password: data.password,
+          phone: data.phone,
+          remember: rememberFlag
         })
         nuxtApp.runWithContext(() => this.applySession(res))
         return res
@@ -307,6 +312,7 @@ export const useAuthStore = defineStore('auth', {
     -------------------------------------------------------------- */
     applySession(payload: any, remember?: boolean): boolean {
       const { token, refreshToken, expiresIn, user } = normalizeSession(payload)
+      console.log("ApplySession user ===========> ",user)
 
       if (!token) {
         // Do NOT wipe an existing session just because one response was odd.
@@ -317,8 +323,15 @@ export const useAuthStore = defineStore('auth', {
       const rem = remember ?? this.remember
       this.token = token
       if (refreshToken) this.refreshToken = refreshToken
-      if (user) this.user = user
-
+      if (user) {
+        this.user = {
+          ...user,
+          id: user.id ? decryptAES(user.id) : '',
+          username: user.username ? decryptAES(user.username) : '',
+          email: user.email ? decryptAES(user.email) : '',
+          phone: user.phone ? decryptAES(user.phone) : null
+        };
+      }
       writeTokenCookies(token, refreshToken ?? this.refreshToken, expiresIn, rem)
       this.persistUser()
       useUserData({

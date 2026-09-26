@@ -41,22 +41,22 @@
           <form class="auth-modal__form" @submit.prevent="handleSubmit">
             <div v-if="mode === 'register' || mode === 'join'" class="auth-modal__field">
               <label>{{ t('auth.fullName') }}</label>
-              <input v-model="form.Name" type="text" required :placeholder="t('auth.fullName')" :disabled="auth.loading"/>
+              <input v-model="form.name" type="text" required :placeholder="t('auth.fullName')" :disabled="auth.loading"/>
             </div>
 
             <div class="auth-modal__field">
               <label>{{ t('auth.email') }}</label>
-              <input v-model="form.Email" type="email" required :placeholder="t('auth.email')" :disabled="auth.loading"/>
+              <input v-model="form.email" type="email" required :placeholder="t('auth.email')" :disabled="auth.loading"/>
             </div>
 
             <div v-if="mode === 'register' || mode === 'join'" class="auth-modal__field">
               <label>{{ t('auth.phone') }}</label>
-              <input v-model="form.Phone" type="tel" :placeholder="t('auth.phone')" :disabled="auth.loading"/>
+              <input v-model="form.phone" type="tel" :placeholder="t('auth.phone')" :disabled="auth.loading"/>
             </div>
 
             <div class="auth-modal__field">
               <label>{{ t('auth.password') }}</label>
-              <input v-model="form.Password" type="password" required :placeholder="t('auth.password')" :disabled="auth.loading"/>
+              <input v-model="form.password" type="password" required :placeholder="t('auth.password')" :disabled="auth.loading"/>
             </div>
 
             <div v-if="mode === 'login'" class="auth-modal__remember">
@@ -158,11 +158,12 @@ const { t, locale } = useI18n()
 const auth = useAuthStore()
 const plans = ref([])
 const form = reactive({
-  Name: '',
-  Email: '',
-  Phone: '',
-  Password: '',
-  ConfirmPassword: '',
+  name: '',
+  username: '',
+  email: '',
+  phone: '',
+  password: '',
+  confirmPassword: '',
 })
 
 const remember = ref(auth.remember)
@@ -293,10 +294,11 @@ function encryptField(value: string) {
 
 function encryptedForm() {
   return {
-    Name: encryptField(form.Name),
-    Email: encryptField(form.Email),
-    Phone: encryptField(form.Phone),
-    Password: encryptField(form.Password),
+    name: encryptField(form.name),
+    username: encryptField(form.username),
+    email: encryptField(form.email),
+    phone: encryptField(form.phone),
+    password: encryptField(form.password),
   }
 }
 
@@ -304,7 +306,7 @@ async function handleSubmit() {
   try {
     if (props.mode === 'login') {
       const payload = encryptedForm()
-      await auth.login(payload.Email, payload.Password, remember.value)
+      await auth.login(payload.email, payload.password, remember.value)
       close()
     } else if (props.mode === 'register') {
       await auth.register(encryptedForm())

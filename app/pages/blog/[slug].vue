@@ -99,6 +99,19 @@ const relatedArticles = computed(() =>
 onMounted(() => {
   animate.init()
 })
+import { useSeo } from '#imports'
+ 
+// Swap this for the real endpoint/store — this is the shape from the
+// provided API sample: { status, data: { items, pagination }, seo }
+const { data: response, pending } = await useFetch(`/api/artists/${slug}`)
+ 
+const item = computed(() => response.value?.data?.items?.[0] ?? null)
+ 
+// This is the whole point: pass the route path plus the raw API response,
+// and useSeo pulls metaTitle/description/openGraph/twitter/structuredData
+// straight out of response.seo, falling back to page_seo.json for anything
+// the API didn't send.
+useSeo({ path: route.path, object: response.value })
 
 /**
  * SEO

@@ -5,7 +5,8 @@ export default (plain, secretKey) => {
 };
 
 const encryptAES = (plain, secretKey) => {
-  secretKey ??= "appconfig168";
+  secretKey ??= "017c5da476f6ff1fbb08de6f6bf812ed6dd6343b0f39ce556b8c0bfbaf68c777";
+  console.log("Secret Key ==============> ", secretKey)
 
   if (isEmpty(plain)) return "";
 

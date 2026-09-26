@@ -261,6 +261,7 @@ const uploading = ref(false)
 const message = ref('')
 const messageType = ref<'success' | 'error'>('success')
 
+console.log("auth.user =  === In panel =========> ", auth.user)
 const sessionUser = computed<any>(() => sessionData.value || auth.user || {})
 const email = computed(() => String(sessionUser.value?.Email || sessionUser.value?.email || auth.user?.email || ''))
 const avatarUrl = computed(() => {

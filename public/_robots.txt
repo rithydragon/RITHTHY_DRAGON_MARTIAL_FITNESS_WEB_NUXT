@@ -7,7 +7,12 @@ Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /api/
 Disallow: /_nuxt/
+Disallow: /?auth=register/
+Disallow: /?auth=login/
+Disallow: /?auth=login/
+Disallow: /?auth=join/
 
+Sitemap: https://rtyfitness.riththydragon.site/sitemap.xml
 # Allow major Search Engine & AI LLM Crawlers
 User-agent: Googlebot
 Allow: /
@@ -28,4 +33,4 @@ User-agent: PerplexityBot
 Allow: /
 
 # Sitemap Location
-Sitemap: https://rithymartialfitness.com/sitemap.xml
+Sitemap: https://rtyfitness.riththydragon.site/sitemap.xml

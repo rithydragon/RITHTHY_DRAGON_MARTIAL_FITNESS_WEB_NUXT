@@ -30,8 +30,8 @@ export default defineNuxtConfig({
   ssr: false,
 
   site: {
-    url: 'https://rithymartialfitness.com',
-    name: 'RITHTHY Fitness'
+    url: 'https://rtyfitness.riththydragon.site',
+    name: 'RTY FITNESS'
   },
 
   modules: [
@@ -86,7 +86,7 @@ export default defineNuxtConfig({
         { property: 'og:description', content: 'Train with high-performance athletic conditioning with Master Ny Rithy.' },
         { property: 'og:locale', content: 'en_US' },
         { property: 'og:image', content: '/og-image.jpg' },
-        { property: 'og:url', content: 'https://rithymartialfitness.com' },
+        { property: 'og:url', content: 'https://rtyfitness.riththydragon.site' },
         
         // Twitter Card
         { name: 'twitter:card', content: 'summary_large_image' },
@@ -152,7 +152,7 @@ export default defineNuxtConfig({
 
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE || 'https://api.rithymartialfitness.com',
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://rithymartialfitness.com',
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://rtyfitness.riththydragon.site',
       telegramClientId: process.env.NUXT_PUBLIC_TELEGRAM_CLIENT_ID || process.env.TELEGRAM_CLIENT_ID || '',
       wsBase: process.env.NUXT_PUBLIC_WS_BASE || 'ws://localhost:58721/ws',
       chatRoomId: process.env.NUXT_PUBLIC_CHAT_ROOM_ID || '1',
@@ -191,30 +191,35 @@ export default defineNuxtConfig({
         allow: '/'
       }
     ],
-    // sitemap: 'https://rithymartialfitness.com/sitemap.xml'
+    // sitemap: 'https://rtyfitness.riththydragon.site/sitemap.xml'
   },
 
-  // sitemap: {
-  //   gzip: true,
-  //   autoLastmod: true,
+  sitemap: {
+    gzip: true,
+    autoLastmod: true,
 
-  //   urls: [
-  //     '/',
-  //     '/about',
-  //     '/services',
-  //     '/programs',
-  //     '/trainers',
-  //     '/portfolio',
-  //     '/schedule',
-  //     '/testimonials',
-  //     '/blog',
-  //     '/pricing',
-  //     '/faq',
-  //     '/contact',
+    urls: [
+      '/',
+      '/about',
+      '/services',
+      '/programs',
+      '/trainers',
+      '/portfolio',
+      '/schedule',
+      '/testimonials',
+      '/blog',
+      '/pricing',
+      '/faq',
+      '/contact',
+      '/admin/**',
+      '/dashboard/**',
+      '/?auth=register',
+      '/?auth=login',
+      '/?auth=join',
 
-  //     ...blogRoutes
-  //   ]
-  // },
+      ...blogRoutes
+    ]
+  },
 
   vite: {
     esbuild: {

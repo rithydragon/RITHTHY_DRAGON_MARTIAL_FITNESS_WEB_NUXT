@@ -19,7 +19,7 @@ function processTemplate(str = '', dynamicData = {}) {
 
 export function useSeo(input = {}, dynamicData = null) {
   const config = useRuntimeConfig()
-  const siteUrl = config.public.apiBase || 'https://rithymartialfitness.com'
+  const siteUrl = config.public.apiBase || 'https://rtyfitness.riththydragon.site'
   const { locale } = useI18n()
   const route = useRoute()
 

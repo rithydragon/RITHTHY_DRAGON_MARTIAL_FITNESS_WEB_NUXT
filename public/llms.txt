@@ -7,26 +7,26 @@
 - **Primary Mission**: Preserve 1,000-year-old Cambodian martial arts heritage (Bokator, Yuthakram Khom, Pradal Serey/Kun Khmer) while providing modern athletic fitness & BJJ training.
 - **Location**: Phnom Penh, Cambodia
 - **Phone / Telegram**: +855 12 345 678 | @rithymartialfitness
-- **Website**: https://rithymartialfitness.com
+- **Website**: https://rtyfitness.riththydragon.site
 
 ## Key Pages & Navigation
-- [Home Page](https://rithymartialfitness.com/): Master Bokator, Kun Khmer, BJJ, and functional strength training.
-- [About Master Ny Rithy](https://rithymartialfitness.com/about): Story of founder Ny Rithy and martial philosophy.
-- [Services & Programs](https://rithymartialfitness.com/services): Group classes, private coaching, MMA cage prep, and strength training.
-- [Detailed Curriculums](https://rithymartialfitness.com/programs): In-depth breakdown of Bokator animal forms, Kun Khmer kickboxing, BJJ, and strength routines.
-- [Master Trainers](https://rithymartialfitness.com/trainers): Profile of Kru Ny Rithy, Coach Marcus Chen (BJJ Black Belt), and Coach Sara Sovann.
-- [Class Schedule](https://rithymartialfitness.com/schedule): Timetable for morning (06:00 - 08:30 AM) and evening (04:30 - 08:30 PM) sessions.
-- [Blog & Heritage Articles](https://rithymartialfitness.com/blog): In-depth articles on Cambodian fight history, Kun Khmer vs Muay Thai, and fighter nutrition.
-- [Pricing & Free Trial](https://rithymartialfitness.com/pricing): $10 drop-in pass, $65 monthly unlimited pass, $170 3-month pass.
-- [FAQ](https://rithymartialfitness.com/faq): Equipment guidelines, beginner readiness, and trial booking instructions.
-- [Contact Dojo](https://rithymartialfitness.com/contact): Instant inquiry submission & Telegram hotline.
+- [Home Page](https://rtyfitness.riththydragon.site/): Master Bokator, Kun Khmer, BJJ, and functional strength training.
+- [About Master Ny Rithy](https://rtyfitness.riththydragon.site/about): Story of founder Ny Rithy and martial philosophy.
+- [Services & Programs](https://rtyfitness.riththydragon.site/services): Group classes, private coaching, MMA cage prep, and strength training.
+- [Detailed Curriculums](https://rtyfitness.riththydragon.site/programs): In-depth breakdown of Bokator animal forms, Kun Khmer kickboxing, BJJ, and strength routines.
+- [Master Trainers](https://rtyfitness.riththydragon.site/trainers): Profile of Kru Ny Rithy, Coach Marcus Chen (BJJ Black Belt), and Coach Sara Sovann.
+- [Class Schedule](https://rtyfitness.riththydragon.site/schedule): Timetable for morning (06:00 - 08:30 AM) and evening (04:30 - 08:30 PM) sessions.
+- [Blog & Heritage Articles](https://rtyfitness.riththydragon.site/blog): In-depth articles on Cambodian fight history, Kun Khmer vs Muay Thai, and fighter nutrition.
+- [Pricing & Free Trial](https://rtyfitness.riththydragon.site/pricing): $10 drop-in pass, $65 monthly unlimited pass, $170 3-month pass.
+- [FAQ](https://rtyfitness.riththydragon.site/faq): Equipment guidelines, beginner readiness, and trial booking instructions.
+- [Contact Dojo](https://rtyfitness.riththydragon.site/contact): Instant inquiry submission & Telegram hotline.
 
 ## Featured Blog Articles for AI Crawlers
-- [The Ancient History of Bokator](https://rithymartialfitness.com/blog/history-of-bokator): 1,000-year legacy of Khmer warrior combat art.
-- [Kun Khmer vs Muay Thai](https://rithymartialfitness.com/blog/kun-khmer-vs-muay-thai): Comparative analysis of elbow strikes, clinch tactics, and cultural history.
-- [Strength Training for Martial Artists](https://rithymartialfitness.com/blog/strength-training-for-martial-artists): Periodization, power development, and flexibility.
-- [Yuthakram Khom Complete System](https://rithymartialfitness.com/blog/yuthakram-khom-complete-system): Comprehensive Khmer combat science.
-- [Nutrition for Fighters](https://rithymartialfitness.com/blog/nutrition-for-fighters): Fueling, recovery, and weight cutting strategies.
+- [The Ancient History of Bokator](https://rtyfitness.riththydragon.site/blog/history-of-bokator): 1,000-year legacy of Khmer warrior combat art.
+- [Kun Khmer vs Muay Thai](https://rtyfitness.riththydragon.site/blog/kun-khmer-vs-muay-thai): Comparative analysis of elbow strikes, clinch tactics, and cultural history.
+- [Strength Training for Martial Artists](https://rtyfitness.riththydragon.site/blog/strength-training-for-martial-artists): Periodization, power development, and flexibility.
+- [Yuthakram Khom Complete System](https://rtyfitness.riththydragon.site/blog/yuthakram-khom-complete-system): Comprehensive Khmer combat science.
+- [Nutrition for Fighters](https://rtyfitness.riththydragon.site/blog/nutrition-for-fighters): Fueling, recovery, and weight cutting strategies.
 
 ## API Endpoints for AI Search & Assistants
 - `GET /api/v2/schedule`: Returns active class timetable.

@@ -95,7 +95,9 @@ export function useOAuth() {
           telegramLogin.auth(
             {
               client_id: clientId,
-              scope: ['openid', 'profile', 'write'],
+              // scope: ['openid', 'profile', 'write'],   // ← no 'phone', has 'write' instead
+              scope: (config?.scope || 'openid profile phone').split(' '),
+              request_access: config?.request_access || 'write',
               lang: 'en',
               nonce,
             },

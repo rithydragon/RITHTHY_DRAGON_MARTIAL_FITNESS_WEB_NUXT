@@ -101,36 +101,6 @@
       </div>
     </Transition>
   </Teleport>
-
-  <!-- Telegram Login Widget popup panel -->
-  <Teleport to="body">
-    <Transition name="tp">
-      <div v-if="telegramOpen" class="tp-card__overlay" @click.self="closeTelegram">
-        <div class="tp-card" role="dialog" aria-modal="true" :aria-label="t('auth.telegramWidgetTitle')">
-          <button class="tp-card__x" @click="closeTelegram" :aria-label="t('common.close')">
-            <i class="ri-close-line"></i>
-          </button>
-          <div class="tp-card__brand">
-            <i class="ri-telegram-fill"></i>
-          </div>
-          <h3 class="tp-card__title">{{ t('auth.telegramWidgetTitle') }}</h3>
-          <p class="tp-card__sub">{{ t('auth.telegramWidgetSubtitle') }}</p>
-
-          <div class="tp-card__body">
-            <p v-if="twSigning" class="tp-card__signing">
-              <i class="ri-loader-4-line animate-spin"></i> {{ t('auth.telegramWidgetSigningIn') }}
-            </p>
-            <div v-else class="tp-card__widget">
-              <button class="tg-auth-button" type="button">Sign In with Telegram</button>
-            </div>
-            <p v-if="twError" class="tp-card__error">
-              <i class="ri-error-warning-line"></i> {{ twError }}
-            </p>
-          </div>
-        </div>
-      </div>
-    </Transition>
-  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -154,8 +124,9 @@ const emit = defineEmits<{
   switchMode: [mode: AuthMode]
 }>()
 
-const { t, locale } = useI18n()
+const { t } = useI18n()
 const auth = useAuthStore()
+const { openTelegramLogin } = useOAuth()
 const plans = ref([])
 const form = reactive({
   name: '',
@@ -263,10 +234,7 @@ function close() {
 }
 
 useEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    if (props.isOpen) close()
-    if (telegramOpen.value) closeTelegram()
-  }
+  if (e.key === 'Escape' && props.isOpen) close()
 })
 
 watch( () => auth.isLoggedIn, (loggedIn) => {
@@ -333,201 +301,32 @@ async function handleSubmit() {
 const oauthLoading = ref<string | null>(null)
 const oauthError = ref('')
 
-const telegramOpen = ref(false)
-const twSigning = ref(false)
-const twError = ref('')
-const telegramClientId = ref(0)
-const telegramNonce = ref('')
-let telegramSdkPromise: Promise<boolean> | null = null
-
-type TelegramOAuthResult = {
-  id_token?: string
-  error?: string
-  error_description?: string
-}
-
-const TELEGRAM_LOGIN_SCRIPT = 'https://oauth.telegram.org/js/telegram-login.js?6'
-
-function closeTelegram() {
-  const sdk = (window as any).Telegram?.Login
-  sdk?.close?.()
-  telegramOpen.value = false
-  twSigning.value = false
-  twError.value = ''
-  telegramClientId.value = 0
-  telegramNonce.value = ''
-  if ((window as any).onTelegramOauth === handleTelegramOauth) {
-    delete (window as any).onTelegramOauth
-  }
-}
-
-async function handleTelegramOauth(data: TelegramOAuthResult) {
-  if (twSigning.value) return
-  if (data?.error) {
-    twError.value = data.error_description || data.error
-    return
-  }
-  if (!data?.id_token) {
-    twError.value = t('auth.telegramUnavailable') || 'Telegram login is not available right now.'
-    return
-  }
-
-  const isDev = import.meta.client && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-  if (isDev && data.id_token === 'dev-mock-id-token') {
-    // Development bypass: mock successful login without backend call
-    twSigning.value = true
-    try {
-      // Create a mock user session for development
-      const mockUser = {
-        id: 'dev-user-1',
-        name: 'Dev User',
-        email: 'dev@localhost',
-        avatar: undefined,
-        role: 'member' as const,
-      }
-      const nuxtApp = useNuxtApp()
-      nuxtApp.runWithContext(() => {
-        auth.applySession({
-          data: {
-            access_token: 'dev-mock-access-token',
-            refresh_token: 'dev-mock-refresh-token',
-            expires_in: 86400,
-            user: mockUser,
-          }
-        }, true)
-      })
-      await auth.fetchProfile()
-      closeTelegram()
-      close()
-    } finally {
-      twSigning.value = false
-    }
-    return
-  }
-
-  twSigning.value = true
-  twError.value = ''
-  try {
-    await auth.completeTelegramLogin(data.id_token, telegramNonce.value)
-    closeTelegram()
-    close()
-  } catch (err: any) {
-    closeTelegram()
-    oauthError.value = err?.response?.data?.error || err?.message || (t('auth.telegramUnavailable') || 'Telegram login is not available right now.')
-  } finally {
-    twSigning.value = false
-  }
-}
-
-function initializeTelegramSdk(): boolean {
-  if (!import.meta.client || !telegramClientId.value || !telegramNonce.value) return false
-  const sdk = (window as any).Telegram?.Login
-  if (!sdk || typeof sdk.init !== 'function') return false
-  try {
-    sdk.init(
-      {
-        client_id: telegramClientId.value,
-        scope: ['openid', 'profile', 'write'],
-        lang: locale.value === 'km' || locale.value === 'zh' ? locale.value : 'en',
-        nonce: telegramNonce.value,
-      },
-      handleTelegramOauth,
-    )
-    return true
-  } catch {
-    return false
-  }
-}
-
-async function waitForTelegramSdk(): Promise<boolean> {
-  if (initializeTelegramSdk()) return true
-  if (telegramSdkPromise) return telegramSdkPromise
-
-  telegramSdkPromise = new Promise<boolean>((resolve) => {
-    let script = document.querySelector<HTMLScriptElement>(`script[data-telegram-login][src="${TELEGRAM_LOGIN_SCRIPT}"]`)
-    if (!script) {
-      script = document.createElement('script')
-      script.async = true
-      script.src = TELEGRAM_LOGIN_SCRIPT
-      script.setAttribute('data-client-id', String(telegramClientId.value))
-      script.setAttribute('data-request-access', 'write')
-      script.setAttribute('data-onauth', 'window.onTelegramOauth(data)')
-      script.dataset.telegramLogin = 'true'
-      document.head.appendChild(script)
-    }
-
-    const finish = () => {
-      const ready = initializeTelegramSdk()
-      if (ready) resolve(true)
-    }
-    const fail = () => resolve(false)
-    script.addEventListener('load', finish, { once: true })
-    script.addEventListener('error', fail, { once: true })
-    window.setTimeout(() => {
-      if (!initializeTelegramSdk()) resolve(false)
-    }, 10000)
-  })
-
-  try {
-    return await telegramSdkPromise
-  } finally {
-    telegramSdkPromise = null
-  }
-}
-
-async function handleTelegram() {
-  if (oauthLoading.value !== null) return
-  oauthError.value = ''
-  closeTelegram()
-  oauthLoading.value = 'telegram'
-  try {
-    auth.setRemember(remember.value)
-
-    const cfg = await auth.telegramPreflight()
-    const clientId = Number(cfg?.client_id)
-    telegramClientId.value = clientId
-    telegramNonce.value = String(cfg?.nonce || '')
-    if (!Number.isSafeInteger(clientId) || clientId <= 0 || !telegramNonce.value) {
-      throw new Error('Telegram login is not configured')
-    }
-    ;(window as any).onTelegramOauth = handleTelegramOauth
-    telegramOpen.value = true
-    await nextTick()
-    if (!(await waitForTelegramSdk())) {
-      throw new Error('Telegram Login SDK could not be loaded')
-    }
-  } catch (err: any) {
-    oauthError.value = err?.domain
-      ? (t('auth.telegramDomainHint') || 'Telegram widget requires a public HTTPS domain.')
-      : (err?.response?.data?.error || err?.message || t('auth.telegramUnavailable') || 'Telegram login is not available right now.')
-    closeTelegram()
-  } finally {
-    oauthLoading.value = null
-  }
-}
-
+/**
+ * Telegram no longer gets its own branch or its own SDK-loading code here —
+ * useOAuth().openTelegramLogin() already does the whole thing: fetch the
+ * preflight config, load Telegram's widget script once, and call
+ * telegramLogin.auth({...}) which pops Telegram's OWN login window (not a
+ * panel we render). We just await the result and log the session in.
+ */
 async function handleOAuth(providerId: 'google' | 'telegram' | 'facebook' | 'tiktok') {
-  if (providerId === 'telegram') {
-    await handleTelegram()
-    return
-  }
   if (oauthLoading.value !== null) return
   oauthError.value = ''
   oauthLoading.value = providerId
   try {
     auth.setRemember(remember.value)
-    await auth.loginWithProvider(providerId)
+
+    if (providerId === 'telegram') {
+      await openTelegramLogin()
+    } else {
+      await auth.loginWithProvider(providerId)
+    }
     close()
   } catch (err: any) {
     oauthError.value =
-      providerId === 'telegram' && err?.domain
-        ? (t('auth.telegramDomainHint') || 'Telegram widget requires a public HTTPS domain.')
-        : providerId === 'telegram'
-          ? (t('auth.telegramUnavailable') || 'Telegram login is not available right now.')
-          : (err?.response?.data?.message ||
-              err?.message ||
-              t('auth.oauthFailed') ||
-              'The social login could not be started. Please try again.')
+      err?.response?.data?.message ||
+      err?.message ||
+      t('auth.oauthFailed') ||
+      'The social login could not be started. Please try again.'
   } finally {
     oauthLoading.value = null
   }
@@ -680,151 +479,6 @@ async function handleOAuth(providerId: 'google' | 'telegram' | 'facebook' | 'tik
     margin-top: 2px;
     flex-shrink: 0;
   }
-}
-
-.tp-card__overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.72);
-  backdrop-filter: blur(10px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100000;
-  padding: 1rem;
-}
-
-.tp-card {
-  position: relative;
-  width: 100%;
-  max-width: 360px;
-  padding: 2rem 1.75rem 1.75rem;
-  background: var(--c-surface, #161616);
-  border: 1px solid var(--c-border, #2a2a2a);
-  border-radius: 20px;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
-  text-align: center;
-
-  &__x {
-    position: absolute;
-    top: 0.9rem;
-    right: 0.9rem;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: transparent;
-    border: 1px solid var(--c-border);
-    color: var(--c-muted, #9ca3af);
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-      color: var(--c-text);
-      border-color: var(--c-primary);
-      background: var(--c-primary-soft);
-    }
-  }
-
-  &__brand {
-    width: 52px;
-    height: 52px;
-    margin: 0 auto 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: rgba(36, 161, 222, 0.15);
-    color: #24a1de;
-    font-size: 1.6rem;
-  }
-
-  &__title {
-    margin: 0 0 0.4rem;
-    font-size: 1.15rem;
-    font-weight: 800;
-    color: var(--c-text, #f5f5f4);
-  }
-
-  &__sub {
-    margin: 0 0 1.5rem;
-    font-size: 0.8rem;
-    line-height: 1.5;
-    color: var(--c-muted, #9ca3af);
-  }
-
-  &__body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.7rem;
-  }
-
-  &__widget {
-    min-height: 48px;
-    display: flex;
-    justify-content: center;
-  }
-
-  &__signing {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 0;
-    padding: 0.6rem 0.9rem;
-    border: 1px solid rgba(231, 201, 95, 0.3);
-    background: rgba(231, 201, 95, 0.08);
-    color: #e7c95f;
-    border-radius: 12px;
-    font-size: 0.8rem;
-  }
-
-  &__error {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.5rem;
-    width: 100%;
-    margin: 0;
-    padding: 0.65rem 0.85rem;
-    border: 1px solid rgba(244, 63, 94, 0.35);
-    background: rgba(244, 63, 94, 0.1);
-    color: #fb7185;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    line-height: 1.45;
-    text-align: left;
-
-    i {
-      margin-top: 2px;
-      flex-shrink: 0;
-    }
-  }
-}
-
-.tp-enter-active,
-.tp-leave-active {
-  transition: opacity 0.22s ease;
-}
-
-.tp-enter-active .tp-card,
-.tp-leave-active .tp-card {
-  transition: transform 0.22s ease;
-}
-
-.tp-enter-from,
-.tp-leave-to {
-  opacity: 0;
-}
-
-.tp-enter-from .tp-card {
-  transform: translateY(14px) scale(0.96);
-}
-
-.tp-leave-to .tp-card {
-  transform: translateY(14px) scale(0.96);
 }
 
 .auth-modal__divider {

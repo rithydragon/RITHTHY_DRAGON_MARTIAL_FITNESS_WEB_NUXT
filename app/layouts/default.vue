@@ -6,7 +6,7 @@
     </main>
     <Footer />
     <NotificationToast />
-    <AuthModal
+    <AuthModal_Claude
       :isOpen="isAuthOpen"
       :mode="authMode"
       @close="closeAuthModal"

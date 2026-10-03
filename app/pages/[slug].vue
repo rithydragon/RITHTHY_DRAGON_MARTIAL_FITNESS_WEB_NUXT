@@ -9,11 +9,17 @@ import { useSeo } from '#imports'
 const route = useRoute()
 const modules = import.meta.glob('~/components/pages/**/*.vue')
 
+// const slug = computed(() => {
+//   const raw = route.params.slug
+//   return Array.isArray(raw) ? raw.join('/') : raw
+// })
 const slug = computed(() => {
-  const raw = route.params.slug
-  return Array.isArray(raw) ? raw.join('/') : raw
-})
+  const value = route.params.slug
 
+  return Array.isArray(value)
+    ? value[0]
+    : value
+})
 const pageComponent = computed(() => {
   const flatKey = `/components/pages/${slug.value}.vue`
   const dirKey = `/components/pages/${slug.value}/index.vue`
@@ -35,11 +41,31 @@ const item = computed(() => data.value?.data?.items?.[0] ?? null)
 // the API didn't send.
 // useSeo({ path: route.path, object: response.value })
 // Automatically bind SEO metadata from page_seo.json via useSeo
-watchEffect( async () => {
-  if (slug.value) {
-    const { data, error } = await useWeb(`/api/v1/rty/dragon/site/pages/${slug.value}`)
-    // useSeo(slug.value)
-    useSeo({ path: route.path,object: data.value?.seo })
-  }
+// watchEffect( async () => {
+//   if (slug.value) {
+//     const { data, error } = await useWeb(`/api/v1/rty/dragon/site/pages/${slug.value}`)
+//     // useSeo(slug.value)
+//     useSeo({ path: route.path,object: data.value?.seo || 'contacts'})
+//   }
+// })
+
+
+const {
+  data,
+  error
+} = await useWeb(
+  `/api/v1/rty/dragon/site/pages/${slug.value}`
+)
+
+if (error.value || !data.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Page not found'
+  })
+}
+
+useSeo({
+  path: route.path,
+  object: data.value
 })
 </script>

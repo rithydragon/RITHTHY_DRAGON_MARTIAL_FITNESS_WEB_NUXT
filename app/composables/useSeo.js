@@ -58,7 +58,7 @@ export function useSeo(input = {}, dynamicData = null) {
   // Standard Fallback Values
   const fallback = {
     title: {
-      en: 'Rithy Martial & Fitness — Combat & Fitness Training',
+      en: 'Rithy & Fitness — Combat & Fitness Training',
       km: 'រិទ្ធី ម៉ាសល & ហ្វ៊ីតនេស — ការបង្វឹកក្បាច់គុន និងកាយសម្បទា',
       zh: 'Rithy 武术与健身 — 搏击与健身训练'
     },

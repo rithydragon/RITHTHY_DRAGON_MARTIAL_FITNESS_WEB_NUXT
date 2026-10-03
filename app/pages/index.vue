@@ -121,20 +121,19 @@ import { useSeo } from '#imports'
 
 const { t } = useI18n()
 
-// useSeo({
-//   title: 'RTY Fitness Training',
-//   description: 'Professional  fitness training in Cambodia led by Mr. Ny Rithy. Strength & conditioning.',
-//   url: '/',
-// })
-
-useSeo({
-  title: 'Rithy Martial & Fitness | RTY FITNESS',
-  description:
-    'Rithy Martial & Fitness — RTY FITNESS provides martial arts, fitness training, workout programs, and training resources.',
-  ogTitle: 'Rithy Martial & Fitness | RTY FITNESS',
-  ogDescription:
-    'Martial arts and fitness training with Rithy Martial & Fitness.',
+watchEffect( async () => {
+  const { data, error } = await useWeb(`/api/v1/rty/dragon/site/pages/home`)
+    // useSeo(slug.value)
+    useSeo({ path: '/',object: data.value?.seo || 'home'})
 })
+// useSeo({
+//   title: 'Rithy Martial & Fitness | RTY FITNESS',
+//   description:
+//     'Rithy Martial & Fitness — RTY FITNESS provides martial arts, fitness training, workout programs, and training resources.',
+//   ogTitle: 'Rithy Martial & Fitness | RTY FITNESS',
+//   ogDescription:
+//     'Martial arts and fitness training with Rithy Martial & Fitness.',
+// })
 
 const featuredTestimonials = computed(() => {
   return Array.isArray(testimonialsData) ? testimonialsData.slice(0, 3) : []

@@ -361,7 +361,7 @@ const filteredSections = computed(() => {
   return sections.filter(s => tBy(s.title).toLowerCase().includes(q))
 })
 
-function scrollTo(id: string) {
+function scrollTo(id) {
   activeSection.value = id
   const el = document.getElementById(id)
   if (el) {
@@ -371,7 +371,7 @@ function scrollTo(id: string) {
   }
 }
 
-let observer: IntersectionObserver | null = null
+let observer = null
 
 onMounted(() => {
   observer = new IntersectionObserver(

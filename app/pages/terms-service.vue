@@ -338,7 +338,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 const { t } = useI18n()
 const localePath = useLocalePath()
 
-useHead({
+useSeo({
   title: 'Terms of Service & Rules | RTY Fitness',
   meta: [
     { name: 'description', content: 'Official Terms of Service, gym conduct rules, membership terms, and safety policies for RTY Fitness Club in Phnom Penh, Cambodia.' },

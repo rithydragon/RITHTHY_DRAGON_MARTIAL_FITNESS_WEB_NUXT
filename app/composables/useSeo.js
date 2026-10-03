@@ -242,7 +242,7 @@ export function useSeo(input = {}, dynamicData = null) {
     ogImageHeight: imageHeight,
     ogUrl: url,
     ogType: type,
-    ogSiteName: 'Rithy Martial & Fitness',
+    ogSiteName: 'Rithy Workout & Fitness',
     twitterCard,
     twitterTitle: title,
     twitterDescription: description,
@@ -256,7 +256,7 @@ export function useSeo(input = {}, dynamicData = null) {
   const schema = {
     '@context': 'https://schema.org',
     '@type': ['LocalBusiness', 'SportsActivityLocation'],
-    name: 'Rithy Martial & Fitness',
+    name: 'Rithy Workout & Fitness',
     description: 'Premium Cambodian martial arts and fitness training center.',
     founder: {
       '@type': 'Person',

@@ -112,7 +112,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { computed } from 'vue'
 import FaqPage from '~/components/pages/faq.vue'
 import testimonialsData from '../assets/json/testimonials.json'

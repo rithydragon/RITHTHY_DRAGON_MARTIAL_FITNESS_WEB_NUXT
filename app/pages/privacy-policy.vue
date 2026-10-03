@@ -326,13 +326,13 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 const { t } = useI18n()
 const localePath = useLocalePath()
 
-useHead({
+useSeo({
   title: 'Privacy Policy & Data Protection | RTY Fitness',
   meta: [
     { name: 'description', content: 'Official Privacy Policy for RTY Fitness. Learn how we collect, protect, and process user data, OAuth2 logins, and account deletion requests.' },

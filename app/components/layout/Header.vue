@@ -73,8 +73,8 @@
           </div>
         </template>
         <template v-else>
-          <button class="btn btn--ghost navbar__btn-login" @click="openLogin">{{ t('common.login') || 'Login' }}</button>
-          <button class="btn btn--primary navbar__btn-join" @click="openJoin">{{ t('common.joinNow') || 'Join Now' }}</button>
+          <button class="btn btn--ghost navbar__btn-login auth-actions" @click="openLogin">{{ t('common.login') || 'Login' }}</button>
+          <button class="btn btn--primary navbar__btn-join auth-actions" @click="openJoin">{{ t('common.joinNow') || 'Join Now' }}</button>
         </template>
       </div>
 
@@ -134,7 +134,7 @@
           </div>
         </div>
 
-        <div class="navbar__mobile-actions">
+        <div v-if="!isAuth" class="navbar__mobile-actions">
           <button class="btn btn--ghost" @click="openLogin">{{ t('common.login') || 'Login' }}</button>
           <button class="btn btn--primary" @click="openJoin">{{ t('common.joinNow') || 'Join Now' }}</button>
         </div>
@@ -310,6 +310,14 @@ watch(() => route.path, () => {
   transform: rotate(180deg);
 }
 
+.auth-actions{
+  display: flex;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
 /* Level 1 Dropdown */
 .navbar__dropdown {
   position: absolute;

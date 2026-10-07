@@ -5,7 +5,7 @@
       <div v-if="ui.aiAssistantOpen" class="ai-panel">
         <div class="ai-panel-header">
           <div class="ai-header-left">
-            <div class="ai-avatar"><RImage src="/RTY_FITNESS_LOGO.jpg" /></div>
+            <div class="ai-avatar"><RImage src="/RTY_FITNESS_LOGO.png" /></div>
             <div>
               <p class="ai-name">{{ mode === 'ai' ? aiName : roomName }}</p>
               <p class="ai-status">
@@ -282,7 +282,7 @@ const loginLabel = computed(() => pickText(TEXT.login))
 const publicEmpty = computed(() => pickText(TEXT.publicEmpty))
 const adminName = computed(() => pickText(TEXT.adminName))
 
-const assistantAvatar = '/RTY_FITNESS_LOGO.jpg'
+const assistantAvatar = '/RTY_FITNESS_LOGO.png'
 
 const displayName = computed(() => profile.value.name)
 const myName = computed(() => profile.value.name)

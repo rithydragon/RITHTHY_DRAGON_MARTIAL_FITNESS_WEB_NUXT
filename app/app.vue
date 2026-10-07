@@ -9,6 +9,7 @@
     <NotifPanel />
     <UserProfilePanel />
     <AIAssistantFloat />
+    <AppToastContainer />
   </div>
 </template>
 

@@ -39,7 +39,7 @@ function switchAuthMode(newMode: 'login' | 'register' | 'join') {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .app-layout {
   display: flex;
   flex-direction: column;

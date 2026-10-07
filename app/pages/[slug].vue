@@ -8,18 +8,24 @@ import { defineAsyncComponent, computed, watchEffect } from 'vue'
 import { useSeo } from '#imports'
 const route = useRoute()
 const modules = import.meta.glob('~/components/pages/**/*.vue')
-
-// const slug = computed(() => {
-//   const raw = route.params.slug
-//   return Array.isArray(raw) ? raw.join('/') : raw
-// })
-const slug = computed(() => {
-  const value = route.params.slug
-
-  return Array.isArray(value)
-    ? value[0]
-    : value
+// This is the whole point: pass the route path plus the raw API response,
+// and useSeo pulls metaTitle/description/openGraph/twitter/structuredData
+// straight out of response.seo, falling back to page_seo.json for anything
+// the API didn't send.
+// useSeo({ path: route.path, object: response.value })
+// Automatically bind SEO metadata from page_seo.json via useSeo
+watchEffect( async () => {
+  if (slug.value) {
+    const { data, error } = await useWeb(`/api/v1/rty/dragon/site/pages/${slug.value}`)
+    // useSeo(slug.value)
+    useSeo({ path: route.path,object: data.value?.seo || 'contacts'})
+  }
 })
+const slug = computed(() => {
+  const raw = route.params.slug
+  return Array.isArray(raw) ? raw.join('/') : raw
+})
+
 const pageComponent = computed(() => {
   const flatKey = `/components/pages/${slug.value}.vue`
   const dirKey = `/components/pages/${slug.value}/index.vue`
@@ -35,37 +41,5 @@ const pageComponent = computed(() => {
  
 const item = computed(() => data.value?.data?.items?.[0] ?? null)
  
-// This is the whole point: pass the route path plus the raw API response,
-// and useSeo pulls metaTitle/description/openGraph/twitter/structuredData
-// straight out of response.seo, falling back to page_seo.json for anything
-// the API didn't send.
-// useSeo({ path: route.path, object: response.value })
-// Automatically bind SEO metadata from page_seo.json via useSeo
-// watchEffect( async () => {
-//   if (slug.value) {
-//     const { data, error } = await useWeb(`/api/v1/rty/dragon/site/pages/${slug.value}`)
-//     // useSeo(slug.value)
-//     useSeo({ path: route.path,object: data.value?.seo || 'contacts'})
-//   }
-// })
 
-
-const {
-  data,
-  error
-} = await useWeb(
-  `/api/v1/rty/dragon/site/pages/${slug.value}`
-)
-
-if (error.value || !data.value) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: 'Page not found'
-  })
-}
-
-useSeo({
-  path: route.path,
-  object: data.value
-})
 </script>

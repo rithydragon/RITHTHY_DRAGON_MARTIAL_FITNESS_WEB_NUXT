@@ -121,11 +121,15 @@ import { useSeo } from '#imports'
 
 const { t } = useI18n()
 
-watchEffect( async () => {
-  const { data, error } = await useWeb(`/api/v1/rty/dragon/site/pages/home`)
-    // useSeo(slug.value)
-    useSeo({ path: '/',object: data.value?.seo || 'home'})
+// Call composables at the top level of setup
+const { data, error } = await useWeb('/api/v1/rty/dragon/site/pages/home')
+
+// SEO must also be called at setup level
+useSeo({
+  path: '/',
+  object: data.value?.seo || 'home'
 })
+
 // useSeo({
 //   title: 'Rithy Martial & Fitness | RTY FITNESS',
 //   description:

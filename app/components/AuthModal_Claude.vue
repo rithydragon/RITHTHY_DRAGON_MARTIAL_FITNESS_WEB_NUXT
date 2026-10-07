@@ -318,6 +318,9 @@ async function handleOAuth(providerId: 'google' | 'telegram' | 'facebook' | 'tik
     if (providerId === 'telegram') {
       await openTelegramLogin()
     } else {
+       // Google, Facebook, TikTok: server-side OAuth 2.0 Authorization Code
+      // flow. This navigates the whole page away to the provider and back,
+      // so there's nothing further to await here on success.
       await auth.loginWithProvider(providerId)
     }
     close()

@@ -124,6 +124,87 @@ export function useOAuth() {
     }
   }
 
+  // Facebook
+  const FB = window.FB
+  const FB_LOGIN_SCRIPT = 'https://connect.facebook.net/en_US/sdk.js'
+  let fbScriptPromise = null
+  async function loadFacebookScript() {
+    if (!import.meta.client) {
+      throw new Error('Facebook Login can only be initialized on the client.')
+    }
+    if (window.FB) return window.FB
+    if (fbScriptPromise) return fbScriptPromise
+    fbScriptPromise = new Promise((resolve, reject) => {
+      let script = document.querySelector(
+        `script[data-facebook-login][src="${FB_LOGIN_SCRIPT}"]`,
+      )
+      if (!script) {
+        script = document.createElement('script')
+        script.src = FB_LOGIN_SCRIPT
+        script.async = true
+        script.dataset.facebookLogin = 'true'
+      }
+      const finish = () => {
+        if (window.FB) {
+          resolve(window.FB)
+        } else {
+          reject(new Error('Facebook Login SDK was not initialized.'))
+        }
+      }
+      const fail = () => reject(new Error('Failed to load Facebook Login SDK.'))
+      script.addEventListener('load', finish, { once: true })
+      script.addEventListener('error', fail, { once: true })
+      window.setTimeout(fail, 10000)
+      if (!script.isConnected) document.head.appendChild(script)
+    })
+    try {
+      return await fbScriptPromise
+    } catch (err) {
+      fbScriptPromise = null
+      throw err
+    }
+  }
+
+
+  function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
+      console.log('statusChangeCallback');
+      console.log(response);                   // The current login status of the person.
+      if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+        testAPI();
+      } else {                                 // Not logged into your webpage or we are unable to tell.
+        document.getElementById('status').innerHTML = 'Please log ' +
+          'into this webpage.';
+      }
+    }
+
+    function checkLoginState() {               // Called when a person is finished with the Login Button.
+      FB.getLoginStatus(function(response) {   // See the onlogin handler
+        statusChangeCallback(response);
+      });
+    }
+
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '{app-id}',
+        cookie     : true,                     // Enable cookies to allow the server to access the session.
+        xfbml      : true,                     // Parse social plugins on this webpage.
+        version    : '{api-version}'           // Use this Graph API version for this call.
+      });
+
+      FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.
+        statusChangeCallback(response);        // Returns the login status.
+      });
+    };
+
+    function testAPI() {
+      console.log('Welcome!  Fetching your info.... ');
+      FB.api('/me', function(response) {
+        console.log('Successful login for: ' + response.name);
+        document.getElementById('status').innerHTML =
+          'Thanks for logging in, ' + response.name + '!';
+      });
+    }
+
   function clearError() {
     error.value = null
   }

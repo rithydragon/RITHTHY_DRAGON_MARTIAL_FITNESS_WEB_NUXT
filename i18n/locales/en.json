@@ -34,7 +34,8 @@
     "theme": "Theme",
     "dark": "Dark",
     "light": "Light",
-    "system": "System"
+    "system": "System",
+    "or":"Or"
   },
   "hero": {
     "badge": "Premium Cambodian Fitness",

@@ -148,7 +148,7 @@ const featuredArticles = computed(() => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .home__intro-grid {
   display: grid;
   grid-template-columns: 1fr;

@@ -156,8 +156,8 @@ const selectedPlan = ref<PlanCode>('FREE')
 const providers = [
   { id: 'google', name: 'Google', icon: 'ri-google-fill' },
   { id: 'telegram', name: 'Telegram', icon: 'ri-telegram-fill' },
-  { id: 'tiktok', name: 'TikTok', icon: 'ri-tiktok-fill' },
-  { id: 'facebook', name: 'Facebook', icon: 'ri-facebook-circle-fill' },
+  // { id: 'tiktok', name: 'TikTok', icon: 'ri-tiktok-fill' },
+  // { id: 'facebook', name: 'Facebook', icon: 'ri-facebook-circle-fill' },
 ] as const
 
 async function getPlans() {

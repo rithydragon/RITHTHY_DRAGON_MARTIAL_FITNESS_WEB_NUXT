@@ -122,14 +122,37 @@ import { useSeo } from '#imports'
 const { t } = useI18n()
 
 // Call composables at the top level of setup
-const { data, error } = await useWeb('/api/v1/rty/dragon/site/pages/home')
+// const { data, error } = await useWeb('/api/v1/rty/dragon/site/pages/home')
 
 // SEO must also be called at setup level
-useSeo({
-  path: '/',
-  object: data.value?.seo || 'home'
+// useSeo({
+//   path: '/',
+//   object: data.value?.seo || 'home'
+// })
+const slug = computed(() => {
+  const raw = route.params.slug
+  return Array.isArray(raw) ? raw.join('/') : raw
 })
+const { data } = await useWeb(`/api/v1/rty/dragon/site/pages/${slug.value}`)
 
+const pageComponent = computed(() => { /* unchanged */ })
+const notFound = computed(() => !pageComponent.value && !data.value)
+
+// detail routes only, so a listing page doesn't take its first item's title
+const item = computed(() =>
+  slug.value.includes('/') ? data.value?.data?.item ?? data.value?.data?.items?.[0] ?? null : null
+)
+
+if (notFound.value && import.meta.server) {
+  const event = useRequestEvent()
+  if (event) setResponseStatus(event, 404)
+}
+
+useSeo(() =>
+  notFound.value
+    ? { path: route.path, title: 'Page not found', noindex: true }
+    : { path: route.path, object: data.value, item: item.value }
+)
 // useSeo({
 //   title: 'Rithy Martial & Fitness | RTY FITNESS',
 //   description:

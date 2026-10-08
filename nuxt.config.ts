@@ -85,14 +85,14 @@ export default defineNuxtConfig({
         { property: 'og:title', content: 'RTY Fitness — Premier Fitness Training' },
         { property: 'og:description', content: 'Train with high-performance athletic conditioning with Master Ny Rithy.' },
         { property: 'og:locale', content: 'en_US' },
-        { property: 'og:image', content: '/og-image.jpg' },
+        { property: 'og:image', content: '/og-image.png' },
         { property: 'og:url', content: 'https://rtyfitness.riththydragon.site' },
         
         // Twitter Card
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: 'RTY Fitness' },
         { name: 'twitter:description', content: 'Strength Conditioning in Phnom Penh.' },
-        { name: 'twitter:image', content: '/og-image.jpg' },
+        { name: 'twitter:image', content: '/og-image.png' },
       ],
 
       script: [

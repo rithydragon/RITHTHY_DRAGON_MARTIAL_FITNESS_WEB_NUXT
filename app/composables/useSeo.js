@@ -67,7 +67,7 @@ export function useSeo(input = {}, dynamicData = null) {
       km: 'មជ្ឈមណ្ឌលហ្វឹកហាត់ក្បាច់គុនខ្មែរជាន់ខ្ពស់ ដឹកនាំដោយគ្រូនី រិទ្ធី។',
       zh: '由 Kru Ny Rithy 领导的顶级柬埔寨武术训练中心。'
     },
-    ogImage: '/og-image.jpg',
+    ogImage: '/og-image.png',
     twitterCard: 'summary_large_image',
     keywords: {
       en: 'Martial arts Cambodia, Bokator, Kun Khmer, BJJ, Fitness Phnom Penh',
@@ -218,7 +218,7 @@ export function useSeo(input = {}, dynamicData = null) {
   else if (typeof input === 'object' && input !== null) {
     title = input.title || 'RTY Fitness — Premium Fitness Training'
     description = input.description || 'Premium fitness training in Cambodia led by Mr. Ny Rithy. Strength & Conditioning.'
-    image = input.image || '/og-image.jpg'
+    image = input.image || '/og-image.png'
     url = input.url ? (input.url.startsWith('http') ? input.url : `${siteUrl}${input.url}`) : siteUrl
     type = input.type || 'website'
     publishedAt = input.publishedAt || ''

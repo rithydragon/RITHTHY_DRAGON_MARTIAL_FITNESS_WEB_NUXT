@@ -293,6 +293,7 @@ watch(() => route.path, () => {
   gap: 0.25rem;
   border-bottom: 2px solid transparent;
   transition: all 0.2s ease;
+  white-space: nowrap !important;
 }
 
 .navbar__link:hover,

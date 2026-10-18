@@ -56,6 +56,11 @@
         <LanguageSwitcher />
         <ThemeToggle />
         <NotificationBell />
+        <!-- GoogleSignIn -->
+        <GoogleSignIn
+          label="Google Connect"
+          @click="connectWithGoogle"
+        />
         <template v-if="isAuth">
           <div class="navbar__user">
             <button
@@ -149,6 +154,12 @@ import { ref, onMounted, watch } from 'vue'
 const screen = useScreenStore()
 const auth = useAuthStore()
 const ui = useUIStore()
+const {
+  status,
+  loading,
+  connecting,
+  connectWithGoogle,
+} = useOAuth2()
 const menu = await useMenuData()
 const { t } = useI18n()
 const route = useRoute()

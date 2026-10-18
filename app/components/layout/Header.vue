@@ -57,10 +57,7 @@
         <ThemeToggle />
         <NotificationBell />
         <!-- GoogleSignIn -->
-        <GoogleSignIn
-          label="Google Connect"
-          @click="connectWithGoogle"
-        />
+        <button @click="connectWithGoogle">Google</button>
         <template v-if="isAuth">
           <div class="navbar__user">
             <button

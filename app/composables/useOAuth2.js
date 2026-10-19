@@ -155,7 +155,7 @@ export default function useOAuth2({ preload = false } = {}) {
     if (connecting.value) return
     connecting.value = true
     try {
-      const { data, error } = await callApi("api/v1/google-drive/connect", {
+      const { data, error } = await callApi("api/v1/google-drive/connect_cls", {
         method: "POST",
         data: {
           Action: "connect",

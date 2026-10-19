@@ -77,7 +77,7 @@ export default function useOAuth2({ preload = false } = {}) {
       // User un-ticked the Drive permission on the consent screen.
       if (response.scope && !response.scope.includes(DRIVE_SCOPE)) return fail()
 
-      const { error } = await callApi("api/v1/google-drive/connect", {
+      const { error } = await callApi("api/v1/google-drive/connect_cls", {
         method: "POST",
         data: {
           Code: response.code,
